@@ -7,3 +7,5 @@ Creating a new branch is quick.
 This is branch master and dev.
 Add a new dev.
 
+add new files。
+add new files2。
