@@ -1,0 +1,11 @@
+<!--aboutme.wxml-->
+<view class="container">
+  <view>
+    <image class="about-logo" src="{{logoUrl}}"></image>
+  </view>
+  <view class="about-title">{{title}}</view>
+  <view class="about-describe">{{desc}}</view>
+  <view class="about-contact">联系方式：{{contact}}</view>
+  <view class="about-site">地址：{{site}}</view>
+  <view class="about-website">官网地址：{{website}}</view>
+</view>
