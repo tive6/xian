@@ -1,1 +1,38 @@
 /* pages/aboutme/aboutme.wxss */
+.about{
+  
+}
+.about-logo-outer{
+  width: 100%;
+  padding: 20px 0;
+  background: #EC2C40;
+}
+.about-logo{
+  display: block;
+  width: 142px;
+  height: 133px;
+  margin: 0 auto;
+}
+.about-title{
+  text-align: center;
+  margin: 20px 0;
+  font-size: 2000B1FBpx;
+  color: #00B1FB;
+}
+.about-describe{
+  font-size: 14px;
+  padding: 0 15px;
+  color: #666;
+  line-height: 1.5;
+}
+.about-site,
+.about-website,
+.about-contact{
+  margin-left: 15px;
+  font-size: 14px;
+  line-height: 1.8;
+  color: #888;
+}
+.about-contact{
+  margin-top: 20px;
+}

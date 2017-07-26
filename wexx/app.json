@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/aboutme/aboutme",
     "pages/index/index",
+    "pages/aboutme/aboutme",
     "pages/logs/logs",
     "pages/list/list"
   ],
@@ -9,7 +9,7 @@
     "backgroundTextStyle": "dark",
     "navigationBarBackgroundColor": "#1D1D1F",
     "navigationBarTitleText": "Hello",
-    "navigationBarTextStyle": "#fff",
+    "navigationBarTextStyle": "white",
     "backgroundColor": "#eee"
   },
   "tabBar":{
@@ -22,8 +22,8 @@
       "iconPath":"images/1.png",
       "selectedIconPath": "images/3.png"
     },{
-      "pagePath":"pages/logs/logs",
-      "text":"日志",
+      "pagePath":"pages/my/my",
+      "text":"我的",
       "iconPath": "images/2.png",
       "selectedIconPath": "images/4.png"
     }]

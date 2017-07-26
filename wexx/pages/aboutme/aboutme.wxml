@@ -1,6 +1,6 @@
 <!--aboutme.wxml-->
-<view class="container">
-  <view>
+<view class="about">
+  <view class="about-logo-outer">
     <image class="about-logo" src="{{logoUrl}}"></image>
   </view>
   <view class="about-title">{{title}}</view>
