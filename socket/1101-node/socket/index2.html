@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>♥画一个小人♥</title>
+  <link rel="icon" href="http://ohecg7vrp.bkt.clouddn.com/favicon.ico">
+  <style>
+    *{
+      margin: 0;
+      padding: 0;
+    }
+    #canvas{
+      border: 1px solid #ddd;
+    }
+  </style>
+</head>
+<body>
+<canvas id="canvas" width="1366" height="800"></canvas>
+<h1>随心所画——解放你的双手，动起来O(∩_∩)O哈哈~</h1>
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script src="./../socket.io/socket.io.js"></script>
+<script>
+  window.onload = function(){
+    var socket = io();
+    var canvas = document.getElementById('canvas');
+    var cxt = canvas.getContext('2d');
+    canvas.width = window.innerWidth-30;
+    canvas.onmousedown = function(){
+      canvas.addEventListener('mousemove',handler,true)
+    };
+
+    canvas.onmouseup = function(){
+      canvas.removeEventListener('mousemove',handler,true)
+    };
+    function handler(e){
+      cxt.beginPath();
+      cxt.arc(e.pageX, e.pageY,5,0,Math.PI*2,true);
+      cxt.fillStyle = setColor();
+      cxt.fill();
+      // 触发事件
+      socket.emit('hua',{'x': e.pageX,'y': e.pageY,'color':setColor()});
+    }
+    function setColor(){
+      return 'rgba(' + parseInt(Math.random()*255)+','+parseInt(Math.random()*255)+','+parseInt(Math.random()*255)+','+Math.random().toFixed(1)+')';
+    }
+    // 画画
+    socket.on('hua',function(msg){
+      cxt.beginPath();
+      cxt.arc(msg.x, msg.y,5,0,Math.PI*2,true);
+      cxt.fillStyle = msg.color;
+      cxt.fill();
+    })
+  }
+</script>
+</body>
+</html>

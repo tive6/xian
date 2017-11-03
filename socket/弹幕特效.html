@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>弹幕特效</title>
+  <style>
+    *{
+      margin: 0;
+      padding: 0;
+    }
+    body{
+      overflow: hidden;
+    }
+    .con{
+      width: 100%;
+      height: 500px;
+      position: relative;
+    }
+    .inner{
+      height: 100%;
+      background: #333;
+      position: relative;
+    }
+    .input{
+      position: absolute;
+      padding: 10px;
+      bottom: 10px;
+      right: 30px;
+    }
+    .text{
+      display: inline-block;
+      padding: 10px;
+      position: absolute;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+
+<div class="con">
+  <div class="inner">
+    <!--<div class="text">hello</div>-->
+  </div>
+  <div class="input">
+    <input class="inner-input" type="text" placeholder="内容"/>
+    <button class="btn">发送</button>
+  </div>
+</div>
+
+<script src="./../src/jquery.js"></script>
+<script>
+
+  var windowW = 0;
+  function getWidth(){
+    windowW = $(window).width();
+  }
+  window.onload = function(){
+    var V = 1200/10/1000; // 速度：px/ms
+    var T = 0;
+    var arrHtml = [];
+    var arrTop = [];
+    var arrLeft = [];
+
+    getWidth();
+    $(window).resize(function(){
+      getWidth();
+    });
+
+    $(".inner-input").keyup(function(e){
+      var keycode = e.which || window.event.keyCode;
+      if (keycode == 13) {
+        if(!$(this).val()) return false;
+        arrHtml.push('<div class="text">'+$(this).val()+'</div>');
+        $('.inner').append(arrHtml[arrHtml.length-1]);
+        var top = parseInt(Math.random()*300,10) + 20;
+        arrTop.push(top);
+        T = parseInt(windowW / V);
+        console.log(T);
+        var left = 0 - $('.text').eq(arrHtml.length-1).outerWidth() - 50;
+        arrLeft.push(left);
+        $('.text:last-child').css({
+          'top':arrTop[arrTop.length-1]+'px',
+          'right':arrLeft[arrLeft.length-1]+'px'
+        }).animate({
+          'left': arrLeft[arrLeft.length-1]
+        },T,'linear',function(){
+          $(this).remove();
+          arrHtml.shift();
+          arrTop.shift();
+          arrLeft.shift();
+        });
+        $(this).val('');
+      }
+    });
+
+    $('.btn').click(function(){});
+
+  }
+
+</script>
+</body>
+</html>
