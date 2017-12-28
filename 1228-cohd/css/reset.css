@@ -1,0 +1,128 @@
+/* CSS RESET */
+/*@font-face{
+    font-family:"Times New Roman";
+    /!*为引入的字体命名*!/
+    src:url(./TimesNewRoman.fon);
+    /!*定义要引入字体文件的路径*!/
+}*/
+
+* {
+    margin: 0;
+    padding: 0;
+    outline: 0;
+    /* 去除移动端 点击之后的背景和边框 */
+    -webkit-tap-highlight-color:rgba(0, 0, 0, 0);
+    -moz-tap-highlight-color:rgba(0, 0, 0, 0);
+    -ms-tap-highlight-color:rgba(0, 0, 0, 0);
+    -o-tap-highlight-color:rgba(0, 0, 0, 0);
+    tap-highlight-color:rgba(0, 0, 0, 0);
+    -webkit-tap-highlight-color:transparent;
+}
+html,
+body,
+#app{
+    width: 100%;
+}
+body {
+    width: 100%;
+    font-family: "Arial","Microsoft YaHei",sans-serif;
+    /*font-family: "Arial","Microsoft YaHei","黑体","宋体",sans-serif;*/
+    font-size: 14px;
+    min-width: 1200px;
+}
+
+img {
+    border: 0;
+}
+
+ol,ul,li {
+    list-style: none;
+}
+
+i {
+    font-style: normal;
+}
+
+h1,h2,h2,h3,h4,h5,h6 {
+    font-weight: 400;
+    font-size: 14px;
+}
+
+a {
+    text-decoration: none;
+    color: #4A4A4A;
+    cursor: pointer;
+}
+
+label {
+    cursor: pointer;
+}
+
+button,
+input[type="button"]{
+    border: none;
+    background: #fff;
+}
+
+button:hover {
+    cursor: pointer;
+    text-align: center;
+}
+
+input[type="button"]:hover {
+    cursor: pointer;
+}
+
+input {
+    border: none;
+}
+input:disabled{
+    background-color: #fff;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+th,td {
+    font-size: 14px;
+}
+
+.clear:before,
+.clear:after {
+    content: '';
+    display: block;
+    clear: both;
+    height: 0;
+}
+
+.img-res {
+    display: block;
+    width: 100%;
+}
+
+.center {
+    text-align: center;
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+.clearfix {
+    *zoom: 1;
+}
+
+/*
+红色：cd1b0a
+nav: 333 bg：E8EAEA
+f1: 666
+f1-right: 515359 蓝色：6c8dd1
+more：a1b8e5
+f2: 72767f 蓝色：6488d0 border：D0D8E7
+tab蓝色bg：A1B9F7 color：7c8cbe border：CED7F1
+footer：8f98a3
+
+
+*/

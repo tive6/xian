@@ -1,0 +1,56 @@
+.home{
+    background-color: #F4F6F7;
+}
+.header{
+    height: 120px;
+    background-color: #E8EAEA;
+}
+.header-inner{
+    width: 1200px;
+    margin: 0 auto;
+}
+.header-l,
+.header-r{
+    float: left;
+    height: 120px;
+}
+.header-l{
+    display: block;
+    width: 166px;
+    background: url(./../img/logo.png) no-repeat center center;
+    background-size: 100%;
+}
+.header-r{
+    width: 1034px;
+}
+.header-r a{
+    float: left;
+    display: inline-block;
+    height: 120px;
+    line-height: 120px;
+    padding: 0 15px;
+    font-size: 18px;
+    color: #333;
+    margin-left: 40px;
+}
+.header-r .header-active{
+    color: #cd1b0a;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
