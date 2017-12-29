@@ -1,10 +1,10 @@
 /* CSS RESET */
-/*@font-face{
-    font-family:"Times New Roman";
-    /!*为引入的字体命名*!/
-    src:url(./TimesNewRoman.fon);
-    /!*定义要引入字体文件的路径*!/
-}*/
+@font-face{
+    font-family:"TimesNewRoman";
+    /*为引入的字体命名*/
+    src:url(./TimesNewRomanBold.ttf);
+    /*定义要引入字体文件的路径*/
+}
 
 * {
     margin: 0;
@@ -27,7 +27,8 @@ body {
     width: 100%;
     font-family: "Arial","Microsoft YaHei",sans-serif;
     /*font-family: "Arial","Microsoft YaHei","黑体","宋体",sans-serif;*/
-    font-size: 14px;
+    font-size: 16px;
+    color: #333;
     min-width: 1200px;
 }
 
@@ -45,12 +46,12 @@ i {
 
 h1,h2,h2,h3,h4,h5,h6 {
     font-weight: 400;
-    font-size: 14px;
+    font-size: 16px;
 }
 
 a {
     text-decoration: none;
-    color: #4A4A4A;
+    color: #333;
     cursor: pointer;
 }
 
@@ -86,7 +87,7 @@ table {
 }
 
 th,td {
-    font-size: 14px;
+    font-size: 16px;
 }
 
 .clear:before,
@@ -113,16 +114,3 @@ th,td {
 .clearfix {
     *zoom: 1;
 }
-
-/*
-红色：cd1b0a
-nav: 333 bg：E8EAEA
-f1: 666
-f1-right: 515359 蓝色：6c8dd1
-more：a1b8e5
-f2: 72767f 蓝色：6488d0 border：D0D8E7
-tab蓝色bg：A1B9F7 color：7c8cbe border：CED7F1
-footer：8f98a3
-
-
-*/
