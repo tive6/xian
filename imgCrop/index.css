@@ -1,0 +1,156 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+a{
+    text-decoration: none;
+}
+.crop-section{
+    min-width: 1000px;
+    padding: 20px;
+    margin: 10px 20px;
+    border: 1px solid #eee;
+    overflow: hidden;
+}
+.crop-content,
+.crop-show{
+    float: left;
+}
+.crop-content{
+    width: 60%;
+    cursor: crosshair;
+    position: relative;
+    float: left;
+}
+.crop-show{
+    margin-left: 6%;
+    width: 34%;
+}
+.crop-mask{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    background: rgba(0,0,0,.5);
+}
+.outer-img{
+    display: block;
+    width: 100%;
+}
+.crop-outer{
+    width: 150px;
+    height: 150px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 20;
+    cursor: move;
+}
+.crop-inner{
+    width: 100%;
+    height: 100%;
+    border: 1px solid #39f;
+    position: relative;
+}
+.crop-inner span{
+    position: absolute;
+    display: inline-block;
+}
+.crop-dot{
+    width: 5px;
+    height: 5px;
+    background: #39f;
+}
+.crop-tl,
+.crop-ml,
+.crop-bl{
+    left: -3px;
+}
+.crop-tm,
+.crop-bm{
+    left: 50%;
+}
+.crop-tr,
+.crop-mr{
+    right: -3px;
+}
+.crop-t{
+    top: -3px;
+}
+.crop-m{
+    top: 50%;
+}
+.crop-b{
+    bottom: -3px;
+}
+.crop-x{
+    width: 100%;
+    height: 33.33%;
+    border-top: 1px dashed #eee;
+    border-bottom: 1px dashed #eee;
+    top: 33.33%;
+}
+.crop-x:before{
+    content: '+';
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    line-height: 12px;
+    text-align: center;
+    font-size: 12px;
+    color: #e2e2e2;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin: -6px 0 0 -6px;
+}
+.crop-y{
+    width: 33.33%;
+    height: 100%;
+    border-left: 1px dashed #eee;
+    border-right: 1px dashed #eee;
+    left: 33.33%;
+}
+.crop-tl,
+.crop-br{
+    cursor: nw-resize;
+}
+.crop-tr,
+.crop-bl{
+    cursor: sw-resize;
+}
+.crop-tm,
+.crop-bm{
+    cursor: n-resize;
+}
+.crop-m{
+    cursor: e-resize;
+}
+.crop-btn-group{
+    padding-bottom: 20px;
+}
+.crop-btn{
+    display: inline-block;
+    height: 30px;
+    line-height: 30px;
+    padding: 0 15px;
+    margin-right: 20px;
+    color: #fff;
+    background: #28A745;
+    border-radius: 5px;
+}
+.crop-br{
+    width: 10px;
+    height: 10px;
+    right: -5px;
+    bottom: -5px;
+}
+.crop-base64{
+    width: 100%;
+    padding: 20px;
+    color: #d9534f;
+    word-break: break-all;
+}
