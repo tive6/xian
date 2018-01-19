@@ -1,8 +1,9 @@
 /**
- * Created by badou on 2018/1/19.
+ * Created by zmnaer on 2018/1/19.
  */
 window.onload = function(){
 
+    var body = document.getElementsByTagName('body')[0]
     var oBase64 = getByClass('crop-base64')
     var oOuter = getByClass('crop-outer')
     var oContent = getByClass('crop-content')
@@ -183,7 +184,6 @@ window.onload = function(){
     function createCanvas(cb){
         oShow.innerHTML = ''
         var cvs = document.createElement('canvas')
-        var body = document.getElementsByTagName('body')[0]
         var ctx = cvs.getContext('2d')
         cvs.className = 'crop-canvas'
         var cvsImg = new Image()
@@ -200,7 +200,7 @@ window.onload = function(){
         cvsImg.style.width = '100%'
         cvsImg.onload = function(){
             ctx.drawImage(cvsImg,opts.x*scale,opts.y*scale,cvs.width,cvs.height,0,0,cvs.width,cvs.height)
-            var imgSrc = cvs.toDataURL("image/png",1.0);
+            var imgSrc = cvs.toDataURL("image/png",1.0)
             var newImg = new Image()
             newImg.src = imgSrc;
             newImg.style.display = 'block'
