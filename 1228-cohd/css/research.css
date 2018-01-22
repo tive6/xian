@@ -110,4 +110,33 @@
     left: 0;
 }
 
-
+/* research5.1 */
+.resc-cont-list{
+    padding-top: 20px;
+}
+.resc-cont-list-l{
+    width: 340px;
+    float: left;
+}
+.resc-cont-list-l img{
+    display: block;
+    width: 100%;
+}
+.resc-cont-list-r{
+    width: 640px;
+    float: left;
+    box-sizing: border-box;
+    padding: 20px 16px 10px 16px;
+}
+.resc-cont-text-t{
+    color: #e57768;
+    font-size: 20px;
+    line-height: 1.8;
+}
+.resc-cont-text-b{
+    color: #72767f;
+    line-height: 1.8;
+}
+.research51-f .inner1-l-paging{
+    padding: 40px 0 60px;
+}
