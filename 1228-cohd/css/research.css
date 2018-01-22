@@ -1,0 +1,113 @@
+/* research1.1 */
+.resc-l{
+    width: 980px;
+    float: left;
+    margin-right: 60px;
+}
+.resc-r{
+    width: 160px;
+    float: left;
+}
+.resc-top-title{
+    font-size: 40px;
+    padding: 30px 0;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #DCDBDB;
+}
+.resc-l-list{
+    height: 43px;
+    line-height: 43px;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+}
+.resc-l-list:before{
+    content: ' · ';
+    font-weight: bold;
+}
+.resc-r-top-title{
+    font-size: 18px;
+    padding: 30px 0 15px;
+}
+.resc-r-list{
+    display: block;
+    padding: 15px 0;
+    border-top: 1px solid #DCDBDB;
+}
+.resc-r-list-first{
+    border-top: none;
+}
+.resc-r-list-red{
+    color: #F44131;
+}
+.research-f .inner1-l-paging{
+    padding-top: 20px;
+}
+
+/* research1.2 */
+.research-f-nav{
+    height: 40px;
+    line-height: 40px;
+    color: #999;
+    padding: 20px 0 10px;
+}
+.research-f-nav a{
+    color: #E55D4F;
+}
+.research-f-nav .sec-1-link-target{
+    color: #666;
+}
+.resc-m-title{
+    font-size: 40px;
+}
+.resc-m-inner{
+    line-height: 1.8;
+    color: #666;
+    padding: 15px 0 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #DCDBDB;
+}
+.resc-body-inner{
+    line-height: 1.8;
+    color: #666;
+}
+.resc-body-span{
+    color: #333;
+    font-weight: 600;
+}
+.resc-download{
+    display: inline-block;
+    height: 26px;
+    line-height: 26px;
+    color: #e65c45;
+    font-size: 20px;
+    margin: 30px 0;
+}
+.resc-download:before,
+.resc-download:after{
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 26px;
+}
+.resc-download:before{
+    float: left;
+    margin-right: 10px;
+    background: url(./../img/co-icon-download.png) no-repeat center center;
+}
+.resc-download:after {
+    float: right;
+    margin-left: 10px;
+    background: url(./../img/co-icon-pdf.png) no-repeat center center;
+    background-size: 80%;
+}
+.research21{
+    position: relative;
+    padding-bottom: 70px;
+}
+.research21 .link-more{
+    bottom: 40px;
+    left: 0;
+}
+
+

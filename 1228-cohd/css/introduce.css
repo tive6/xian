@@ -1,0 +1,122 @@
+/* introduce1 */
+.intro1-f1-l{
+    width: 980px;
+    float: left;
+    margin-right: 60px;
+}
+.intro1-f1-r{
+    width: 160px;
+    float: left;
+}
+.intro1-f1-l h3{
+    font-size: 40px;
+    padding: 25px 0 5px;
+}
+.intro1-f1-r h4{
+    font-size: 18px;
+    padding: 30px 0 5px;
+}
+.intro1-f1-l-text{
+    color: #666;
+    line-height: 1.8;
+    border-bottom: 1px solid #DCDBDB;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+.intro1-f1-r-list{
+    height: 48px;
+    line-height: 48px;
+    color: #666;
+}
+.intro1-f1-list-red{
+    color: #F44131;
+}
+.intro1-f1-list-m{
+    border-top: 1px solid #DCDBDB;
+    border-bottom: 1px solid #DCDBDB;
+}
+.intro1-f2{
+    line-height: 1.9;
+    color: #666;
+    letter-spacing: 0.6px;
+    padding-bottom: 30px;
+}
+
+/* introduce2 */
+.intro2-f h3{
+    padding-bottom: 25px;
+    border-bottom: 1px solid #DCDBDB;
+}
+.intro1-f1-inner{
+    padding-bottom: 30px;
+}
+.intro1-f1-inner h4{
+    color: #f16552;
+    padding: 25px 0;
+}
+.intro2-f1-table{
+    width: 100%;
+}
+.intro2-f1-table th{
+    color: #ce9890;
+    height: 40px;
+    line-height: 40px;
+    width: 20%;
+    background: #F8F1F0;
+}
+.intro2-f1-table td{
+    padding: 15px 0;
+    border-top: 1px dashed #DCDBDB;
+    color: #666;
+    line-height: 1.7;
+}
+.intro2-f1-first-th{
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+.intro2-f1-last-th{
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+.intro2-f1-first td{
+    border-top: none;
+}
+
+/* introduce3 */
+.intro3-f{
+    padding-bottom: 40px;
+}
+.intro3-f h3{
+    border-bottom: 1px solid #DCDBDB;
+    padding: 25px 0;
+    margin-bottom: 25px;
+}
+.intro3-f-t{
+    width: 100%;
+}
+.intro3-f-t td{
+    color: #808080;
+    vertical-align: text-top;
+    line-height: 2.5;
+}
+.intro3-f-t .intro3-f-font{
+    color: #333;
+}
+.intro3-f-t .intro3-f-red{
+    color: #F44131;
+}
+.intro3-f .intro3-f-title{
+    color: #F44131;
+    padding: 30px 0 10px;
+    border-top: 1px dashed #DCDBDB;
+    margin-top: 20px;
+}
+.intro3-f-b td{
+    height: 50px;
+    line-height: 50px;
+}
+
+
+
+
+
