@@ -1,22 +1,46 @@
 /* CSS RESET */
+/* TimesNewRoman */
 @font-face{
     font-family:"TimesNewRoman";
     /*为引入的字体命名*/
-    src:url(./TimesNewRomanBold.ttf);
+    src:url("TimesNewRoman.ttf");
     /*定义要引入字体文件的路径*/
+    font-style: normal;
+}
+@font-face{
+    font-family:"TimesNewRomanBold";
+    /*为引入的字体命名*/
+    src:url("TimesNewRomanBold.ttf");
+    /*定义要引入字体文件的路径*/
+    font-style: normal;
+}
+/* PTSans */
+@font-face{
+    font-family:"PTSans";
+    /*为引入的字体命名*/
+    src:url("PTSans.ttc");
+    /*定义要引入字体文件的路径*/
+    font-style: normal;
+}
+@font-face{
+    font-family:"PTSansBold";
+    /*为引入的字体命名*/
+    src:url("PTSansBold.ttf");
+    /*定义要引入字体文件的路径*/
+    font-style: normal;
+}
+@font-face{
+    font-family:"PTSerif";
+    /*为引入的字体命名*/
+    src:url("PTSerif.ttc");
+    /*定义要引入字体文件的路径*/
+    font-style: normal;
 }
 
 * {
     margin: 0;
     padding: 0;
     outline: 0;
-    /* 去除移动端 点击之后的背景和边框 */
-    -webkit-tap-highlight-color:rgba(0, 0, 0, 0);
-    -moz-tap-highlight-color:rgba(0, 0, 0, 0);
-    -ms-tap-highlight-color:rgba(0, 0, 0, 0);
-    -o-tap-highlight-color:rgba(0, 0, 0, 0);
-    tap-highlight-color:rgba(0, 0, 0, 0);
-    -webkit-tap-highlight-color:transparent;
 }
 html,
 body,
@@ -26,7 +50,6 @@ body,
 body {
     width: 100%;
     font-family: "Arial","Microsoft YaHei",sans-serif;
-    /*font-family: "Arial","Microsoft YaHei","黑体","宋体",sans-serif;*/
     font-size: 16px;
     color: #333;
     min-width: 1200px;
@@ -155,6 +178,7 @@ th,td {
     font-size: 18px;
     color: #333;
     margin-left: 40px;
+    font-family: "PTSansBold";
 }
 .header-r .header-active{
     color: #cd1b0a;
@@ -185,9 +209,7 @@ th,td {
 .banner .swiper-pagination-bullet-active{
     background: #E56F5D;
 }
-.section-inner{
-    margin-top: 20px;
-}
+
 /* footer */
 .footer{
     height: 400px;
@@ -281,6 +303,11 @@ th,td {
     border-radius: 5px;
     margin-right: 15px;
 }
+.paging-btn:hover{
+    background-color: #E55D4F;
+    color: #fff;
+    border: 1px solid #E55D4F;
+}
 .paging-prev{
     background: url(./../img/co-icon-prev.png) no-repeat center center;
 }
@@ -302,4 +329,22 @@ th,td {
     position: absolute;
     font-size: 20px;
     color: #e58373;
+}
+
+.link-more,
+.sec-f1-more{
+    font-family: "Arial";
+}
+
+.resc-l-list:hover,
+.sec31-1-r-list:hover,
+.inner1-l-text:hover,
+.section-f2-list-b:hover,
+.sec-f1-list-desc:hover,
+.sec-f1-li a:hover{
+    color: #f23524;
+}
+
+.sec-f1-list-desc:hover{
+    border-bottom: 1px solid #f23524;
 }
