@@ -35,7 +35,9 @@
           <p>存储总量(B)</p>
         </div>
       </div>
-      <div class="ad-body-1 ad-body-12"></div>
+      <div class="ad-body-1 ad-body-12">
+        <div class="ad-body-12-l" id="myChart1"></div>
+      </div>
       <div class="ad-body-1 ad-body-13"></div>
       <div class="ad-body-1 ad-body-14"></div>
     </div>
@@ -55,8 +57,6 @@
 
 
 <script src="./js/echarts/build/dist/echarts.js"></script>
-<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
-<div id="main" style="width: 600px;height:400px;"></div>
 <script type="text/javascript">
     // 路径配置
   require.config({
@@ -74,65 +74,77 @@
     ],
     function (ec) {
       // 基于准备好的dom，初始化echarts图表
-      var myChart = ec.init(document.getElementById('main'));
+      var myChart = ec.init(document.getElementById('myChart1'));
 
       var option = {
+        backgroundColor: '#1A2742',
         tooltip : {
           trigger: 'axis'
         },
         legend: {
-          data:['蒸发量','降水量','最低气温','最高气温']
+          data:['磁盘IO','网络IO','CPU使用率']
         },
         xAxis : [
           {
             type : 'category',
             position: 'bottom',
+//            splitNumber: 5,
             boundaryGap: true,
             axisLine : {    // 轴线
               show: true,
               lineStyle: {
                 color: 'green',
                 type: 'solid',
-                width: 2
+                width: 1
               }
             },
             axisTick : {    // 轴标记
               show:true,
               length: 10,
               lineStyle: {
-                color: 'red',
-                type: 'solid',
-                width: 2
+//                color: 'red',
+                type: 'none',
+//                type: 'solid',
+                width: 1
               }
             },
             axisLabel : {
               show:true,
               interval: 'auto',    // {number}
 //              rotate: 45,
-              margin: 8,
-              formatter: '{value}月',
+              margin: 10,
+              formatter: '{value}',
               textStyle: {
+                color: '#1e90ff',
+                fontFamily: 'verdana',
+                fontSize: 10,
+                fontStyle: 'normal',
+//                fontWeight: 'bold'
+              }
+//              formatter: '{value}月',
+              /*textStyle: {
                 color: 'blue',
                 fontFamily: 'sans-serif',
                 fontSize: 15,
                 fontStyle: 'italic',
                 fontWeight: 'bold'
-              }
+              }*/
             },
             splitLine : {
               show:true,
               lineStyle: {
-                color: '#483d8b',
-                type: 'dashed',
+//                color: '#483d8b',
+                type: 'none',
+//                type: 'dashed',
                 width: 1
               }
-            },
+            },/*
             splitArea : {
               show: true,
               areaStyle:{
                 color:['rgba(144,238,144,0.3)','rgba(135,200,250,0.3)']
               }
-            },
+            },*/
             data : [
               '1','2','3','4','5','6',
               /*{
@@ -144,7 +156,6 @@
                   fontWeight: 'bold'
                 }
               },*/
-              '7','8','9','10','11','12'
             ]
           }
         ],
@@ -161,24 +172,25 @@
               show: true,
               lineStyle: {
                 color: 'red',
+//                type: 'none',
 //                type: 'dashed',
-                width: 2
+                width: 1
               }
             },
             axisTick : {    // 轴标记
-              show:true,
+              show:false,
               length: 10,
               lineStyle: {
                 color: 'green',
                 type: 'solid',
-                width: 2
+                width: 1
               }
             },
             axisLabel : {
               show:true,
               interval: 'auto',    // {number}
 //              rotate: -45,
-              margin: 18,
+              margin: 5,
               formatter: '{value}',    // Template formatter!
               textStyle: {
                 color: '#1e90ff',
@@ -188,7 +200,7 @@
 //                fontWeight: 'bold'
               }
             },
-            splitLine : {
+            /*splitLine : {
               show:true,
               lineStyle: {
                 color: '#483d8b',
@@ -201,17 +213,34 @@
               areaStyle:{
                 color:['rgba(205,92,92,0.3)','rgba(255,215,0,0.3)']
               }
-            }
+            }*/
           },
           {
             type : 'value',
             name: 'CUP使用率 \n Byte/s',
-            splitNumber: 10,
+            splitNumber: 5,
             axisLabel : {
               formatter: function (value) {
                 // Function formatter
 //                return value + ' °C'
                 return value
+              },
+              margin: 10,
+              textStyle: {
+                color: '#1e90ff',
+                fontFamily: 'verdana',
+                fontSize: 10,
+                fontStyle: 'normal',
+//                fontWeight: 'bold'
+              }
+            },
+            axisTick : {    // 轴标记
+              show:false,
+              length: 20,
+              lineStyle: {
+                color: 'green',
+                type: 'solid',
+                width: 1
               }
             },
             splitLine : {
@@ -221,22 +250,25 @@
         ],
         series : [
           {
-            name: 'CPU',
+            name: '磁盘IO',
             type: 'line',
-            data:[10,22,55,13,66,80,40,35,76,50,30]
+            smooth: true,
+            data:[10,55,80,40,76,60]
           },
           {
-            name:'最低气温',
+            name:'网络IO',
             type: 'line',
+            smooth: true,
             yAxisIndex: 1,
-            data: [2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20.3, 23.4, 23.0, 16.5, 12.0, 6.2]
+            data:[38,62,91,105,80,50]
           },
           {
-            name:'最高气温',
+            name:'CPU使用率',
             type: 'line',
+            smooth: true,
 //            xAxisIndex: 1,
-            yAxisIndex: 1,
-            data: [12.0, 12.2, 13.3, 14.5, 16.3, 18.2, 28.3, 33.4, 31.0, 24.5, 18.0, 16.2]
+//            yAxisIndex: 1,
+            data:[20,44,50,82,40,35]
           }
         ]
       };
