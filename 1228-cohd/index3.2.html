@@ -18,26 +18,18 @@
     <div class="header-inner clear">
       <a href="index.html" class="header-l"></a>
       <div class="header-r clear">
-        <a href="" class="header-active">HOME</a>
-        <a href="">ABOUT US</a>
-        <a href="">STUDY WITH US</a>
-        <a href="">RESEARCH</a>
-        <a href="">DEPARTMENTS</a>
-        <a href="">FACULTY</a>
+        <a href="./index.html" class="header-active">HOME</a>
+        <a href="./introduce1.html">ABOUT US</a>
+        <a href="./talents1.html">STUDY WITH US</a>
+        <a href="./research1.1.html">RESEARCH</a>
+        <a href="./department1.html">DEPARTMENTS</a>
+        <a href="./teachers1.html">FACULTY</a>
       </div>
     </div>
   </div>
   <!-- banner -->
   <div class="banner">
-    <div class="swiper-container">
-      <div class="swiper-wrapper">
-        <div class="swiper-slide slide-1"></div>
-        <div class="swiper-slide slide-2"></div>
-        <div class="swiper-slide slide-3"></div>
-      </div>
-      <!-- 如果需要分页器 -->
-      <div class="swiper-pagination"></div>
-    </div>
+    <img src="./img/banner-04.png" alt=""/>
   </div>
   <!-- section -->
   <div class="section">
@@ -45,11 +37,11 @@
     <div class="sec-cont sec-1">
       <div class="sec-1-header">
         <div class="sec-1-link">
-          <a href="#">Home</a>
+          <a href="index.html">Home</a>
           ＞
-          <a href="#">Seminacs</a>
+          <a href="index3.1.html">Seminacs</a>
           ＞
-          <a class="sec-1-link-target" href="#">Trajectories of Political Ecology</a>
+          <a class="sec-1-link-target" href="javascript:">Trajectories of Political Ecology</a>
         </div>
         <h4>Trajectories of Political Ecology</h4>
         <h5>Official Vision</h5>
@@ -93,7 +85,7 @@
           Prof. Nancy Peluso was born in 1952 and got her Master degree in Rural Sociology in 1983 and later her Ph.D degree in Sociology of Agriculture and Natural Resources in 1988 both from Cornell University. She worked as Assistant Professor and Associate Professor of Resource Policy in Yale School of Forestry and Environmental Studies, and then has been lecturing in University of California (Berkeley) since 1997. She serves now as a Henry J. Vaux Distinguished Professor of Forest Policy, Professor of Environmental Social Science in Department of Environmental Science, Policy and Management. She is also an Editorial Collective Member for The Journal of Peasant Studies. She has broad research interests in environmental policy, forestry, environmental studies, resource management and policy, rural development, environmental sociology, political ecology and etc. She now conducts research on the social processes that affect the management of land-based and coastal resources. Her work explores various dimensions of resource access, use, and control, while contrasting local, national, and international influences on management structures and processes. Her representative works include Rich Forests, Poor People: Resource Control and Resistance in Java (1994), Beyond Slash and Burn: Building on Indigenous Management of Borneo’s Tropical Rain Forests (1997). She also contributed to a lot of publications as editor including Borneo in Transition: People, Forests, Conservation, and Development (1996), Violent Environments (2001), New Frontiers of Land Control (2012).
         </div>
         <img class="img-res" src="./img/co-07.png" alt=""/>
-        <a class="sec-f1-more" href="javascript:">&lt;&lt; back</a>
+        <a class="sec-f1-more" href="index3.1.html">&lt;&lt; back</a>
       </div>
     </div>
 
@@ -136,33 +128,5 @@
   </div>
 
 </div>
-
-<script src="./js/jquery.min.js"></script>
-<script src="./js/swiper.min.js"></script>
-<script>
-
-  window.onload = function(){
-    /* banner 轮播 */
-    var mySwiper = new Swiper('.swiper-container',{
-      loop: true,
-      autoplay: {
-        delay: 3000,
-        stopOnLastSlide: false,
-        disableOnInteraction: true
-      },
-      pagination: {
-        el: '.swiper-pagination',
-        clickable :true
-      }
-    })
-    /* tab 切换 */
-    $('.section-f3-tab').on('click',function(){
-      var _index = $(this).index();
-      $(this).addClass('tab-active').siblings().removeClass('tab-active');
-      $('.section-f3-body-tabs').eq(_index).show().siblings().hide();
-    })
-  }
-
-</script>
 </body>
 </html>
