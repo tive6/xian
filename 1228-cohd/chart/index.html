@@ -37,6 +37,10 @@
       </div>
       <div class="ad-body-1 ad-body-12">
         <div class="ad-body-12-l" id="myChart1"></div>
+        <div class="ad-body-12-r">
+          <div class="ad-body-12-rc ad-body-12-r1" id="myChart2"></div>
+          <div class="ad-body-12-rc ad-body-12-r2" id="myChart3"></div>
+        </div>
       </div>
       <div class="ad-body-1 ad-body-13"></div>
       <div class="ad-body-1 ad-body-14"></div>
@@ -71,29 +75,37 @@
       'echarts',
       'echarts/chart/bar',
       'echarts/chart/line',
+      'echarts/chart/pie'
     ],
     function (ec) {
-      // 基于准备好的dom，初始化echarts图表
-      var myChart = ec.init(document.getElementById('myChart1'));
 
-      var option = {
-        backgroundColor: '#1A2742',
+      var option1 = {
+        grid:{
+          x:30,
+          y:40,
+          x2:30,
+          y2:30
+        },
         tooltip : {
           trigger: 'axis'
         },
         legend: {
-          data:['磁盘IO','网络IO','CPU使用率']
+          data:['磁盘IO','网络IO','CPU使用率'],
+          y: 10,
+          textStyle:{
+            color:'#fff'
+          }
         },
         xAxis : [
           {
             type : 'category',
             position: 'bottom',
 //            splitNumber: 5,
-            boundaryGap: true,
+            boundaryGap: false, // 从0开始绘制
             axisLine : {    // 轴线
               show: true,
               lineStyle: {
-                color: 'green',
+                color: '#2F95BF',
                 type: 'solid',
                 width: 1
               }
@@ -115,7 +127,7 @@
               margin: 10,
               formatter: '{value}',
               textStyle: {
-                color: '#1e90ff',
+                color: '#2F95BF',
                 fontFamily: 'verdana',
                 fontSize: 10,
                 fontStyle: 'normal',
@@ -136,7 +148,7 @@
 //                color: '#483d8b',
                 type: 'none',
 //                type: 'dashed',
-                width: 1
+//                width: 1
               }
             },/*
             splitArea : {
@@ -146,7 +158,7 @@
               }
             },*/
             data : [
-              '1','2','3','4','5','6',
+              '1','2','3'
               /*{
                 value:'6',
                 textStyle: {
@@ -171,17 +183,17 @@
             axisLine : {    // 轴线
               show: true,
               lineStyle: {
-                color: 'red',
+                color: '#2F95BF',
 //                type: 'none',
 //                type: 'dashed',
                 width: 1
               }
             },
             axisTick : {    // 轴标记
-              show:false,
-              length: 10,
+              show:true,
+              length: 3,
               lineStyle: {
-                color: 'green',
+                color: '#2F95BF',
                 type: 'solid',
                 width: 1
               }
@@ -193,7 +205,7 @@
               margin: 5,
               formatter: '{value}',    // Template formatter!
               textStyle: {
-                color: '#1e90ff',
+                color: '#2F95BF',
                 fontFamily: 'verdana',
                 fontSize: 10,
                 fontStyle: 'normal',
@@ -217,7 +229,7 @@
           },
           {
             type : 'value',
-            name: 'CUP使用率 \n Byte/s',
+            name: 'Byte/s',
             splitNumber: 5,
             axisLabel : {
               formatter: function (value) {
@@ -227,7 +239,7 @@
               },
               margin: 10,
               textStyle: {
-                color: '#1e90ff',
+                color: '#2F95BF',
                 fontFamily: 'verdana',
                 fontSize: 10,
                 fontStyle: 'normal',
@@ -235,16 +247,16 @@
               }
             },
             axisTick : {    // 轴标记
-              show:false,
-              length: 20,
+              show:true,
+              length: 3,
               lineStyle: {
-                color: 'green',
+                color: '#2F95BF',
                 type: 'solid',
                 width: 1
               }
             },
             splitLine : {
-              show: false
+              show: true
             }
           }
         ],
@@ -253,14 +265,14 @@
             name: '磁盘IO',
             type: 'line',
             smooth: true,
-            data:[10,55,80,40,76,60]
+            data:[10,55,80]
           },
           {
             name:'网络IO',
             type: 'line',
             smooth: true,
             yAxisIndex: 1,
-            data:[38,62,91,105,80,50]
+            data:[38,62,91]
           },
           {
             name:'CPU使用率',
@@ -268,13 +280,150 @@
             smooth: true,
 //            xAxisIndex: 1,
 //            yAxisIndex: 1,
-            data:[20,44,50,82,40,35]
+            data:[20,77,50]
           }
         ]
       };
 
+      var option2 = {
+        color:['#FBC31A','#258BFF'],
+        title:{
+          text:'内存占用',
+          x:'center',
+          y:'bottom',
+          textStyle:{
+            color:'#5797D6',
+            fontSize:12,
+            fontStyle:'normal'
+          }
+        },
+        tooltip: {
+          trigger: 'item',
+          formatter: "{a} <br/>{b}: {c} ({d}%)"
+        },
+        legend: {
+          orient: 'horizontal',
+          x: 'center',
+          y: 10,
+          data:['已用','空闲'],
+          textStyle:{
+            color: '#fff'
+          }
+        },
+        series: [
+          {
+            name:'使用率',
+            type:'pie',
+            radius: ['30%', '50%'],
+            avoidLabelOverlap: false,
+            label: {
+              normal: {
+                show: false,
+                position: 'center'
+              },
+              emphasis: {
+                show: false,
+                textStyle: {
+                  color: '#fff',
+                  fontSize: '30',
+                  fontWeight: 'bold'
+                }
+              }
+            },
+            labelLine: {
+              normal: {
+                show: false
+              }
+            },
+            itemStyle : {
+              normal : {
+                label : {
+                  show:false
+                },
+                labelLine : {
+                  show:false,
+//                  length : 10,
+                }
+              }
+            },
+            data:[
+              {value:335, name:'已用'},
+              {value:1548, name:'空闲'}
+            ]
+          }
+        ]
+      };
+
+      var option3 = {
+        color:['#FBC31A','#258BFF'],
+        title:{
+          text:'磁盘占用',
+          x:'center',
+          y:'bottom',
+          textStyle:{
+            color:'#5797D6',
+            fontSize:12,
+            fontStyle:'normal'
+          }
+        },
+        tooltip: {
+          trigger: 'item',
+          formatter: "{a} <br/>{b}: {c} ({d}%)"
+        },
+        series: [
+          {
+            name:'使用率',
+            type:'pie',
+            radius: ['30%', '50%'],
+            avoidLabelOverlap: false,
+            label: {
+              normal: {
+                show: false,
+                position: 'center'
+              },
+              emphasis: {
+                show: true,
+                textStyle: {
+                  color: '#fff',
+                  fontSize: '30',
+                  fontWeight: 'bold'
+                }
+              }
+            },
+            labelLine: {
+              normal: {
+                show: false
+              }
+            },
+            itemStyle : {
+              normal : {
+                label : {
+                  show:false
+                },
+                labelLine : {
+                  show:false,
+//                  length : 10,
+                }
+              }
+            },
+            data:[
+              {value:335, name:'已用'},
+              {value:1548, name:'空闲'}
+            ]
+          }
+        ]
+      };
+
+
+      // 基于准备好的dom，初始化echarts图表
+      var myChart1 = ec.init(document.getElementById('myChart1'));
+      var myChart2 = ec.init(document.getElementById('myChart2'));
+      var myChart3 = ec.init(document.getElementById('myChart3'));
+
       // 为echarts对象加载数据
-      myChart.setOption(option);
+      myChart1.setOption(option1);
+      myChart2.setOption(option2);
+      myChart3.setOption(option3);
     }
   );
 
