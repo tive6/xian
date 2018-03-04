@@ -1,39 +1,64 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <title>可视化数据展示</title>
-  <link rel="stylesheet" href="./css/reset.css"/>
-  <link rel="stylesheet" href="./css/index.css"/>
+    <meta charset="UTF-8">
+    <title>可视化数据展示</title>
+    <link rel="stylesheet" href="./css/reset.css"/>
+    <link rel="stylesheet" href="./css/index.css"/>
 </head>
 <body>
 
 <div class="ad-container">
-  <div class="ad-header">
-    <img src="./img/ad-title.png" alt=""/>
-  </div>
-  <div class="ad-body clear">
-    <div class="ad-cont ad-cont1">
-      <div class="ad-body-title">
-        <img src="./img/ad-title-01.png" alt=""/>
-      </div>
-      <div class="ad-body-1 ad-body-11 clear">
-        <div class="ad-body11-list">
-          <h3>1000</h3>
-          <p>节点数量(个)</p>
+    <div class="ad-header">
+        <img src="./img/ad-title.png" alt=""/>
+    </div>
+    <div class="ad-body clear">
+        <div class="ad-cont ad-cont1">
+            <div class="ad-body-title">
+                <img src="./img/ad-title-01.png" alt=""/>
+            </div>
+            <div class="ad-body-1 ad-body-11 clear">
+                <div class="ad-body11-list">
+                    <h3>1000</h3>
+                    <p>节点数量(个)</p>
+                </div>
+                <div class="ad-body11-list">
+                    <h3>1000</h3>
+                    <p>CPU核数(个)</p>
+                </div>
+                <div class="ad-body11-list">
+                    <h3>1000</h3>
+                    <p>内存总量(B)</p>
+                </div>
+                <div class="ad-body11-list">
+                    <h3>1000</h3>
+                    <p>存储总量(B)</p>
+                </div>
+            </div>
+            <div class="ad-body-1 ad-body-12">
+                <div class="ad-body-12-h">物理使用情况</div>
+                <div class="ad-body-12-b clear">
+                    <div class="ad-body-12-l" id="myChart1"></div>
+                    <div class="ad-body-12-r">
+                        <div class="ad-body-12-chart1" id="myChart2"></div>
+                        <div class="ad-body-12-chart2" id="myChart3"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="ad-body-1 ad-body-13"></div>
+            <div class="ad-body-1 ad-body-14"></div>
         </div>
-        <div class="ad-body11-list">
-          <h3>1000</h3>
-          <p>CPU核数(个)</p>
+        <div class="ad-cont ad-cont2">
+            <div class="ad-body-title">
+                <img src="./img/ad-title-02.png" alt=""/>
+            </div>
         </div>
-        <div class="ad-body11-list">
-          <h3>1000</h3>
-          <p>内存总量(B)</p>
+        <div class="ad-cont ad-cont3">
+            <div class="ad-body-title">
+                <img src="./img/ad-title-03.png" alt=""/>
+            </div>
         </div>
-        <div class="ad-body11-list">
-          <h3>1000</h3>
-          <p>存储总量(B)</p>
-        </div>
+<<<<<<< HEAD:1228-cohd/chart/index.html
       </div>
       <div class="ad-body-1 ad-body-12">
         <div class="ad-body-12-l" id="myChart1"></div>
@@ -49,13 +74,9 @@
       <div class="ad-body-title">
         <img src="./img/ad-title-02.png" alt=""/>
       </div>
+=======
+>>>>>>> a19f00e4d4012cbe8939aee8998c6b4512090987:1228-cohd/admin/index.html
     </div>
-    <div class="ad-cont ad-cont3">
-      <div class="ad-body-title">
-        <img src="./img/ad-title-03.png" alt=""/>
-      </div>
-    </div>
-  </div>
 </div>
 
 
@@ -63,12 +84,13 @@
 <script src="./js/echarts/build/dist/echarts.js"></script>
 <script type="text/javascript">
     // 路径配置
-  require.config({
-    paths: {
-      echarts: './js/echarts/build/dist'
-    }
-  });
+    require.config({
+        paths: {
+            echarts: './js/echarts/build/dist'
+        }
+    });
 
+<<<<<<< HEAD:1228-cohd/chart/index.html
   // 使用
   require(
     [
@@ -131,9 +153,76 @@
                 fontFamily: 'verdana',
                 fontSize: 10,
                 fontStyle: 'normal',
+=======
+    // 使用
+    require(
+            [
+                'echarts',
+                'echarts/chart/bar',
+                'echarts/chart/pie',
+                'echarts/chart/line',
+            ],
+            function (ec) {
+                // 基于准备好的dom，初始化echarts图表
+                var myChart1 = ec.init(document.getElementById('myChart1'));
+                var myChart2 = ec.init(document.getElementById('myChart2'));
+                var myChart3 = ec.init(document.getElementById('myChart3'));
+//                var myChart4 = ec.init(document.getElementById('myChart4'));
+
+                var option1 = {
+                    backgroundColor: '#192641',
+                    grid: {
+                        borderColor: '#2983A8',
+                    },
+                    tooltip : {
+                        trigger: 'axis'
+                    },
+                    legend: {
+                        data:['磁盘IO','网络IO','CPU使用率'],
+                        textStyle:{
+                            color: '#fff',
+                        }
+                    },
+                    xAxis : [
+                        {
+                            type : 'category',
+                            position: 'bottom',
+//            splitNumber: 5,
+                            boundaryGap: false,
+                            axisLine : {    // x轴线 bottom
+                                show: true,
+                                lineStyle: {
+                                    color: '#2F95BF',
+                                    type: 'none',
+                                    width: 1
+                                }
+                            },
+                            axisTick : {    // x轴 bottom，刻度线
+                                show:true,
+                                length: 5,
+                                inside: true,
+                                lineStyle: {
+                                    color: '#2F95BF',
+                                    type: 'solid',
+                                    width: 1
+                                }
+                            },
+                            axisLabel : {
+                                show:true,
+                                interval: 'auto',    // {number}
+//              rotate: 45,
+                                margin: 10,
+                                formatter: '{value}',
+                                textStyle: {
+                                    color: '#1e90ff',
+                                    fontFamily: 'verdana',
+                                    fontSize: 10,
+                                    fontStyle: 'normal'
+>>>>>>> a19f00e4d4012cbe8939aee8998c6b4512090987:1228-cohd/admin/index.html
 //                fontWeight: 'bold'
-              }
+                                }
 //              formatter: '{value}月',
+<<<<<<< HEAD:1228-cohd/chart/index.html
               /*textStyle: {
                 color: 'blue',
                 fontFamily: 'sans-serif',
@@ -426,6 +515,262 @@
       myChart3.setOption(option3);
     }
   );
+=======
+                                /*textStyle: {
+                                 color: 'blue',
+                                 fontFamily: 'sans-serif',
+                                 fontSize: 15,
+                                 fontStyle: 'italic',
+                                 fontWeight: 'bold'
+                                 }*/
+                            },
+                            splitLine : { // 纵轴标尺线
+                                show: false,
+                                lineStyle: {
+                                    color: '#2F95BF',
+                                    type: 'solid',
+                                    width: 1
+                                }
+                            },/*
+                         splitArea : {
+                         show: true,
+                         areaStyle:{
+                         color:['rgba(144,238,144,0.3)','rgba(135,200,250,0.3)']
+                         }
+                         },*/
+                            data : [
+                                '1','2','3','4','5','6'
+                                /*{
+                                 value:'6',
+                                 textStyle: {
+                                 color: 'red',
+                                 fontSize: 30,
+                                 fontStyle: 'normal',
+                                 fontWeight: 'bold'
+                                 }
+                                 },*/
+                            ]
+                        }
+                    ],
+                    yAxis : [
+                        {
+                            type : 'value',
+                            name: '%',
+                            position: 'left',
+                            min: 0,
+                            max: 100,
+//                            splitNumber: 5,
+                            boundaryGap: [0,0.1],
+                            axisLine : {    // y轴线 left
+                                show: true,
+                                lineStyle: {
+                                    color: '#2F95BF',
+                                    type: 'solid',
+                                    width: 1
+                                }
+                            },
+                            axisTick : {    // y轴线 left 刻度线
+                                show: true,
+                                length: 3,
+                                lineStyle: {
+                                    color: '#2F95BF',
+                                    type: 'solid',
+                                    width: 1
+                                }
+                            },
+                            axisLabel : {
+                                show:true,
+                                interval: 'auto',    // {number}
+//              rotate: -45,
+                                margin: 5,
+                                formatter: '{value}',    // Template formatter!
+                                textStyle: {
+                                    color: '#1e90ff',
+                                    fontFamily: 'verdana',
+                                    fontSize: 10,
+                                    fontStyle: 'normal',
+//                fontWeight: 'bold'
+                                }
+                            },
+                            splitLine : {
+                                show:true,
+                                lineStyle: {
+                                    color: '#483d8b',
+//                                    type: 'dotted',
+                                    type: 'none',
+                                    width: 1
+                                }
+                            },
+                            /*splitArea : {
+                             show: true,
+                             areaStyle:{
+                             color:['rgba(205,92,92,0.3)','rgba(255,215,0,0.3)']
+                             }
+                             }*/
+                        },
+                        {
+                            type : 'value',
+                            name: 'Byte/s',
+                            splitNumber: 5,
+                            axisLine : {    // y轴线 right
+                                show: true,
+                                lineStyle: {
+                                    color: '#2F95BF',
+                                    type: 'none',
+                                    width: 1
+                                }
+                            },
+                            axisLabel : {
+                                formatter: function (value) {
+                                    // Function formatter
+//                return value + ' °C'
+                                    return value
+                                },
+                                margin: 10,
+                                textStyle: {
+                                    color: '#1e90ff',
+                                    fontFamily: 'verdana',
+                                    fontSize: 10,
+                                    fontStyle: 'normal',
+//                fontWeight: 'bold'
+                                }
+                            },
+                            axisTick : {    // y轴 right 刻度线
+                                show: true,
+                                length: 5, // 长度
+                                lineStyle: {
+                                    color: '#2F95BF',
+                                    type: 'solid',
+                                    width: 1
+                                }
+                            },
+                            splitLine : {
+                                show: false
+                            }
+                        }
+                    ],
+                    series : [
+                        {
+                            name: '磁盘IO',
+                            type: 'line',
+                            smooth: true,
+                            data:[10,55,80,40,76,60]
+                        },
+                        {
+                            name:'网络IO',
+                            type: 'line',
+                            smooth: true,
+                            yAxisIndex: 1,
+                            data:[38,62,91,105,80,50]
+                        },
+                        {
+                            name:'CPU使用率',
+                            type: 'line',
+                            smooth: true,
+//            xAxisIndex: 1,
+//            yAxisIndex: 1,
+                            data:[20,44,50,82,40,35]
+                        }
+                    ]
+                };
+                var option2 = {
+                    title : {
+                        text: '内存占用',
+                        textStyle:{
+                            fontSize: 14,
+                            color: '#80D7FF'
+                        },
+                        x: 'center',
+                        y: 'bottom'
+                    },
+                    tooltip : {
+                        trigger: 'item',
+                        formatter: "{a} <br/>{b} : {c} ({d}%)"
+                    },
+                    legend: {
+                        orient : 'horizontal',
+                        itemGap: 10,
+                        x : 'center',
+                        y : 'top',
+                        itemWidth: 5,
+                        itemHeight: 10,
+                        textStyle:{
+                            color: '#fff',
+                            fontSize: 14
+                        },
+                        data:['已占用','空闲']
+                    },
+                    series : [
+                        {
+                            name:'内存占用',
+                            type:'pie',
+                            radius : [20, 30],
+                            x: '60%',
+                            width: '35%',
+                            funnelAlign: 'left',
+                            max: 100,
+                            data:[
+                                {value:35, name:'已占用'},
+                                {value:65, name:'空闲'}
+                            ]
+                        }
+                    ],
+                    backgroundColor: '#223D60'
+                };
+                var option3 = {
+                    title : {
+                        text: '磁盘占用',
+                        textStyle:{
+                            fontSize: 14,
+                            color: '#80D7FF'
+                        },
+                        x: 'center',
+                        y: 'bottom'
+                    },
+                    tooltip : {
+                        trigger: 'item',
+                        formatter: "{a} <br/>{b} : {c} ({d}%)"
+                    },
+                    series : [
+                        {
+                            name:'内存占用',
+                            type:'pie',
+                            radius : [20, 30],
+                            avoidLabelOverlap: false,
+                            label: {
+                                normal: {
+                                    show: false,
+                                    position: 'center'
+                                },
+                                emphasis: {
+                                    show: false,
+                                    textStyle: {
+                                        fontSize: '30',
+                                        fontWeight: 'bold'
+                                    }
+                                }
+                            },
+                            labelLine: {
+                                normal: {
+                                    show: false
+                                }
+                            },
+                            data:[
+                                {value:35, name:'已占用'},
+                                {value:65, name:'空闲'}
+                            ]
+                        }
+                    ],
+                    backgroundColor: '#223D60'
+                };
+
+                // 为echarts对象加载数据
+                myChart1.setOption(option1);
+                myChart2.setOption(option2);
+                myChart3.setOption(option3);
+            }
+    );
+>>>>>>> a19f00e4d4012cbe8939aee8998c6b4512090987:1228-cohd/admin/index.html
 
 </script>
 </body>

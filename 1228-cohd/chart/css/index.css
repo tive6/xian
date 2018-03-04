@@ -2,6 +2,7 @@
     width: 1920px;
     background: url(./../img/ad-bg.png) no-repeat;
     background-size: cover;
+    height: 1080px;
 }
 .ad-header{
     box-sizing: border-box;
@@ -18,12 +19,18 @@
 .ad-cont{
     box-sizing: border-box;
     float: left;
+<<<<<<< HEAD:1228-cohd/chart/css/index.css
     height: 1080px;
+=======
+>>>>>>> a19f00e4d4012cbe8939aee8998c6b4512090987:1228-cohd/admin/css/index.css
     border: 1px solid #253354;
 }
 .ad-cont1,
 .ad-cont3{
     width: 430px;
+}
+.ad-cont1{
+    background-color: #19233D;
 }
 .ad-cont2{
     width: 980px;
@@ -57,8 +64,20 @@
     height: 20px;
     line-height: 20px;
 }
+.ad-body-12-h{
+    height: 50px;
+    line-height: 50px;
+    font-size: 16px;
+    color: #80D7FF;
+    padding-left: 20px;
+}
 .ad-body-12-l{
+<<<<<<< HEAD:1228-cohd/chart/css/index.css
     width: 288px;
+=======
+    float: left;
+    width: 290px;
+>>>>>>> a19f00e4d4012cbe8939aee8998c6b4512090987:1228-cohd/admin/css/index.css
     height: 300px;
     float: left;
 }
@@ -67,8 +86,24 @@
     height: 150px;
     float: left;
 }
+<<<<<<< HEAD:1228-cohd/chart/css/index.css
 
 
+=======
+.ad-body-12-r{
+    float: left;
+    width: 138px;
+    height: 300px;
+}
+.ad-body-12-chart1{
+    width: 138px;
+    height: 160px;
+}
+.ad-body-12-chart2{
+    width: 138px;
+    height: 140px;
+}
+>>>>>>> a19f00e4d4012cbe8939aee8998c6b4512090987:1228-cohd/admin/css/index.css
 
 
 
