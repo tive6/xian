@@ -1,7 +1,5 @@
-build
 .vscode
 .idea
-dist
 .project
 /node_modules/
 package-lock.json

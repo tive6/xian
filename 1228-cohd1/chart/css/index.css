@@ -18,7 +18,7 @@
 .ad-cont{
     box-sizing: border-box;
     float: left;
-    height: 500px;
+    height: 1080px;
     border: 1px solid #253354;
 }
 .ad-cont1,
@@ -57,8 +57,16 @@
     height: 20px;
     line-height: 20px;
 }
-
-
+.ad-body-12-l{
+    width: 288px;
+    height: 300px;
+    float: left;
+}
+.ad-body-12-rc{
+    width: 140px;
+    height: 150px;
+    float: left;
+}
 
 
 
