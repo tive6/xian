@@ -1,0 +1,118 @@
+.ad-container{
+    box-sizing: border-box;
+    width: 1920px;
+    height: 1080px;
+    background: url(./../img/ad-bg.png) no-repeat;
+    background-size: cover;
+    padding-top: 80px;
+}
+.ad-header{
+    box-sizing: border-box;
+    height: 80px;
+    padding: 15px 0 0;
+}
+.ad-header img{
+    display: block;
+    margin: 0 auto;
+}
+.ad-body{
+    padding: 0 20px 20px;
+}
+.ad-cont{
+    box-sizing: border-box;
+    float: left;
+}
+.ad-cont1,
+.ad-cont3{
+    width: 430px;
+}
+.ad-cont2{
+    width: 980px;
+    margin: 0 20px;
+}
+.ad-body-title img{
+    display: block;
+    margin: 0 auto;
+}
+.ad-body-11{
+    padding: 16px 0;
+    margin-top: 40px;
+}
+.ad-body11-list{
+    box-sizing: border-box;
+    float: left;
+    width: 25%;
+    padding-left: 18px;
+    color: #80D7FF;
+}
+.ad-body11-list h3{
+    font-size: 18px;
+    height: 30px;
+    line-height: 30px;
+}
+.ad-body11-list p{
+    height: 20px;
+    line-height: 20px;
+}
+.ad-body-12-l{
+    width: 288px;
+    height: 300px;
+    float: left;
+}
+.ad-body-12-rc{
+    width: 142px;
+    height: 150px;
+    float: left;
+}
+.ad-body-list-title{
+    height: 50px;
+    line-height: 50px;
+    color: #74AFF7;
+    font-size: 16px;
+    font-weight: 600;
+}
+.ad-body-list-title:before{
+    content: '';
+    display: inline-block;
+    float: left;
+    width: 18px;
+    height: 100%;
+    margin: 0 6px 0 20px;
+}
+.ad-body-list-title1:before{
+    background: url(./../img/ad-icon-01.png) no-repeat center center;
+}
+.ad-body-list-title2:before{
+    background: url(./../img/ad-icon-02.png) no-repeat center center;
+}
+.ad-body-list-title3:before{
+    background: url(./../img/ad-icon-03.png) no-repeat center center;
+}
+.ad-body-list-title4:before{
+    background: url(./../img/ad-icon-04.png) no-repeat center center;
+}
+.ad-body-list-title5:before{
+    background: url(./../img/ad-icon-05.png) no-repeat center center;
+}
+.ad-body-list-title6:before{
+    background: url(./../img/ad-icon-06.png) no-repeat center center;
+}
+.ad-body-list-title7:before{
+    background: url(./../img/ad-icon-07.png) no-repeat center center;
+}
+.ad-body-c-13{
+    height: 240px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
