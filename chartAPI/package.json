@@ -1,0 +1,15 @@
+{
+  "name": "chartapi",
+  "version": "1.0.0",
+  "description": "平台接口数据",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "zmnaer",
+  "license": "ISC",
+  "devDependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2"
+  }
+}

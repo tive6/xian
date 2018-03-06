@@ -28,8 +28,7 @@
 }
 .talents-r-list{
     display: block;
-    height: 47px;
-    line-height: 47px;
+    padding: 15px 0;
     border-top: 1px solid #DCDBDB;
     font-family: "PTSans";
 }
@@ -79,13 +78,16 @@
     padding-top: 20px;
 }
 .dept-img-list{
-    width: 378px;
+    width: 300px;
     float: left;
 }
 .dept-img-list2{
-    margin: 0 33px;
+    margin: 0 40px;
 }
-
+.dept-img-list img{
+    display: block;
+    width: 100%;
+}
 
 
 

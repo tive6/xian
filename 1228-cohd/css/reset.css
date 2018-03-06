@@ -348,3 +348,12 @@ th,td {
 .sec-f1-list-desc:hover{
     border-bottom: 1px solid #f23524;
 }
+
+.intro1-f2,
+.intro1-f1-l-text,
+.talents-l-inner,
+.talents-inner-text,
+.teachers2-inner-text{
+    word-wrap:break-word;
+    word-break:break-all;
+}
