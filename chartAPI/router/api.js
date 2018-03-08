@@ -120,7 +120,7 @@ router.get('/:ct/serviceStatus', function(req, res){
         ISOK:true,
         data:{
             'cluster': n,
-            'length': num,
+            'length': 3,
             'data': [
                 {
                     'name': 'sqoop',
