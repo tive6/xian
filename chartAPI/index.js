@@ -2,7 +2,6 @@
  * Created by badou on 2018/3/6.
  */
 const express = require('express')
-const bodyParser = require('body-parser')
 
 
 const router = require('./router/api.js')
@@ -13,8 +12,6 @@ app.use(express.static('./public'))
 
 app.use('/api/v1', router);
 
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({extended:false}))
 
 let json = {
     ISOK:200,
@@ -32,7 +29,7 @@ app.get('/api/:a', function (req, res) {
 })
 
 
-let host = '192.168.1.175'
+let host = '192.168.43.20'
 let port = 3000
 app.listen(port,host,()=>{
     console.log(`server listen on ${host}:${port}`)

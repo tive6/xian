@@ -2,12 +2,12 @@
  * Created by badou on 2018/3/6.
  */
 const express = require('express');
-const bodyParser = require('body-parser')
+//const bodyParser = require('body-parser')
 
 const router = express.Router();
 
-router.use(bodyParser.urlencoded({extended:false}))
-router.use(bodyParser.json())
+//router.use(bodyParser.urlencoded({extended:false}))
+//router.use(bodyParser.json())
 
 // 该路由使用的中间件
 router.use(function timeLog(req, res, next) {
