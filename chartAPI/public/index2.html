@@ -13,19 +13,19 @@
     <div class="ad-cont ad-cont1">
       <div class="ad-body-1 ad-body-11 clear">
         <div class="ad-body11-list">
-          <h3>1000</h3>
+          <h3>{{data2[0]['nodes']}}</h3>
           <p>节点数量(个)</p>
         </div>
         <div class="ad-body11-list">
-          <h3>1000</h3>
+          <h3>{{data2[0]['cores']}}</h3>
           <p>CPU核数(个)</p>
         </div>
         <div class="ad-body11-list">
-          <h3>1000</h3>
+          <h3>{{data2[0]['memory']}}</h3>
           <p>内存总量(B)</p>
         </div>
         <div class="ad-body11-list">
-          <h3>1000</h3>
+          <h3>{{a}}</h3>
           <p>存储总量(B)</p>
         </div>
       </div>
@@ -389,43 +389,154 @@
   var vm = new Vue({
     el:'.ad-container',
     data:{
-      a:666
+      a:666,
+      data1:{
+        good:0,
+        bad:0,
+        bad_monthly:0,
+        bad_until_now:0
+      },
+      data2:[
+        {
+          cluster: 0,
+          nodes: 0,
+          cores: 0,
+          memory: 0,
+          disk: 0
+        },
+        {
+          cluster: 0,
+          nodes: 0,
+          cores: 0,
+          memory: 0,
+          disk: 0
+        },
+        {
+          cluster: 0,
+          nodes: 0,
+          cores: 0,
+          memory: 0,
+          disk: 0
+        }
+      ],
+      data3:[
+        [
+          {
+            timestamp: 123445678754,
+            cpu_percent: 0.3,
+            mem_used: 123849,
+            disk_used: 32842812,
+            disk_input: 3829.2,
+            disk_output: 1382.1,
+            net_input: 32901.4,
+            net_output: 4930.8,
+            health: 0
+          }
+        ],
+        [
+          {
+            timestamp: 123445678754,
+            cpu_percent: 0.3,
+            mem_used: 123849,
+            disk_used: 32842812,
+            disk_input: 3829.2,
+            disk_output: 1382.1,
+            net_input: 32901.4,
+            net_output: 4930.8,
+            health: 0
+          }
+        ],
+        [
+          {
+            timestamp: 123445678754,
+            cpu_percent: 0.3,
+            mem_used: 123849,
+            disk_used: 32842812,
+            disk_input: 3829.2,
+            disk_output: 1382.1,
+            net_input: 32901.4,
+            net_output: 4930.8,
+            health: 0
+          }
+        ]
+      ],
+      data4:[]
     },
     computed:{
 
     },
-    mounted:function(){
-      console.log(this.a)
-      /*
-       * ct：cluster
-       0->采集集群
-       1->消息队列集群
-       2->计算存储集群
-       * */
-      /*
-      * n：返回数据长度
-      * */
+    created:function(){
+      this.getJqzl(0)
       this.getJkzk()
-      this.getJqzl(2)
-      this.getJqsy(2,5)
-      this.getJqzt(1)
-      this.getJqls(1,10)
+
+    },
+    mounted:function(){
+      this.$nextTick(function(){
+
+        console.log(this.a)
+        /*
+         * ct：cluster
+         0->采集集群
+         1->消息队列集群
+         2->计算存储集群
+         * */
+        /*
+         * n：返回数据长度
+         * */
+        /*this.getJkzk()
+         this.getJqzl(2)
+         this.getJqsy(2,5)
+         this.getJqzt(1)
+         this.getJqls(1,10)
+         this.getJqsjzt(2,5)
+         this.getJqzyzl()
+         this.getJqzysy(5)
+         this.getJquse()*/
+
+//        this.getJqzl(0)
+
+//      this.getData2()
+
+        /*opts={
+         ct:0,
+         n:0,
+         fn:function(){}
+         }*/
+      })
     },
     methods:{
+      getData2:function(){
+        var len = 0
+        while(len<3){
+          this.getJqzl(len)
+          len++
+        }
+        console.log(`data2:${this.data2}`)
+        console.log(this.data2)
+
+      },
       // this.$http.get('/someUrl', [options]).then(function(response){}
       getJkzk:function(){ // 健康状况
+        var that = this
         this.$http.get('/api/v1/hostStatus').
                 then(function(res){
-                  console.log(res.body)
+                  that.data1 = res.body.data
+                  console.log(that.data1)
                 }, function(res){
                   console.log(res.body.msg)
                   // 响应错误回调
                 });
       },
       getJqzl:function(ct){ // 集群资源总量
+        var that = this
         this.$http.get('/api/v1/'+ct+'/resource').
                 then(function(res){
                   console.log(res.body)
+                  that.data2[ct] = res.body.data
+                  console.log('****')
+                  that.a = 222
+                  console.log(that.data2)
+                  console.log('****')
                 }, function(res){
                   console.log(res.body.msg)
                   // 响应错误回调
@@ -458,10 +569,46 @@
                   // 响应错误回调
                 });
       },
+      getJqsjzt:function(ct,n){ // 6.获取集群数据状态
+        this.$http.get('/api/v1/'+ct+'/dataStatus?range='+n).
+                then(function(res){
+                  console.log(res.body)
+                }, function(res){
+                  console.log(res.body.msg)
+                  // 响应错误回调
+                });
+      },
+      getJqzyzl:function(){ // 7.获取计算存储集群虚拟资源总量
+        this.$http.get('/api/v1/virtualResource').
+                then(function(res){
+                  console.log(res.body)
+                }, function(res){
+                  console.log(res.body.msg)
+                  // 响应错误回调
+                });
+      },
+      getJqzysy:function(n){ // 8.获取计算存储集群资源使用情况
+        this.$http.get('/api/v1/virtualResource/usage?range='+n).
+                then(function(res){
+                  console.log(res.body)
+                }, function(res){
+                  console.log(res.body.msg)
+                  // 响应错误回调
+                });
+      },
+      getJquse:function(){ // 9.获取用户使用资源情况
+        this.$http.get('/api/v1/users/statistic').
+                then(function(res){
+                  console.log(res.body)
+                }, function(res){
+                  console.log(res.body.msg)
+                  // 响应错误回调
+                });
+      }
     }
   })
-</script>
-<script>
+
+
   var option1 = {
     grid:{
       x:30,

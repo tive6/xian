@@ -338,3 +338,47 @@ router.get('/users/statistic', function(req, res) {
 
 
 module.exports = router;
+
+
+
+var res ={
+    type:'year',
+    data:[
+        {
+            title:'1',
+            img:['img1','img2','img3']
+        },
+        {
+            title:'2',
+            img:['img1','img2','img3']
+        },
+        {
+            title:'3',
+            img:['img1','img2','img3']
+        }
+    ]
+};
+
+var res2 ={
+    type:'month',
+    data:[
+        {
+            title:'1',
+            img:['img1','img2','img3']
+        },
+        {
+            title:'2',
+            img:['img1','img2','img3']
+        },
+        {
+            title:'3',
+            img:['img1','img2','img3']
+        }
+    ]
+};
+
+
+
+
+
+
