@@ -29,7 +29,7 @@ app.get('/api/:a', function (req, res) {
 })
 
 
-let host = '192.168.1.175'
+let host = '0.0.0.0'
 let port = 3000
 app.listen(port,host,()=>{
     console.log(`server listen on ${host}:${port}`)

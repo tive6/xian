@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>可视化数据展示</title>
+  <link rel="stylesheet" href="./css/reset.css"/>
+  <link rel="stylesheet" href="./css/index.css"/>
+  <style>
+    .myChart{
+      width: 1000px;
+      height: 400px;
+      margin: 20px auto;
+    }
+  </style>
+</head>
+<body>
+
+<div class="myChart" id="myChart1"></div>
+
+
+<script src="./js/vue.js"></script>
+<script src="./js/vue-resource.min.js"></script>
+<script src="./js/echarts/build/dist/echarts-all.js"></script>
+
+<script>
+
+  var option1 = {
+    title : {
+      text: '动态数据',
+      subtext: '纯属虚构'
+    },
+    tooltip : {
+      trigger: 'axis'
+    },
+    legend: {
+      data:['最新成交价']
+    },
+    xAxis : [
+      {
+        type : 'category',
+        boundaryGap : true,
+        data : (function (){
+          var now = new Date();
+          var res = [];
+          var len = 10;
+          while (len--) {
+            res.unshift(now.toLocaleTimeString().replace(/^\D*/,''));
+            now = new Date(now - 2000);
+          }
+          return res;
+        })()
+      }
+    ],
+    yAxis : [
+      {
+        type : 'value',
+        scale: true,
+        name : '价格',
+        boundaryGap: [0.2, 0.2]
+      },
+
+    ],
+    series : [
+
+      {
+        name:'最新成交价',
+        type:'line',
+        smooth: true,
+        data:(function (){
+          var res = [];
+          var len = 10;
+          while (len--) {
+            res.push((Math.random()*10 + 5).toFixed(1) - 0);
+          }
+          return res;
+        })()
+      }
+    ]
+  };
+  var myChart1 = echarts.init(document.getElementById('myChart1'));
+
+  var lastData = 11;
+  var axisData;
+  clearInterval(timeTicket);
+  var timeTicket = setInterval(function (){
+    lastData += Math.random() * ((Math.round(Math.random() * 10) % 2) == 0 ? 1 : -1);
+    lastData = lastData.toFixed(1) - 0;
+    axisData = (new Date()).toLocaleTimeString().replace(/^\D*/,'');
+
+    // 动态数据接口 addData
+    myChart1.addData([
+      /*
+      * 单组数据：
+       {number} seriesIdx
+       {number | Object} data
+       {boolean=} isHead
+       {boolean=} dataGrow
+       {string=} additionData
+      * */
+      1,        // 系列索引
+      lastData, // 新增数据
+      false,    // 新增数据是否从队列头部插入
+      false,    // 是否增加队列长度，false则自定删除原有数据，队头插入删队尾，队尾插入删队头
+      axisData  // 坐标轴标签
+    ]);
+    myChart1.setOption(option1);
+  }, 2100);
+
+  // 为echarts对象加载数据
+  myChart1.setOption(option1);
+</script>
+
+</body>
+</html>
