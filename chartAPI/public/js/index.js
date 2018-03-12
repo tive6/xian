@@ -8,7 +8,7 @@ Vue.prototype.bytesToGB = function(val) {
 var vm = new Vue({
     el: '.ad-container',
     data: {
-        a: 666,
+        a: 10,
         data1: {
             good: 0,
             bad: 0,
@@ -81,11 +81,11 @@ var vm = new Vue({
         ],
         data4: []
     },
-    filters:{
+    /*filters:{
         bytesToGB:function(val) {
             return (parseInt(val) / 1073741824).toFixed(3)
         }
-    },
+    },*/
     computed: {
 
     },
@@ -95,10 +95,13 @@ var vm = new Vue({
     },
     created: function () {
         this.$nextTick(function () {
-            this.getData2()
             //this.getJkzk()
-            //this.getJqzl(0)
+            this.getJqzl(0)
+            this.getJqzl(1)
+            this.getJqzl(2)
+            //this.getData2()
         })
+
     },
     mounted: function () {
         this.$nextTick(function () {
@@ -140,8 +143,8 @@ var vm = new Vue({
                 this.getJqzl(len)
                 len++
             }
-            console.log(`data2:${this.data2}`)
-            console.log(this.data2)
+            //console.log(`data2:${this.data2}`)
+            //console.log(this.data2)
 
         },
         // this.$http.get('/someUrl', [options]).then(function(response){}

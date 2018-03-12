@@ -52,7 +52,7 @@
           <tr>
             <td>3月5日 12点30分</td>
             <td>Agent运行状况：良好</td>
-            <td>显示</td>
+            <td>{{a}}</td>
           </tr>
           <tr>
             <td>3月5日 12点30分</td>
@@ -89,19 +89,19 @@
             <div class="ad-body-list-title ad-body-list-title4">集群物理可用资源</div>
             <div class="ad-cont2-tl-1-outer clear">
               <div class="ad-cont2-tl-1-inner">
-                <h3 v-text="data2[0].nodes"></h3>
+                <h3>00</h3>
                 <p>节点数量(个)</p>
               </div>
               <div class="ad-cont2-tl-1-inner">
-                <h3 v-text="data2[0].cores"></h3>
+                <h3 v-text="data2[1].cores"></h3>
                 <p>CPU核数(个)</p>
               </div>
               <div class="ad-cont2-tl-1-inner">
-                <h3 v-text="bytesToGB(data2[0].memory)"></h3>
+                <h3 v-text="bytesToGB(data2[1].memory)"></h3>
                 <p>内存总量(G)</p>
               </div>
               <div class="ad-cont2-tl-1-inner">
-                <h3 v-text="bytesToGB(data2[0].disk)"></h3>
+                <h3 v-text="bytesToGB(data2[1].disk)"></h3>
                 <p>存储总量(G)</p>
               </div>
             </div>
