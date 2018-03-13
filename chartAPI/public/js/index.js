@@ -9,6 +9,26 @@ var vm = new Vue({
     el: '.ad-container',
     data: {
         a: 10,
+        uses:[
+            {
+                mem_useN:0,
+                mem_useD:0,
+                disk_useN:0,
+                disk_useD:0
+            },
+            {
+                mem_useN:0,
+                mem_useD:0,
+                disk_useN:0,
+                disk_useD:0
+            },
+            {
+                mem_useN:0,
+                mem_useD:0,
+                disk_useN:0,
+                disk_useD:0
+            }
+        ],
         data1: {
             good: 0,
             bad: 0,
@@ -42,7 +62,7 @@ var vm = new Vue({
             [
                 {
                     timestamp: 123445678754,
-                    cpu_percent: 0.3,
+                    cpu_percent: 0.4,
                     mem_used: 123849,
                     disk_used: 32842812,
                     disk_input: 3829.2,
@@ -79,7 +99,30 @@ var vm = new Vue({
                 }
             ]
         ],
-        data4: []
+        data4: [],
+        data5: [
+            [
+                {
+                    timestamp: 123821312499,
+                    service_name: 'flume',
+                    health: 0
+                }
+            ],
+            [
+                {
+                    timestamp: 123821312499,
+                    service_name: 'flume',
+                    health: 0
+                }
+            ],
+            [
+                {
+                    timestamp: 123821312499,
+                    service_name: 'flume',
+                    health: 0
+                }
+            ]
+        ]
     },
     /*filters:{
         bytesToGB:function(val) {
@@ -91,19 +134,26 @@ var vm = new Vue({
     },
     beforeCreate:function(){
         this.$nextTick(function () {
+            this.getJkzk()
+            //this.getJqzl(0)
+            //this.getJqzl(1)
+            //this.getJqzl(2)
+            this.getData2()
+            this.getData3()
+            this.getData5()
+
         })
     },
     created: function () {
         this.$nextTick(function () {
             //this.getJkzk()
-            this.getJqzl(0)
-            this.getJqzl(1)
-            this.getJqzl(2)
-            //this.getData2()
+
+
         })
 
     },
     mounted: function () {
+
         this.$nextTick(function () {
 
             /*
@@ -137,52 +187,84 @@ var vm = new Vue({
         })
     },
     methods: {
-        getData2: function () {
+        fn_bytesToGB: function(val) {
+            return (parseInt(val) / 1073741824).toFixed(3)
+        },
+        // 计算内存、磁盘的未使用量
+        getUses:function(){
             var len = 0
-            while (len < 3) {
+            while (len < 3){
+                this.uses[len].mem_useN = this.fn_bytesToGB(this.data2[len].memory - this.data3[len][0].mem_used)
+                this.uses[len].mem_useD = this.fn_bytesToGB(this.data3[len][0].mem_used)
+                this.uses[len].disk_useN = this.fn_bytesToGB(this.data2[len].disk - this.data3[len][0].disk_used)
+                this.uses[len].disk_useD = this.fn_bytesToGB(this.data3[len][0].disk_used)
+                len++
+            }
+            console.log(this.uses)
+        },
+        // 分别获取资源总量
+        getData2: function (){
+            var len = 0
+            while (len < 3){
                 this.getJqzl(len)
                 len++
             }
-            //console.log(`data2:${this.data2}`)
             //console.log(this.data2)
-
+        },
+        getData3: function (){
+            var len = 0
+            while (len < 3){
+                this.getJqsy(len,2)
+                len++
+            }
+            console.log(this.data3)
+        },
+        getData5: function (){
+            var len = 0
+            while (len < 3){
+                this.getJqls(len,6)
+                len++
+            }
+            console.log(this.data5)
         },
         // this.$http.get('/someUrl', [options]).then(function(response){}
-        getJkzk: function () { // 健康状况
+        getJkzk: function () { // 1.健康状况
             var that = this
             this.$http.get('/api/v1/hostStatus').
                 then(function (res) {
                     that.data1 = res.body.data
-                    console.log(that.data1)
+                    //console.log(that.data1)
                 }, function (res) {
                     console.log(res.body.msg)
                     // 响应错误回调
                 });
         },
-        getJqzl: function (ct) { // 集群资源总量
+        getJqzl: function (ct) { // 2.集群资源总量
             var that = this
             this.$http.get('/api/v1/' + ct + '/resource').
                 then(function (res) {
                     console.log(res.body)
-                    that.data2.splice(ct,ct+1,res.body.data)
-                    console.log('****')
-                    console.log(that.data2)
-                    console.log('****')
+                    that.data2.splice(ct,1,res.body.data)
                 }, function (res) {
                     console.log(res.body.msg)
                     // 响应错误回调
                 });
         },
-        getJqsy: function (ct, n) { // 集群资源使用情况
+        getJqsy: function (ct, n) { // 3.集群资源使用情况
+            var that = this
             this.$http.get('/api/v1/' + ct + '/resource/usage?range=' + n).
                 then(function (res) {
                     console.log(res.body)
+                    that.data3.splice(ct,1,res.body.data.data)
+                    this.getUses()
+
                 }, function (res) {
                     console.log(res.body.msg)
                     // 响应错误回调
                 });
         },
-        getJqzt: function (ct) { // 集群服务当前运行状态
+        getJqzt: function (ct) { // 4.集群服务当前运行状态
+            var that = this
             this.$http.get('/api/v1/' + ct + '/serviceStatus').
                 then(function (res) {
                     console.log(res.body)
@@ -192,15 +274,18 @@ var vm = new Vue({
                 });
         },
         getJqls: function (ct, n) { // 5.获取集群服务运行状态历史
+            var that = this
             this.$http.get('/api/v1/' + ct + '/serviceStatus/history?range=' + n).
                 then(function (res) {
                     console.log(res.body)
+                    that.data5.splice(ct,1,res.body.data.data)
                 }, function (res) {
                     console.log(res.body.msg)
                     // 响应错误回调
                 });
         },
         getJqsjzt: function (ct, n) { // 6.获取集群数据状态
+            var that = this
             this.$http.get('/api/v1/' + ct + '/dataStatus?range=' + n).
                 then(function (res) {
                     console.log(res.body)
@@ -238,6 +323,10 @@ var vm = new Vue({
         }
     }
 })
+
+var vmData = vm.$data
+setTimeout(function(){
+    console.log(vmData.uses[0].mem_useD)
 
 
 var option1 = {
@@ -507,10 +596,19 @@ var option2 = {
                     }
                 }
             },
-            data: [
+            data: (function(){
+                var res = []
+                res.push(
+                    {value: vmData.uses[0].disk_useD, name: '已用'},
+                    {value: vmData.uses[0].disk_useN, name: '空闲'}
+                )
+                console.log(res)
+                return res
+            })()
+                /*[
                 {value: 335, name: '已用'},
                 {value: 1548, name: '空闲'}
-            ]
+            ]*/
         }
     ]
 };
@@ -567,10 +665,18 @@ var option3 = {
                     }
                 }
             },
-            data: [
+            data: (function(){
+                var res = []
+                res.push(
+                    {value: vmData.uses[0].disk_useD, name: '已用'},
+                    {value: vmData.uses[0].disk_useN, name: '空闲'}
+                )
+                return res
+            })()
+                /*[
                 {value: 335, name: '已用'},
                 {value: 1548, name: '空闲'}
-            ]
+            ]*/
         }
     ]
 };
@@ -939,8 +1045,8 @@ var option6 = {
                 }
             },
             data: [
-                {value: 335, name: '已用'},
-                {value: 1548, name: '空闲'}
+                {value: vmData.uses[0].disk_useD, name: '已用'},
+                {value: vmData.uses[0].disk_useN, name: '空闲'}
             ]
         }
     ]
@@ -1560,3 +1666,26 @@ myChart9.setOption(option9);
 myChart10.setOption(option10);
 myChart11.setOption(option11);
 myChart12.setOption(option12);
+
+
+    var lastIndex = 2;
+    var axisData;
+    clearInterval(timeTicket);
+    var timeTicket = setInterval(function (){
+        lastIndex += 1;
+        // 动态数据接口 addData
+        myChart2.addData([
+            [
+                0,        // 系列索引
+                {         // 新增数据
+                    name:  lastIndex%2==0?'空闲':'已用',
+                    value: Math.round(Math.random()*10)
+                },
+                false,     // 新增数据是否从队列头部插入
+                false,     // 是否增加队列长度，false则自定删除原有数据，队头插入删队尾，队尾插入删队头
+            ]
+
+        ]);
+    }, 1000);
+
+},500)

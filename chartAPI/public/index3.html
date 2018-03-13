@@ -33,7 +33,7 @@
       trigger: 'item'
     },
     legend: {
-      data:['随机数据1','随机数据2','随机数据3','随机数据4','随机数据5']
+      data:['随机数据1','随机数据2']
     },
     calculable : false,
     series : [
@@ -45,7 +45,7 @@
         data: (function (){
           var res = [];
           var len = 0;
-          while (len++ < 5) {
+          while (len++ < 2) {
             res.push({
               name: '随机数据' + len,
               value: Math.round(Math.random()*10)
@@ -56,7 +56,7 @@
       },
     ]
   };
-  var lastIndex = 5;
+  var lastIndex = 2;
   var axisData;
   clearInterval(timeTicket);
   var timeTicket = setInterval(function (){

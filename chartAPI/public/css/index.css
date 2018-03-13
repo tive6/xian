@@ -111,16 +111,12 @@
 .ad-body-14-list td{
     line-height: 30px;
 }
-.ad-body-14-list tr td:nth-child(2) {
-    width: 35%;
-}
-.ad-body-14-list tr td:nth-child(2){
+.ad-body-14-list tr td:first-child {
     width: 45%;
-    border-left: 1px solid #61C8F2;
-    border-right: 1px solid #61C8F2;
 }
-.ad-body-14-list tr td:last-child {
-    width: 20%;
+.ad-body-14-list tr td:last-child{
+    width: 55%;
+    border-left: 1px solid #61C8F2;
 }
 .ad-cont2-top{
     border-bottom: 1px dashed #174B64;

@@ -49,35 +49,9 @@
       <div class="ad-body-1 ad-body-14">
         <div class="ad-body-list-title ad-body-list-title3">服务组件健康状况</div>
         <table class="ad-body-14-list">
-          <tr>
-            <td>3月5日 12点30分</td>
-            <td>Agent运行状况：良好</td>
-            <td>{{a}}</td>
-          </tr>
-          <tr>
-            <td>3月5日 12点30分</td>
-            <td>Agent运行状况：良好</td>
-            <td>显示</td>
-          </tr>
-          <tr>
-            <td>3月5日 12点30分</td>
-            <td>Agent运行状况：良好</td>
-            <td>显示</td>
-          </tr>
-          <tr>
-            <td>3月5日 12点30分</td>
-            <td>Agent运行状况：良好</td>
-            <td>显示</td>
-          </tr>
-          <tr>
-            <td>3月5日 12点30分</td>
-            <td>Agent运行状况：良好</td>
-            <td>显示</td>
-          </tr>
-          <tr>
-            <td>3月5日 12点30分</td>
-            <td>Agent运行状况：良好</td>
-            <td>显示</td>
+          <tr v-for="let (val,i) of data5[0]">
+            <td>{{val.timestamp}}</td>
+            <td>{{val.service_name}} 运行状况：{{val.health==0?'健康':'故障'}}</td>
           </tr>
         </table>
       </div>
@@ -89,7 +63,7 @@
             <div class="ad-body-list-title ad-body-list-title4">集群物理可用资源</div>
             <div class="ad-cont2-tl-1-outer clear">
               <div class="ad-cont2-tl-1-inner">
-                <h3>00</h3>
+                <h3 v-text="data2[1].nodes"></h3>
                 <p>节点数量(个)</p>
               </div>
               <div class="ad-cont2-tl-1-inner">
@@ -170,30 +144,9 @@
           <div class="ad-cont2-bl1 ad-cont2-bl1-2">
             <div class="ad-body-list-title ad-body-list-title3">服务组件健康状况</div>
             <table class="ad-body-14-list ad-cont2-bl1-list">
-              <tr>
-                <td>3月5日 12点30分</td>
-                <td>Agent运行状况：良好</td>
-                <td>显示</td>
-              </tr>
-              <tr>
-                <td>3月5日 12点30分</td>
-                <td>Agent运行状况：良好</td>
-                <td>显示</td>
-              </tr>
-              <tr>
-                <td>3月5日 12点30分</td>
-                <td>Agent运行状况：良好</td>
-                <td>显示</td>
-              </tr>
-              <tr>
-                <td>3月5日 12点30分</td>
-                <td>Agent运行状况：良好</td>
-                <td>显示</td>
-              </tr>
-              <tr>
-                <td>3月5日 12点30分</td>
-                <td>Agent运行状况：良好</td>
-                <td>显示</td>
+              <tr v-for="let (val,i) of data5[1]" v-if="i<=4">
+                <td>{{val.timestamp}}</td>
+                <td>{{val.service_name}} 运行状况：{{val.health==0?'健康':'故障'}}</td>
               </tr>
             </table>
           </div>
@@ -352,32 +305,26 @@
           <tr>
             <td>3月5日 12点30分</td>
             <td>Agent运行状况：良好</td>
-            <td>显示</td>
           </tr>
           <tr>
             <td>3月5日 12点30分</td>
             <td>Agent运行状况：良好</td>
-            <td>显示</td>
           </tr>
           <tr>
             <td>3月5日 12点30分</td>
             <td>Agent运行状况：良好</td>
-            <td>显示</td>
           </tr>
           <tr>
             <td>3月5日 12点30分</td>
             <td>Agent运行状况：良好</td>
-            <td>显示</td>
           </tr>
           <tr>
             <td>3月5日 12点30分</td>
             <td>Agent运行状况：良好</td>
-            <td>显示</td>
           </tr>
           <tr>
             <td>3月5日 12点30分</td>
             <td>Agent运行状况：良好</td>
-            <td>显示</td>
           </tr>
         </table>
       </div>

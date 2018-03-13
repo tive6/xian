@@ -33,10 +33,10 @@ router.get('/:ct/resource', function(req, res){
         ISOK:true,
         data:{
             'cluster': n,
-            'nodes': 18,
+            'nodes': 40,
             'cores': 345,
-            'memory': 2394712937,
-            'disk': 123234089203
+            'memory': 10237418240,
+            'disk': 8003741824
         }
     }
     switch(n)
@@ -69,9 +69,9 @@ router.get('/:ct/resource/usage', function(req, res){
     console.log(num)
     let obj = {
         'timestamp': 123445678754,
-        'cpu_percent': 0.3,
-        'mem_used': 123849,
-        'disk_used': 32842812,
+        'cpu_percent': 0.5,
+        'mem_used': 1003741800,
+        'disk_used': 1023741824,
         'disk_input': 3829.2,
         'disk_output': 1382.1,
         'net_input': 32901.4,
@@ -338,47 +338,3 @@ router.get('/users/statistic', function(req, res) {
 
 
 module.exports = router;
-
-
-
-var res ={
-    type:'year',
-    data:[
-        {
-            title:'1',
-            img:['img1','img2','img3']
-        },
-        {
-            title:'2',
-            img:['img1','img2','img3']
-        },
-        {
-            title:'3',
-            img:['img1','img2','img3']
-        }
-    ]
-};
-
-var res2 ={
-    type:'month',
-    data:[
-        {
-            title:'1',
-            img:['img1','img2','img3']
-        },
-        {
-            title:'2',
-            img:['img1','img2','img3']
-        },
-        {
-            title:'3',
-            img:['img1','img2','img3']
-        }
-    ]
-};
-
-
-
-
-
-
