@@ -82,6 +82,53 @@
 
   // 为echarts对象加载数据
   myChart1.setOption(option1);
+
+  var opts = [
+    {
+      aa:71,
+      bb:2,
+      cc:9,
+      dd:17
+    },
+    {
+      aa:22,
+      bb:8,
+      cc:26,
+      dd:51
+    },
+    {
+      aa:46,
+      bb:65,
+      cc:11,
+      dd:31
+    },
+    {
+      aa:55,
+      bb:33,
+      cc:37,
+      dd:66
+    }
+  ]
+
+  var ind = 0;
+  var arr = ['aa','bb','cc','dd']
+  setInterval(function(){
+    if(ind>=arr.length){
+      ind = 0
+    }
+    console.log(arr[ind])
+    arrSort(opts,arr[ind])
+    console.log(opts)
+    ind++
+  },2000)
+
+  function arrSort(arr,attr){
+    arr.sort(function(a,b){
+      return a[attr] - b[attr];
+    })
+  }
+
+
 </script>
 
 </body>

@@ -184,6 +184,10 @@ var vm = new Vue({
              n:0,
              fn:function(){}
              }*/
+            var that = this
+            setInterval(function(){
+                that.a++
+            },1000)
         })
     },
     methods: {
