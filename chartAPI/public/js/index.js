@@ -128,6 +128,27 @@ var vm = new Vue({
                 }
             ]
         ],
+        data6: [
+            [
+                {
+                    timestamp: 123908234082,
+                    volume: 2384.43
+                }
+            ],
+            [
+                {
+                    timestamp: 123908234082,
+                    volume: 2384.43
+                }
+            ],
+            [
+                {
+                    timestamp: 123908234082,
+                    volume_in: 2384.43,
+                    volume_out: 2394.3
+                }
+            ]
+        ],
         data7: {
             vcores: 0,
             vmems: 0,
@@ -181,6 +202,8 @@ var vm = new Vue({
             this.getData3()
             this.getData5()
             this.getJquse()
+            // 6
+            console.log(this.getData6(0,6))
             // 7
             this.getJqzyzl()
             // 8
@@ -188,6 +211,9 @@ var vm = new Vue({
             /*setInterval(function(){
                 that.getJqzysy(1)
             },2000)*/
+
+
+
 
         })
     },
@@ -280,11 +306,19 @@ var vm = new Vue({
             }
             console.log(this.data5)
         },
+        getData6: function (index,n){
+            var len = 0
+            while (len < 3){
+                this.getJqsjzt(len,n)
+                len++
+            }
+            console.log(this.data6)
+            return this.data6[index]
+        },
         getData8(){
             this.lastData8.vcores = (this.data8.vcore_used / this.data7.vcores).toFixed(2) * 100
             this.lastData8.vmems = (this.data8.vmem_used / this.data7.vmems).toFixed(2) * 100
             this.lastData8.hdfs_capacity = (this.data8.hdfs_used / this.data7.hdfs_capacity).toFixed(2) * 100
-            console.log(this.lastData8)
         },
         // this.$http.get('/someUrl', [options]).then(function(response){}
         getJkzk: function () { // 1.健康状况
@@ -348,6 +382,7 @@ var vm = new Vue({
             this.$http.get('/api/v1/' + ct + '/dataStatus?range=' + n).
                 then(function (res) {
                     console.log(res.body)
+                    that.data6.splice(ct,1,res.body.data.data)
                 }, function (res) {
                     console.log(res.body.msg)
                     // 响应错误回调
@@ -796,7 +831,7 @@ var option4 = {
                 var res = [];
                 var len = 6;
                 while (len--) {
-                    res.unshift(now.toLocaleTimeString().replace(/^\D*/,''));
+                    res.unshift(now.toLocaleTimeString().replace(/^\D*/,'').slice(3,8));
                     now = new Date(now - 2000);
                 }
                 return res;
@@ -847,14 +882,42 @@ var option4 = {
     ],
     series: [
         {
-            name: '成交',
+            name: 'Byte',
             type: 'line',
             smooth: true,
             itemStyle: {normal: {areaStyle: {type: 'default'}}},
-            data: [70, 200, 70, 150, 90, 300]
+            data: (function(){
+                var res = []
+                var arr = vm.getData6(0,6)
+                arr.forEach(function(val,i){
+                    res.unshift(val.volume)
+                })
+                return res
+            })()
         }
     ]
 };
+
+    var lastData4 = 7;
+    var axisData4;
+    clearInterval(timeTicket4);
+    var timeTicket4 = setInterval(function (){
+        //lastData4 += Math.random() * ((Math.round(Math.random() * 10) % 2) == 0 ? 1 : -1);
+        //lastData4 = lastData4.toFixed(1) - 0;
+        lastData4 = vm.getData6(0,1)[0]['volume']
+        axisData4 = (new Date()).toLocaleTimeString().replace(/^\D*/,'').slice(3,8);
+
+        // 动态数据接口 addData
+        myChart4.addData([
+            [
+                0,        // 系列索引
+                lastData4, // 新增数据
+                false,    // 新增数据是否从队列头部插入
+                false,    // 是否增加队列长度，false则自定删除原有数据，队头插入删队尾，队尾插入删队头
+                axisData4  // 坐标轴标签
+            ]
+        ]);
+    }, 2000);
 
 var option5 = {
     grid: {
@@ -1231,7 +1294,16 @@ var option8 = {
                     width: 1
                 }
             },
-            data: ['周一', '周二', '周三', '周四', '周五', '周六']
+            data : (function (){
+                var now = new Date();
+                var res = [];
+                var len = 6;
+                while (len--) {
+                    res.unshift(now.toLocaleTimeString().replace(/^\D*/,'').slice(3,8));
+                    now = new Date(now - 2000);
+                }
+                return res;
+            })()
         },
     ],
     yAxis: [
@@ -1278,14 +1350,42 @@ var option8 = {
     ],
     series: [
         {
-            name: '成交',
+            name: 'Byte',
             type: 'line',
             smooth: true,
             itemStyle: {normal: {areaStyle: {type: 'default'}}},
-            data: [70, 200, 70, 150, 90, 300]
+            data: (function(){
+                var res = []
+                var arr = vm.getData6(1,6)
+                arr.forEach(function(val,i){
+                    res.unshift(val.volume)
+                })
+                return res
+            })()
         }
     ]
 };
+
+    var lastData8 = 7;
+    var axisData8;
+    clearInterval(timeTicket8);
+    var timeTicket8 = setInterval(function (){
+        //lastData8 += Math.random() * ((Math.round(Math.random() * 10) % 2) == 0 ? 1 : -1);
+        //lastData8 = lastData4.toFixed(1) - 0;
+        lastData8 = vm.getData6(1,1)[0]['volume']
+        axisData8 = (new Date()).toLocaleTimeString().replace(/^\D*/,'').slice(3,8);
+
+        // 动态数据接口 addData
+        myChart8.addData([
+            [
+                0,        // 系列索引
+                lastData8, // 新增数据
+                false,    // 新增数据是否从队列头部插入
+                false,    // 是否增加队列长度，false则自定删除原有数据，队头插入删队尾，队尾插入删队头
+                axisData8  // 坐标轴标签
+            ]
+        ]);
+    }, 2000);
 
 var option9 = {
     grid: {
@@ -1623,12 +1723,18 @@ var option11 = {
 };
 
 var option12 = {
-    color: ['#3FC3EC'],
+    color: ['#3FC3EC','#C48743'],
     grid: {
         x: 50,
         y: 30,
         x2: 50,
         y2: 30
+    },
+    legend: {
+        data:['流入流量','流出流量'],
+        textStyle:{
+            color: '#fff'
+        }
     },
     tooltip: {
         trigger: 'axis'
@@ -1662,7 +1768,16 @@ var option12 = {
                     width: 1
                 }
             },
-            data: ['周一', '周二', '周三', '周四', '周五', '周六']
+            data : (function (){
+                var now = new Date();
+                var res = [];
+                var len = 6;
+                while (len--) {
+                    res.unshift(now.toLocaleTimeString().replace(/^\D*/,'').slice(3,8));
+                    now = new Date(now - 2000);
+                }
+                return res;
+            })()
         },
     ],
     yAxis: [
@@ -1670,9 +1785,6 @@ var option12 = {
             type: 'value',
             name: 'Byte',
             position: 'left',
-            //min: 0,
-            //max: 300,
-            //splitNumber: 5,
             boundaryGap: [0, 0.1],
             axisLine: {    // 轴线
                 show: true,
@@ -1683,8 +1795,6 @@ var option12 = {
             },
             axisLabel: {
                 formatter: function (value) {
-                    // Function formatter
-//                return value + ' °C'
                     return value
                 },
                 margin: 10,
@@ -1693,7 +1803,6 @@ var option12 = {
                     fontFamily: 'verdana',
                     fontSize: 12,
                     fontStyle: 'normal',
-//                fontWeight: 'bold'
                 }
             },
             axisTick: {    // 轴标记
@@ -1709,14 +1818,63 @@ var option12 = {
     ],
     series: [
         {
-            name: '成交',
+            name: '流入流量',
             type: 'line',
             smooth: true,
             itemStyle: {normal: {areaStyle: {type: 'default'}}},
-            data: [70, 200, 70, 150, 90, 300]
-        }
+            data: (function(){
+                var res = []
+                var arr = vm.getData6(2,6)
+                arr.forEach(function(val,i){
+                    res.unshift(val.volume_in)
+                })
+                return res
+            })()
+        },
+        {
+            name: '流出流量',
+            type: 'line',
+            smooth: true,
+            itemStyle: {normal: {areaStyle: {type: 'default'}}},
+            data: (function(){
+                var res = []
+                var arr = vm.getData6(2,6)
+                arr.forEach(function(val,i){
+                    res.unshift(val.volume_out)
+                })
+                return res
+            })()
+        },
     ]
 };
+
+    var lastData12 = 7;
+    var axisData12;
+    clearInterval(timeTicket12);
+    var timeTicket12 = setInterval(function (){
+        //lastData12 += Math.random() * ((Math.round(Math.random() * 10) % 2) == 0 ? 1 : -1);
+        //lastData12 = lastData4.toFixed(1) - 0;
+        lastData12 = vm.getData6(2,1)[0]['volume_in']
+        axisData12 = (new Date()).toLocaleTimeString().replace(/^\D*/,'').slice(3,8);
+
+        // 动态数据接口 addData
+        myChart12.addData([
+            [
+                0,        // 系列索引
+                lastData12, // 新增数据
+                false,    // 新增数据是否从队列头部插入
+                false,    // 是否增加队列长度，false则自定删除原有数据，队头插入删队尾，队尾插入删队头
+                axisData12  // 坐标轴标签
+            ],
+            [
+                1,        // 系列索引
+                vm.getData6(2,1)[0]['volume_out'], // 新增数据
+                false,    // 新增数据是否从队列头部插入
+                false,    // 是否增加队列长度，false则自定删除原有数据，队头插入删队尾，队尾插入删队头
+                axisData12  // 坐标轴标签
+            ],
+        ]);
+    }, 2000);
 
 // 基于准备好的dom，初始化echarts图表
 var myChart1 = echarts.init(document.getElementById('myChart1'));

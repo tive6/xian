@@ -211,32 +211,32 @@ router.get('/:ct/dataStatus', function(req, res){
     let n = parseInt(req.params.ct)
     let num = 0
     let data = []
-    let obj = {
-        'timestamp': new Data().getTime(),
-        'volume': (Math.random()*1000).toFixed(2)
-    }
-    let obj1 = {
-        'timestamp': new Data().getTime(),
-        'volume': (Math.random()*1000).toFixed(2)
-    }
-    let obj2 = {
-        'timestamp': new Data().getTime(),
-        'volume_in': (Math.random()*1000).toFixed(2),
-        'volume_out': (Math.random()*1000).toFixed(2)
-    }
     if(n===0){
         num = parseInt(req.query.range)|| 24
         for(let i=0;i<num;i++){
+            let obj = {
+                'timestamp': new Date().getTime(),
+                'volume': (Math.random()*1000).toFixed(2)
+            }
             data.push(obj)
         }
     }else if(n===1){
         num = parseInt(req.query.range)|| 24
         for(let i=0;i<num;i++){
+            let obj1 = {
+                'timestamp': new Date().getTime(),
+                'volume': (Math.random()*1000).toFixed(2)
+            }
             data.push(obj1)
         }
     }else{
         num = parseInt(req.query.range)|| 1
         for(let i=0;i<num;i++){
+            let obj2 = {
+                'timestamp': new Date().getTime(),
+                'volume_in': (Math.random()*1000).toFixed(2),
+                'volume_out': (Math.random()*1000).toFixed(2)
+            }
             data.push(obj2)
         }
     }
