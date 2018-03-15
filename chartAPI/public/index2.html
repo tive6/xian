@@ -50,7 +50,7 @@
         <div class="ad-body-list-title ad-body-list-title3">服务组件健康状况</div>
         <table class="ad-body-14-list">
           <tr v-for="let (val,i) of data5[0]">
-            <td>{{val.timestamp}}</td>
+            <td>{{val.timestamp | dateFormat('MM DD HH mm')}}</td>
             <td>{{val.service_name}} 运行状况：{{val.health==0?'健康':'故障'}}</td>
           </tr>
         </table>
@@ -96,20 +96,20 @@
             <div class="ad-body-list-title ad-body-list-title2">组件集群数据单位时间采集量</div>
             <div class="ad-cont2-tr1-outer clear">
               <div class="ad-cont2-tr1-inner ad-cont2-tr1-inner1">
-                <h3>1000</h3>
+                <h3 v-text="data1.good"></h3>
                 <p>云服务器数量(台)</p>
               </div>
               <div class="ad-cont2-tr1-inner ad-cont2-tr1-inner2">
-                <h3>1000</h3>
-                <p>虚拟硬盘总数(台)</p>
+                <h3 v-text="bytesToGB(data7.vmems)"></h3>
+                <p>虚拟内存总数(G)</p>
               </div>
               <div class="ad-cont2-tr1-inner ad-cont2-tr1-inner3">
-                <h3>1000</h3>
-                <p>CPU总数(台)</p>
+                <h3 v-text="data7.vcores"></h3>
+                <p>CPU总数(个)</p>
               </div>
               <div class="ad-cont2-tr1-inner ad-cont2-tr1-inner4">
-                <h3>1000</h3>
-                <p>虚拟硬盘总数(台)</p>
+                <h3 v-text="bytesToGB(data7.hdfs_capacity)"></h3>
+                <p>虚拟硬盘总数(G)</p>
               </div>
             </div>
           </div>
@@ -117,19 +117,19 @@
             <div class="ad-cont2-tr2-list">
               <h4>Core分配量</h4>
               <div class="ad-cont2-tr2-list-outer">
-                <div class="ad-cont2-tr2-list-inner">50%</div>
+                <div class="ad-cont2-tr2-list-inner" :style="{width:lastData8.vcores+'%'}">{{lastData8.vcores+'%'}}</div>
               </div>
             </div>
             <div class="ad-cont2-tr2-list">
-              <h4>Core分配量</h4>
+              <h4>Mem分配量</h4>
               <div class="ad-cont2-tr2-list-outer">
-                <div class="ad-cont2-tr2-list-inner">50%</div>
+                <div class="ad-cont2-tr2-list-inner" :style="{width:lastData8.vmems+'%'}">{{lastData8.vmems+'%'}}</div>
               </div>
             </div>
             <div class="ad-cont2-tr2-list">
-              <h4>Core分配量</h4>
+              <h4>HDFS分配量</h4>
               <div class="ad-cont2-tr2-list-outer">
-                <div class="ad-cont2-tr2-list-inner">50%</div>
+                <div class="ad-cont2-tr2-list-inner" :style="{width:lastData8.hdfs_capacity+'%'}">{{lastData8.hdfs_capacity+'%'}}</div>
               </div>
             </div>
           </div>
@@ -145,7 +145,7 @@
             <div class="ad-body-list-title ad-body-list-title3">服务组件健康状况</div>
             <table class="ad-body-14-list ad-cont2-bl1-list">
               <tr v-for="let (val,i) of data5[1]" v-if="i<=4">
-                <td>{{val.timestamp}}</td>
+                <td>{{val.timestamp | dateFormat('MM DD HH mm')}}</td>
                 <td>{{val.service_name}} 运行状况：{{val.health==0?'健康':'故障'}}</td>
               </tr>
             </table>
@@ -159,108 +159,20 @@
               <tr>
                 <th>排名</th>
                 <th>应用系统名称</th>
-                <th>CPU数(个)</th>
+                <th>CPU时间(秒)</th>
                 <th>内存(B)</th>
                 <th>任务数(个)</th>
                 <th>持续坚持时间(秒)</th>
               </tr>
               </thead>
               <tbody>
-              <tr>
-                <td>111</td>
-                <td>111</td>
-                <td>111</td>
-                <td>111</td>
-                <td>111</td>
-                <td>111</td>
-              </tr>
-              <tr>
-                <td>111</td>
-                <td>111</td>
-                <td>111</td>
-                <td>111</td>
-                <td>111</td>
-                <td>111</td>
-              </tr>
-              <tr>
-                <td>111</td>
-                <td>111</td>
-                <td>111</td>
-                <td>111</td>
-                <td>111</td>
-                <td>111</td>
-              </tr>
-              <tr>
-                <td>111</td>
-                <td>111</td>
-                <td>111</td>
-                <td>111</td>
-                <td>111</td>
-                <td>111</td>
-              </tr>
-              <tr>
-                <td>111</td>
-                <td>111</td>
-                <td>111</td>
-                <td>111</td>
-                <td>111</td>
-                <td>111</td>
-              </tr>
-              <tr>
-                <td>111</td>
-                <td>111</td>
-                <td>111</td>
-                <td>111</td>
-                <td>111</td>
-                <td>111</td>
-              </tr>
-              <tr>
-                <td>111</td>
-                <td>111</td>
-                <td>111</td>
-                <td>111</td>
-                <td>111</td>
-                <td>111</td>
-              </tr>
-              <tr>
-                <td>111</td>
-                <td>111</td>
-                <td>111</td>
-                <td>111</td>
-                <td>111</td>
-                <td>111</td>
-              </tr>
-              <tr>
-                <td>111</td>
-                <td>111</td>
-                <td>111</td>
-                <td>111</td>
-                <td>111</td>
-                <td>111</td>
-              </tr>
-              <tr>
-                <td>111</td>
-                <td>111</td>
-                <td>111</td>
-                <td>111</td>
-                <td>111</td>
-                <td>111</td>
-              </tr>
-              <tr>
-                <td>111</td>
-                <td>111</td>
-                <td>111</td>
-                <td>111</td>
-                <td>111</td>
-                <td>111</td>
-              </tr>
-              <tr>
-                <td>111</td>
-                <td>111</td>
-                <td>111</td>
-                <td>111</td>
-                <td>111</td>
-                <td>111</td>
+              <tr v-for="let (val,i) of data9" v-if="i<12">
+                <td v-text="i+1"></td>
+                <td v-text="val['vcore_seconds']"></td>
+                <td v-text="val['user']"></td>
+                <td v-text="val['mem_used']"></td>
+                <td v-text="val['jobs']"></td>
+                <td v-text="val['during_time']"></td>
               </tr>
               </tbody>
             </table>
@@ -302,29 +214,9 @@
       <div class="ad-body-1 ad-body-14">
         <div class="ad-body-list-title ad-body-list-title3">服务组件健康状况</div>
         <table class="ad-body-14-list">
-          <tr>
-            <td>{{a}}</td>
-            <td>Agent运行状况：良好</td>
-          </tr>
-          <tr>
-            <td>3月5日 12点30分</td>
-            <td>Agent运行状况：良好</td>
-          </tr>
-          <tr>
-            <td>3月5日 12点30分</td>
-            <td>Agent运行状况：良好</td>
-          </tr>
-          <tr>
-            <td>3月5日 12点30分</td>
-            <td>Agent运行状况：良好</td>
-          </tr>
-          <tr>
-            <td>3月5日 12点30分</td>
-            <td>Agent运行状况：良好</td>
-          </tr>
-          <tr>
-            <td>3月5日 12点30分</td>
-            <td>Agent运行状况：良好</td>
+          <tr v-for="let (val,i) of data5[2]" v-if="i<=6">
+            <td>{{val.timestamp | dateFormat('MM DD HH mm')}}</td>
+            <td>{{val.service_name}} 运行状况：{{val.health==0?'健康':'故障'}}</td>
           </tr>
         </table>
       </div>

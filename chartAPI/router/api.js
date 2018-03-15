@@ -212,17 +212,17 @@ router.get('/:ct/dataStatus', function(req, res){
     let num = 0
     let data = []
     let obj = {
-        'timestamp': 123908234082,
-        'volume': 2384.43
+        'timestamp': new Data().getTime(),
+        'volume': (Math.random()*1000).toFixed(2)
     }
     let obj1 = {
-        'timestamp': 123908234082,
-        'volume_in': 2384.43,
-        'volume_out': 2394.3
+        'timestamp': new Data().getTime(),
+        'volume': (Math.random()*1000).toFixed(2)
     }
     let obj2 = {
-        'timestamp': 123908234082,
-        'records': 2384
+        'timestamp': new Data().getTime(),
+        'volume_in': (Math.random()*1000).toFixed(2),
+        'volume_out': (Math.random()*1000).toFixed(2)
     }
     if(n===0){
         num = parseInt(req.query.range)|| 24
@@ -278,8 +278,8 @@ router.get('/virtualResource', function(req, res) {
     res.json({
         ISOK:true,
         data:{
-            'vcores': 123,
-            'vmems': 492039,
+            'vcores': 1000,
+            'vmems': 4920390,
             'hdfs_capacity': 2934802983
         }
     });
@@ -291,9 +291,9 @@ router.get('/virtualResource/usage', function(req, res){
     console.log(num)
     let obj = {
         'timestamp': 1293801928309,
-        'vcore_used': 12,
-        'vmem_used': 23098,
-        'hdfs_used': 3280948
+        'vcore_used': 650,
+        'vmem_used': 4020390,
+        'hdfs_used': 1934802983
     }
     let data = []
     for(let i=0;i<num;i++){

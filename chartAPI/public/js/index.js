@@ -29,6 +29,11 @@ var vm = new Vue({
                 disk_useD:0
             }
         ],
+        lastData8:{
+            vcores: 0,
+            vmems: 0,
+            hdfs_capacity: 0
+        },
         data1: {
             good: 0,
             bad: 0,
@@ -122,32 +127,73 @@ var vm = new Vue({
                     health: 0
                 }
             ]
+        ],
+        data7: {
+            vcores: 0,
+            vmems: 0,
+            hdfs_capacity: 0
+        },
+        data8: {
+            timestamp: Date.now(),
+            vcore_used: 10,
+            vmem_used: 10005,
+            hdfs_used: 3200941
+        },
+        data9: [
+            {
+                user: 'anjian',
+                vcore_seconds: 232342,
+                mem_used: 3293204,
+                during_time: 23489123,
+                jobs: 12391
+            }
         ]
     },
-    /*filters:{
-        bytesToGB:function(val) {
+    filters:{
+        bytesToGB(val) {
             return (parseInt(val) / 1073741824).toFixed(3)
+        },
+        dateFormat(ms,opts){
+            if(typeof ms == 'number'){
+                ms = new Date(ms)
+            }
+            var lastDate = ''
+            opts.indexOf('YY')!=-1 && (lastDate += ms.getFullYear()+'年')
+            opts.indexOf('MM')!=-1 && (lastDate += ms.getMonth()+1+'月')
+            opts.indexOf('DD')!=-1 && (lastDate += ms.getDate()+'日 ')
+            opts.indexOf('HH')!=-1 && (lastDate += ms.getHours()+'时')
+            opts.indexOf('mm')!=-1 && (lastDate += ms.getMinutes()+'分')
+            opts.indexOf('ss')!=-1 && (lastDate += ms.getSeconds()+'秒')
+            return lastDate
         }
-    },*/
+    },
     computed: {
 
     },
     beforeCreate:function(){
         this.$nextTick(function () {
-            this.getJkzk()
+            var that = this
+            this.getJkzk() // 1
             //this.getJqzl(0)
             //this.getJqzl(1)
             //this.getJqzl(2)
             this.getData2()
             this.getData3()
             this.getData5()
+            this.getJquse()
+            // 7
+            this.getJqzyzl()
+            // 8
+            this.getJqzysy(1)
+            /*setInterval(function(){
+                that.getJqzysy(1)
+            },2000)*/
 
         })
     },
     created: function () {
         this.$nextTick(function () {
             //this.getJkzk()
-
 
         })
 
@@ -191,6 +237,9 @@ var vm = new Vue({
         })
     },
     methods: {
+        fn(){
+            console.log(666)
+        },
         fn_bytesToGB: function(val) {
             return (parseInt(val) / 1073741824).toFixed(3)
         },
@@ -230,6 +279,12 @@ var vm = new Vue({
                 len++
             }
             console.log(this.data5)
+        },
+        getData8(){
+            this.lastData8.vcores = (this.data8.vcore_used / this.data7.vcores).toFixed(2) * 100
+            this.lastData8.vmems = (this.data8.vmem_used / this.data7.vmems).toFixed(2) * 100
+            this.lastData8.hdfs_capacity = (this.data8.hdfs_used / this.data7.hdfs_capacity).toFixed(2) * 100
+            console.log(this.lastData8)
         },
         // this.$http.get('/someUrl', [options]).then(function(response){}
         getJkzk: function () { // 1.健康状况
@@ -299,27 +354,37 @@ var vm = new Vue({
                 });
         },
         getJqzyzl: function () { // 7.获取计算存储集群虚拟资源总量
+            var that = this
             this.$http.get('/api/v1/virtualResource').
                 then(function (res) {
                     console.log(res.body)
+                    that.data7 = res.body.data
                 }, function (res) {
                     console.log(res.body.msg)
                     // 响应错误回调
                 });
         },
         getJqzysy: function (n) { // 8.获取计算存储集群资源使用情况
+            var that = this
             this.$http.get('/api/v1/virtualResource/usage?range=' + n).
                 then(function (res) {
                     console.log(res.body)
+                    that.data8 = res.body.data.data[0]
+                    console.log(that.data7)
+                    console.log(that.data8)
+                    that.getData8()
                 }, function (res) {
                     console.log(res.body.msg)
                     // 响应错误回调
                 });
         },
         getJquse: function () { // 9.获取用户使用资源情况
+            var that = this
             this.$http.get('/api/v1/users/statistic').
                 then(function (res) {
                     console.log(res.body)
+                    that.data9 = res.body.data.data
+                    console.log(that.data9)
                 }, function (res) {
                     console.log(res.body.msg)
                     // 响应错误回调
@@ -328,6 +393,7 @@ var vm = new Vue({
     }
 })
 
+console.log(vm)
 var vmData = vm.$data
 setTimeout(function(){
     console.log(vmData.uses[0].mem_useD)
@@ -725,7 +791,16 @@ var option4 = {
                     width: 1
                 }
             },
-            data: ['周一', '周二', '周三', '周四', '周五', '周六']
+            data : (function (){
+                var now = new Date();
+                var res = [];
+                var len = 6;
+                while (len--) {
+                    res.unshift(now.toLocaleTimeString().replace(/^\D*/,''));
+                    now = new Date(now - 2000);
+                }
+                return res;
+            })()
         },
     ],
     yAxis: [
