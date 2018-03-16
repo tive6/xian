@@ -5,6 +5,32 @@
     background: url(./../img/ad-bg.png) no-repeat;
     background-size: cover;
     padding-top: 80px;
+    position: relative;
+}
+.ad-health{
+    width: 434px;
+    height: 50px;
+    background: url(./../img/ad-bg-rt.png) no-repeat;
+    position: absolute;
+    top: 15px;
+    right: 19px;
+}
+.ad-health-list{
+    width: 50%;
+    float: left;
+    color: #80D7FF;
+}
+.ad-health-1,
+.ad-health-2{
+    line-height: 27px;
+}
+.ad-health-1,
+.ad-health-3{
+    text-indent: 35px;
+}
+.ad-health-2,
+.ad-health-4{
+    text-indent: 15px;
 }
 .ad-header{
     box-sizing: border-box;

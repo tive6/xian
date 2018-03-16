@@ -67,19 +67,19 @@ router.get('/:ct/resource/usage', function(req, res){
     let n = parseInt(req.params.ct)
     let num = parseInt(req.query.range) || 30
     console.log(num)
-    let obj = {
-        'timestamp': 123445678754,
-        'cpu_percent': 0.5,
-        'mem_used': 1003741800,
-        'disk_used': 1023741824,
-        'disk_input': 3829.2,
-        'disk_output': 1382.1,
-        'net_input': 32901.4,
-        'net_output': 4930.8,
-        'health': 0
-    }
     let data = []
     for(let i=0;i<num;i++){
+        let obj = {
+            'timestamp': 123445678754,
+            'cpu_percent': toNum2(Math.random(),2),
+            'mem_used': Math.floor(Math.random()*100000),
+            'disk_used': Math.floor(Math.random()*100000),
+            'disk_input': toNum2(Math.random()*1000,1),
+            'disk_output': toNum2(Math.random()*1000,1),
+            'net_input': toNum2(Math.random()*1000,1),
+            'net_output': toNum2(Math.random()*1000,1),
+            'health': 0
+        }
         data.push(obj)
     }
     let json = {
@@ -165,13 +165,13 @@ router.get('/:ct/serviceStatus/history', function(req, res){
     let n = parseInt(req.params.ct)
     let num = parseInt(req.query.range) || 30
     console.log(num)
-    let obj = {
-        'timestamp': 123821312499,
-        'service_name': 'flume',
-        'health': 0
-    }
     let data = []
     for(let i=0;i<num;i++){
+        let obj = {
+            'timestamp': new Date().getTime(),
+            'service_name': 'flume'+Math.floor(Math.random()*10),
+            'health': Math.random()>0.5?0:1
+        }
         data.push(obj)
     }
     let json = {
@@ -313,15 +313,15 @@ router.get('/virtualResource/usage', function(req, res){
 router.get('/users/statistic', function(req, res) {
     let num = parseInt(req.query.range) || 13
     console.log(num)
-    let obj = {
-        'user': 'anjian',
-        'vcore_seconds': 232342,
-        'mem_used': 3293204,
-        'during_time': 23489123,
-        'jobs': 12391
-    }
     let data = []
     for(let i=0;i<num;i++){
+        let obj = {
+            'user': 'anjian'+Math.floor(Math.random()*20),
+            'vcore_seconds': Math.floor(Math.random()*1000),
+            'mem_used': Math.floor(Math.random()*10000),
+            'during_time': Math.floor(Math.random()*100000),
+            'jobs': Math.floor(Math.random()*1000)
+        }
         data.push(obj)
     }
     let json = {
@@ -335,6 +335,9 @@ router.get('/users/statistic', function(req, res) {
     res.json(json)
 });
 
+function toNum2(val,n){
+    return parseFloat((val).toFixed(n))
+}
 
 
 module.exports = router;

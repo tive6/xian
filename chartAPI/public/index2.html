@@ -14,6 +14,13 @@
 <body>
 
 <div class="ad-container">
+  <!-- 物理机健康状况 -->
+  <div class="ad-health">
+    <div class="ad-health-list ad-health-1">正常运行主机数(个)：{{data1.good}}</div>
+    <div class="ad-health-list ad-health-2">最近一个月故障机次(次)：{{data1.bad_monthly}}</div>
+    <div class="ad-health-list ad-health-3">当前故障主机数(个)：{{data1.bad}}</div>
+    <div class="ad-health-list ad-health-4">到目前为止故障机次(次)：{{data1.bad_until_now}}</div>
+  </div>
   <div class="ad-body clear">
     <div class="ad-cont ad-cont1">
       <div class="ad-body-1 ad-body-11 clear">
@@ -168,8 +175,8 @@
               <tbody>
               <tr v-for="let (val,i) of data9" v-if="i<12">
                 <td v-text="i+1"></td>
-                <td v-text="val['vcore_seconds']"></td>
                 <td v-text="val['user']"></td>
+                <td v-text="val['vcore_seconds']"></td>
                 <td v-text="val['mem_used']"></td>
                 <td v-text="val['jobs']"></td>
                 <td v-text="val['during_time']"></td>

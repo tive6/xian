@@ -5,10 +5,20 @@
 Vue.prototype.bytesToGB = function(val) {
     return (parseInt(val) / 1073741824).toFixed(3)
 }
+Vue.prototype.toNum2 = function(num,n){
+    return parseFloat((num).toFixed(n))
+}
+
 var vm = new Vue({
     el: '.ad-container',
     data: {
         a: 10,
+        timeType:{
+            twoS: 2000,
+            oneM: 60000,
+            oneH: 3600000,
+            oneD: 86400000
+        },
         uses:[
             {
                 mem_useN:0,
@@ -34,6 +44,13 @@ var vm = new Vue({
             vmems: 0,
             hdfs_capacity: 0
         },
+        lastData3: [
+            {
+                cpu_percent: 0,
+                diskSum: 0,
+                netSum: 0
+            }
+        ],
         data1: {
             good: 0,
             bad: 0,
@@ -199,22 +216,39 @@ var vm = new Vue({
             //this.getJqzl(1)
             //this.getJqzl(2)
             this.getData2()
-            this.getData3()
-            this.getData5()
-            this.getJquse()
-            // 6
-            console.log(this.getData6(0,6))
-            // 7
-            this.getJqzyzl()
-            // 8
-            this.getJqzysy(1)
+            var ln = 0
+            while(ln<3){
+                this.getData3(ln,4)
+                ln ++
+            }
+            this.getData5() // 5
+            setInterval(function(){
+                that.getData5() // 5
+            },that.timeType.twoS)
+            console.log(this.getData6(0,6)) // 6
+            this.getJqzyzl() // 7
+            this.getJqzysy(1)// 8
             /*setInterval(function(){
-                that.getJqzysy(1)
-            },2000)*/
+             that.getJqzysy(1)
+             },2000)*/
 
-
-
-
+            //this.getJquse() // 9
+            that.getJquse(function(res){
+                that.arrSort(res,arr9[0])
+            })
+            var ind = 0;
+            var arr9 = ['vcore_seconds','mem_used','jobs','during_time']
+            setInterval(function(){
+                that.getJquse(function(res){
+                    ind ++
+                    if(ind>=arr9.length){
+                        ind = 0
+                    }
+                    console.log(arr9[ind])
+                    that.arrSort(res,arr9[ind])
+                })
+            },5000)
+            //},that.timeType.oneD)
         })
     },
     created: function () {
@@ -225,9 +259,8 @@ var vm = new Vue({
 
     },
     mounted: function () {
-
         this.$nextTick(function () {
-
+            var that = this
             /*
              * ct：cluster
              0->采集集群
@@ -246,25 +279,20 @@ var vm = new Vue({
              this.getJqzyzl()
              this.getJqzysy(5)
              this.getJquse()*/
-
 //        this.getJqzl(0)
-
 //      this.getData2()
-
             /*opts={
              ct:0,
              n:0,
              fn:function(){}
              }*/
-            var that = this
-            setInterval(function(){
-                that.a++
-            },1000)
         })
     },
     methods: {
-        fn(){
-            console.log(666)
+        arrSort(arr,attr){
+            arr.sort(function(a,b){
+                return a[attr] - b[attr];
+            })
         },
         fn_bytesToGB: function(val) {
             return (parseInt(val) / 1073741824).toFixed(3)
@@ -279,7 +307,17 @@ var vm = new Vue({
                 this.uses[len].disk_useD = this.fn_bytesToGB(this.data3[len][0].disk_used)
                 len++
             }
-            console.log(this.uses)
+            //console.log(this.uses)
+        },
+        getSum(){
+            var len = 0
+            while (len < 3){
+                this.uses[len].mem_useN = this.fn_bytesToGB(this.data2[len].memory - this.data3[len][0].mem_used)
+                this.uses[len].mem_useD = this.fn_bytesToGB(this.data3[len][0].mem_used)
+                this.uses[len].disk_useN = this.fn_bytesToGB(this.data2[len].disk - this.data3[len][0].disk_used)
+                this.uses[len].disk_useD = this.fn_bytesToGB(this.data3[len][0].disk_used)
+                len++
+            }
         },
         // 分别获取资源总量
         getData2: function (){
@@ -290,13 +328,10 @@ var vm = new Vue({
             }
             //console.log(this.data2)
         },
-        getData3: function (){
-            var len = 0
-            while (len < 3){
-                this.getJqsy(len,2)
-                len++
-            }
+        getData3: function (index,n){
+            this.getJqsy(index,n)
             console.log(this.data3)
+            return this.data3[index]
         },
         getData5: function (){
             var len = 0
@@ -304,7 +339,7 @@ var vm = new Vue({
                 this.getJqls(len,6)
                 len++
             }
-            console.log(this.data5)
+            //console.log(this.data5)
         },
         getData6: function (index,n){
             var len = 0
@@ -312,7 +347,7 @@ var vm = new Vue({
                 this.getJqsjzt(len,n)
                 len++
             }
-            console.log(this.data6)
+            //console.log(this.data6)
             return this.data6[index]
         },
         getData8(){
@@ -336,7 +371,7 @@ var vm = new Vue({
             var that = this
             this.$http.get('/api/v1/' + ct + '/resource').
                 then(function (res) {
-                    console.log(res.body)
+                    //console.log(res.body)
                     that.data2.splice(ct,1,res.body.data)
                 }, function (res) {
                     console.log(res.body.msg)
@@ -350,7 +385,6 @@ var vm = new Vue({
                     console.log(res.body)
                     that.data3.splice(ct,1,res.body.data.data)
                     this.getUses()
-
                 }, function (res) {
                     console.log(res.body.msg)
                     // 响应错误回调
@@ -370,7 +404,7 @@ var vm = new Vue({
             var that = this
             this.$http.get('/api/v1/' + ct + '/serviceStatus/history?range=' + n).
                 then(function (res) {
-                    console.log(res.body)
+                    //console.log(res.body)
                     that.data5.splice(ct,1,res.body.data.data)
                 }, function (res) {
                     console.log(res.body.msg)
@@ -381,7 +415,7 @@ var vm = new Vue({
             var that = this
             this.$http.get('/api/v1/' + ct + '/dataStatus?range=' + n).
                 then(function (res) {
-                    console.log(res.body)
+                    //console.log(res.body)
                     that.data6.splice(ct,1,res.body.data.data)
                 }, function (res) {
                     console.log(res.body.msg)
@@ -392,7 +426,7 @@ var vm = new Vue({
             var that = this
             this.$http.get('/api/v1/virtualResource').
                 then(function (res) {
-                    console.log(res.body)
+                    //console.log(res.body)
                     that.data7 = res.body.data
                 }, function (res) {
                     console.log(res.body.msg)
@@ -403,9 +437,8 @@ var vm = new Vue({
             var that = this
             this.$http.get('/api/v1/virtualResource/usage?range=' + n).
                 then(function (res) {
-                    console.log(res.body)
+                    //console.log(res.body)
                     that.data8 = res.body.data.data[0]
-                    console.log(that.data7)
                     console.log(that.data8)
                     that.getData8()
                 }, function (res) {
@@ -413,13 +446,14 @@ var vm = new Vue({
                     // 响应错误回调
                 });
         },
-        getJquse: function () { // 9.获取用户使用资源情况
+        getJquse: function (cb) { // 9.获取用户使用资源情况
             var that = this
             this.$http.get('/api/v1/users/statistic').
                 then(function (res) {
-                    console.log(res.body)
+                    //console.log(res.body)
                     that.data9 = res.body.data.data
-                    console.log(that.data9)
+                    //that.arrSort(that.data9,'vcore_seconds')
+                    cb(that.data9)
                 }, function (res) {
                     console.log(res.body.msg)
                     // 响应错误回调
@@ -434,469 +468,492 @@ setTimeout(function(){
     console.log(vmData.uses[0].mem_useD)
 
 
-var option1 = {
-    grid: {
-        x: 30,
-        y: 50,
-        x2: 30,
-        y2: 30
-    },
-    tooltip: {
-        trigger: 'axis'
-    },
-    legend: {
-        data: ['磁盘IO', '网络IO', 'CPU使用率'],
-        y: 10,
-        textStyle: {
-            color: '#fff'
-        }
-    },
-    xAxis: [
-        {
-            type: 'category',
-            position: 'bottom',
-//            splitNumber: 5,
-            boundaryGap: false, // 从0开始绘制
-            axisLine: {    // 轴线
-                show: true,
-                lineStyle: {
-                    color: '#2F95BF',
-                    type: 'solid',
-                    width: 1
-                }
-            },
-            axisTick: {    // 轴标记
-                show: true,
-                length: 10,
-                lineStyle: {
-//                color: 'red',
-                    type: 'none',
-//                type: 'solid',
-                    width: 1
-                }
-            },
-            axisLabel: {
-                show: true,
-                interval: 'auto',    // {number}
-//              rotate: 45,
-                margin: 10,
-                formatter: '{value}',
-                textStyle: {
-                    color: '#2F95BF',
-                    fontFamily: 'verdana',
-                    fontSize: 10,
-                    fontStyle: 'normal',
-//                fontWeight: 'bold'
-                }
-//              formatter: '{value}月',
-                /*textStyle: {
-                 color: 'blue',
-                 fontFamily: 'sans-serif',
-                 fontSize: 15,
-                 fontStyle: 'italic',
-                 fontWeight: 'bold'
-                 }*/
-            },
-            splitLine: {
-                show: true,
-                lineStyle: {
-//                color: '#483d8b',
-                    type: 'none',
-//                type: 'dashed',
-//                width: 1
-                }
-            }, /*
-         splitArea : {
-         show: true,
-         areaStyle:{
-         color:['rgba(144,238,144,0.3)','rgba(135,200,250,0.3)']
-         }
-         },*/
-            data: [
-                '1', '2', '3'
-                /*{
-                 value:'6',
-                 textStyle: {
-                 color: 'red',
-                 fontSize: 30,
-                 fontStyle: 'normal',
-                 fontWeight: 'bold'
-                 }
-                 },*/
-            ]
-        }
-    ],
-    yAxis: [
-        {
-            type: 'value',
-            name: '%',
-            position: 'left',
-            //min: 0,
-            //max: 300,
-            //splitNumber: 5,
-            boundaryGap: [0, 0.1],
-            axisLine: {    // 轴线
-                show: true,
-                lineStyle: {
-                    color: '#2F95BF',
-//                type: 'none',
-//                type: 'dashed',
-                    width: 1
-                }
-            },
-            axisTick: {    // 轴标记
-                show: true,
-                length: 3,
-                lineStyle: {
-                    color: '#2F95BF',
-                    type: 'solid',
-                    width: 1
-                }
-            },
-            axisLabel: {
-                show: true,
-                interval: 'auto',    // {number}
-//              rotate: -45,
-                margin: 5,
-                formatter: '{value}',    // Template formatter!
-                textStyle: {
-                    color: '#2F95BF',
-                    fontFamily: 'verdana',
-                    fontSize: 10,
-                    fontStyle: 'normal',
-//                fontWeight: 'bold'
-                }
-            },
-            /*splitLine : {
-             show:true,
-             lineStyle: {
-             color: '#483d8b',
-             type: 'dotted',
-             width: 2
-             }
-             },
-             splitArea : {
-             show: true,
-             areaStyle:{
-             color:['rgba(205,92,92,0.3)','rgba(255,215,0,0.3)']
-             }
-             }*/
+    var option1 = {
+        grid: {
+            x: 30,
+            y: 50,
+            x2: 40,
+            y2: 30
         },
-        {
-            type: 'value',
-            name: 'Byte/s',
-            splitNumber: 5,
-            axisLabel: {
-                formatter: function (value) {
-                    // Function formatter
-//                return value + ' °C'
-                    return value
-                },
-                margin: 10,
-                textStyle: {
-                    color: '#2F95BF',
-                    fontFamily: 'verdana',
-                    fontSize: 10,
-                    fontStyle: 'normal',
-//                fontWeight: 'bold'
-                }
-            },
-            axisTick: {    // 轴标记
-                show: true,
-                length: 3,
-                lineStyle: {
-                    color: '#2F95BF',
-                    type: 'solid',
-                    width: 1
-                }
-            },
-            splitLine: {
-                show: true
+        tooltip: {
+            trigger: 'axis'
+        },
+        legend: {
+            data: ['磁盘IO', '网络IO', 'CPU使用率'],
+            y: 10,
+            textStyle: {
+                color: '#fff'
             }
-        }
-    ],
-    series: [
-        {
-            name: '磁盘IO',
-            type: 'line',
-            smooth: true,
-            data: [10, 55, 80]
         },
-        {
-            name: '网络IO',
-            type: 'line',
-            smooth: true,
-            yAxisIndex: 1,
-            data: [38, 62, 91]
-        },
-        {
-            name: 'CPU使用率',
-            type: 'line',
-            smooth: true,
+        xAxis: [
+            {
+                type: 'category',
+                position: 'bottom',
+//            splitNumber: 5,
+                boundaryGap: false, // 从0开始绘制
+                axisLine: {    // 轴线
+                    show: true,
+                    lineStyle: {
+                        color: '#2F95BF',
+                        type: 'solid',
+                        width: 1
+                    }
+                },
+                axisTick: {    // 轴标记
+                    show: true,
+                    length: 10,
+                    lineStyle: {
+                        type: 'none',
+                        width: 1
+                    }
+                },
+                axisLabel: {
+                    show: true,
+                    interval: 'auto',    // {number}
+                    margin: 10,
+                    formatter: '{value}',
+                    textStyle: {
+                        color: '#2F95BF',
+                        fontFamily: 'verdana',
+                        fontSize: 10,
+                        fontStyle: 'normal'
+                    }
+                },
+                splitLine: {
+                    show: true,
+                    lineStyle: {
+                        type: 'none'
+                    }
+                },
+                data: (function (){
+                    var now = new Date();
+                    var res = [];
+                    var len = 4;
+                    while (len--) {
+                        res.unshift(now.toLocaleTimeString().replace(/^\D*/,'').slice(2,8));
+                        now = new Date(now - 2000);
+                    }
+                    return res;
+                })()
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value',
+                name: '%',
+                position: 'left',
+                boundaryGap: [0, 0.1],
+                axisLine: {    // 轴线
+                    show: true,
+                    lineStyle: {
+                        color: '#2F95BF',
+                        width: 1
+                    }
+                },
+                axisTick: {    // 轴标记
+                    show: true,
+                    length: 3,
+                    lineStyle: {
+                        color: '#2F95BF',
+                        type: 'solid',
+                        width: 1
+                    }
+                },
+                axisLabel: {
+                    show: true,
+                    interval: 'auto',    // {number}
+                    margin: 5,
+                    formatter: '{value}',    // Template formatter!
+                    textStyle: {
+                        color: '#2F95BF',
+                        fontFamily: 'verdana',
+                        fontSize: 10,
+                        fontStyle: 'normal'
+                    }
+                }
+            },
+            {
+                type: 'value',
+                name: 'Byte/s',
+                splitNumber: 5,
+                axisLabel: {
+                    formatter: function (value) {
+                        // Function formatter
+//                return value + ' °C'
+                        return value
+                    },
+                    margin: 5,
+                    textStyle: {
+                        color: '#2F95BF',
+                        fontFamily: 'verdana',
+                        fontSize: 10,
+                        fontStyle: 'normal'
+                    }
+                },
+                axisTick: {    // 轴标记
+                    show: true,
+                    length: 3,
+                    lineStyle: {
+                        color: '#2F95BF',
+                        type: 'solid',
+                        width: 1
+                    }
+                },
+                splitLine: {
+                    show: true
+                }
+            }
+        ],
+        series: [
+            {
+                name: '磁盘IO',
+                type: 'line',
+                smooth: true,
+                yAxisIndex: 1,
+                data: (function(){
+                    var res = []
+                    var arr = vm.getData3(0,4)
+                    arr.forEach(function(val,i){
+                        res.push((val.disk_input+val.disk_output))
+                    })
+                    return res
+                })()
+            },
+            {
+                name: '网络IO',
+                type: 'line',
+                smooth: true,
+                yAxisIndex: 1,
+                data: (function(){
+                    var res = []
+                    var arr = vm.getData3(0,4)
+                    arr.forEach(function(val,i){
+                        res.push((val.net_input+val.net_output))
+                    })
+                    console.log(res)
+                    return res
+                })()
+            },
+            {
+                name: 'CPU使用率',
+                type: 'line',
+                smooth: true,
 //            xAxisIndex: 1,
 //            yAxisIndex: 1,
-            data: [20, 77, 50]
-        }
-    ]
-};
+                data: (function(){
+                    var res = []
+                    var arr = vm.getData3(0,4)
+                    arr.forEach(function(val,i){
+                        console.log(val.cpu_percent)
+                        res.push(val.cpu_percent*100)
+                    })
+                    return res
+                })()
+            }
+        ]
+    };
 
-var option2 = {
-    color: ['#FBC31A', '#258BFF'],
-    title: {
-        text: '内存占用',
-        x: 'center',
-        y: 'bottom',
-        textStyle: {
-            color: '#5797D6',
-            fontSize: 12,
-            fontStyle: 'normal'
-        }
-    },
-    tooltip: {
-        trigger: 'item',
-        formatter: "{a} <br/>{b}: {c} ({d}%)"
-    },
-    legend: {
-        orient: 'horizontal',
-        x: 'center',
-        y: 10,
-        data: ['已用', '空闲'],
-        textStyle: {
-            color: '#fff'
-        }
-    },
-    series: [
-        {
-            name: '使用率',
-            type: 'pie',
-            radius: ['30%', '50%'],
-            avoidLabelOverlap: false,
-            label: {
-                normal: {
-                    show: false,
-                    position: 'center'
-                },
-                emphasis: {
-                    show: false,
-                    textStyle: {
-                        color: '#fff',
-                        fontSize: '30',
-                        fontWeight: 'bold'
-                    }
-                }
-            },
-            labelLine: {
-                normal: {
-                    show: false
-                }
-            },
-            itemStyle: {
-                normal: {
-                    label: {
-                        show: false
-                    },
-                    labelLine: {
-                        show: false,
-//                  length : 10,
-                    }
-                }
-            },
-            data: (function(){
-                var res = []
-                res.push(
-                    {value: vmData.uses[0].disk_useD, name: '已用'},
-                    {value: vmData.uses[0].disk_useN, name: '空闲'}
-                )
-                console.log(res)
-                return res
-            })()
-                /*[
-                {value: 335, name: '已用'},
-                {value: 1548, name: '空闲'}
-            ]*/
-        }
-    ]
-};
+    var lastData1 = 5;
+    var axisData1;
+    clearInterval(timeTicket1);
+    var timeTicket1 = setInterval(function (){
+        axisData1 = (new Date()).toLocaleTimeString().replace(/^\D*/,'').slice(2,8);
 
-var option3 = {
-    color: ['#FBC31A', '#258BFF'],
-    title: {
-        text: '磁盘占用',
-        x: 'center',
-        y: 'bottom',
-        textStyle: {
-            color: '#5797D6',
-            fontSize: 12,
-            fontStyle: 'normal'
-        }
-    },
-    tooltip: {
-        trigger: 'item',
-        formatter: "{a} <br/>{b}: {c} ({d}%)"
-    },
-    series: [
-        {
-            name: '使用率',
-            type: 'pie',
-            radius: ['30%', '50%'],
-            avoidLabelOverlap: false,
-            label: {
-                normal: {
-                    show: false,
-                    position: 'center'
-                },
-                emphasis: {
-                    show: true,
-                    textStyle: {
-                        color: '#fff',
-                        fontSize: '30',
-                        fontWeight: 'bold'
-                    }
-                }
-            },
-            labelLine: {
-                normal: {
-                    show: false
-                }
-            },
-            itemStyle: {
-                normal: {
-                    label: {
-                        show: false
-                    },
-                    labelLine: {
-                        show: false,
-//                  length : 10,
-                    }
-                }
-            },
-            data: (function(){
-                var res = []
-                res.push(
-                    {value: vmData.uses[0].disk_useD, name: '已用'},
-                    {value: vmData.uses[0].disk_useN, name: '空闲'}
-                )
-                return res
-            })()
-                /*[
-                {value: 335, name: '已用'},
-                {value: 1548, name: '空闲'}
-            ]*/
-        }
-    ]
-};
+        // 动态数据接口 addData
+        myChart1.addData([
+            [
+                0,        // 系列索引
+                vm.getData3(0,1)[0]['disk_input']+vm.getData3(0,1)[0]['disk_output'], // 新增数据
+                false,    // 新增数据是否从队列头部插入
+                false,    // 是否增加队列长度，false则自定删除原有数据，队头插入删队尾，队尾插入删队头
+                axisData1  // 坐标轴标签
+            ],
+            [
+                1,        // 系列索引
+                vm.getData3(0,1)[0]['disk_input']+vm.getData3(0,1)[0]['net_output'], // 新增数据
+                false,    // 新增数据是否从队列头部插入
+                false,    // 是否增加队列长度，false则自定删除原有数据，队头插入删队尾，队尾插入删队头
+                axisData1  // 坐标轴标签
+            ],
+            [
+                2,        // 系列索引
+                vm.getData3(0,1)[0]['cpu_percent']*100, // 新增数据
+                false,    // 新增数据是否从队列头部插入
+                false,    // 是否增加队列长度，false则自定删除原有数据，队头插入删队尾，队尾插入删队头
+                axisData1  // 坐标轴标签
+            ]
+        ]);
+    }, 2000);
 
-var option4 = {
-    color: ['#3FC3EC'],
-    grid: {
-        x: 50,
-        y: 30,
-        x2: 50,
-        y2: 30
-    },
-    tooltip: {
-        trigger: 'axis'
-    },
-    calculable: true,
-    xAxis: [
-        {
-            type: 'category',
-            boundaryGap: false,
-            axisLabel: {
-                formatter: function (value) {
-                    // Function formatter
-//                return value + ' °C'
-                    return value
-                },
-                margin: 10,
-                textStyle: {
-                    color: '#fff',
-                    fontFamily: 'verdana',
-                    fontSize: 12,
-                    fontStyle: 'normal',
-//                fontWeight: 'bold'
-                }
-            },
-            axisTick: {    // 轴标记
-                show: true,
-                length: 3,
-                lineStyle: {
-                    color: '#2F95BF',
-                    type: 'solid',
-                    width: 1
-                }
-            },
-            data : (function (){
-                var now = new Date();
-                var res = [];
-                var len = 6;
-                while (len--) {
-                    res.unshift(now.toLocaleTimeString().replace(/^\D*/,'').slice(3,8));
-                    now = new Date(now - 2000);
-                }
-                return res;
-            })()
+    var option2 = {
+        color: ['#FBC31A', '#258BFF'],
+        title: {
+            text: '内存占用',
+            x: 'center',
+            y: 'bottom',
+            textStyle: {
+                color: '#5797D6',
+                fontSize: 12,
+                fontStyle: 'normal'
+            }
         },
-    ],
-    yAxis: [
-        {
-            type: 'value',
-            name: 'Byte',
-            position: 'left',
-            //min: 0,
-            //max: 300,
-            //splitNumber: 5,
-            boundaryGap: [0, 0.1],
-            axisLine: {    // 轴线
-                show: true,
-                lineStyle: {
-                    color: '#2F95BF',
-                    width: 1
-                }
-            },
-            axisLabel: {
-                formatter: function (value) {
-                    // Function formatter
-//                return value + ' °C'
-                    return value
+        tooltip: {
+            trigger: 'item',
+            formatter: "{a} <br/>{b}: {c} ({d}%)"
+        },
+        legend: {
+            orient: 'horizontal',
+            x: 'center',
+            y: 10,
+            data: ['已用', '空闲'],
+            textStyle: {
+                color: '#fff'
+            }
+        },
+        series: [
+            {
+                name: '使用率',
+                type: 'pie',
+                radius: ['30%', '50%'],
+                avoidLabelOverlap: false,
+                label: {
+                    normal: {
+                        show: false,
+                        position: 'center'
+                    },
+                    emphasis: {
+                        show: false,
+                        textStyle: {
+                            color: '#fff',
+                            fontSize: '30',
+                            fontWeight: 'bold'
+                        }
+                    }
                 },
-                margin: 10,
-                textStyle: {
-                    color: '#fff',
-                    fontFamily: 'verdana',
-                    fontSize: 12,
-                    fontStyle: 'normal',
-//                fontWeight: 'bold'
-                }
+                labelLine: {
+                    normal: {
+                        show: false
+                    }
+                },
+                itemStyle: {
+                    normal: {
+                        label: {
+                            show: false
+                        },
+                        labelLine: {
+                            show: false,
+//                  length : 10,
+                        }
+                    }
+                },
+                data: (function(){
+                    var res = []
+                    res.push(
+                        {value: vmData.uses[0].disk_useD, name: '已用'},
+                        {value: vmData.uses[0].disk_useN, name: '空闲'}
+                    )
+                    console.log(res)
+                    return res
+                })()
+            }
+        ]
+    };
+
+    var lastIndex = 2;
+    var axisData;
+    clearInterval(timeTicket);
+    var timeTicket = setInterval(function (){
+        lastIndex += 1;
+        // 动态数据接口 addData
+        myChart2.addData([
+            [
+                0,        // 系列索引
+                {         // 新增数据
+                    name:  lastIndex%2==0?'空闲':'已用',
+                    value: Math.round(Math.random()*10)
+                },
+                false,     // 新增数据是否从队列头部插入
+                false,     // 是否增加队列长度，false则自定删除原有数据，队头插入删队尾，队尾插入删队头
+                //lastIndex%2==0?'空闲':'已用'
+            ]
+
+        ]);
+    }, 2000);
+
+
+    var option3 = {
+        color: ['#FBC31A', '#258BFF'],
+        title: {
+            text: '磁盘占用',
+            x: 'center',
+            y: 'bottom',
+            textStyle: {
+                color: '#5797D6',
+                fontSize: 12,
+                fontStyle: 'normal'
+            }
+        },
+        tooltip: {
+            trigger: 'item',
+            formatter: "{a} <br/>{b}: {c} ({d}%)"
+        },
+        series: [
+            {
+                name: '使用率',
+                type: 'pie',
+                radius: ['30%', '50%'],
+                avoidLabelOverlap: false,
+                label: {
+                    normal: {
+                        show: false,
+                        position: 'center'
+                    },
+                    emphasis: {
+                        show: true,
+                        textStyle: {
+                            color: '#fff',
+                            fontSize: '30',
+                            fontWeight: 'bold'
+                        }
+                    }
+                },
+                labelLine: {
+                    normal: {
+                        show: false
+                    }
+                },
+                itemStyle: {
+                    normal: {
+                        label: {
+                            show: false
+                        },
+                        labelLine: {
+                            show: false,
+//                  length : 10,
+                        }
+                    }
+                },
+                data: (function(){
+                    var res = []
+                    res.push(
+                        {value: vmData.uses[0].disk_useD, name: '已用'},
+                        {value: vmData.uses[0].disk_useN, name: '空闲'}
+                    )
+                    return res
+                })()
+            }
+        ]
+    };
+
+    var option4 = {
+        color: ['#3FC3EC'],
+        grid: {
+            x: 50,
+            y: 30,
+            x2: 50,
+            y2: 30
+        },
+        tooltip: {
+            trigger: 'axis'
+        },
+        calculable: true,
+        xAxis: [
+            {
+                type: 'category',
+                boundaryGap: false,
+                axisLabel: {
+                    formatter: function (value) {
+                        // Function formatter
+//                return value + ' °C'
+                        return value
+                    },
+                    margin: 10,
+                    textStyle: {
+                        color: '#fff',
+                        fontFamily: 'verdana',
+                        fontSize: 12,
+                        fontStyle: 'normal'
+                    }
+                },
+                axisTick: {    // 轴标记
+                    show: true,
+                    length: 3,
+                    lineStyle: {
+                        color: '#2F95BF',
+                        type: 'solid',
+                        width: 1
+                    }
+                },
+                data : (function (){
+                    var now = new Date();
+                    var res = [];
+                    var len = 6;
+                    while (len--) {
+                        res.unshift(now.toLocaleTimeString().replace(/^\D*/,'').slice(2,8));
+                        now = new Date(now - 2000);
+                    }
+                    return res;
+                })()
             },
-            axisTick: {    // 轴标记
-                show: true,
-                length: 3,
-                lineStyle: {
-                    color: '#2F95BF',
-                    type: 'solid',
-                    width: 1
+        ],
+        yAxis: [
+            {
+                type: 'value',
+                name: 'Byte',
+                position: 'left',
+                //min: 0,
+                //max: 300,
+                //splitNumber: 5,
+                boundaryGap: [0, 0.1],
+                axisLine: {    // 轴线
+                    show: true,
+                    lineStyle: {
+                        color: '#2F95BF',
+                        width: 1
+                    }
+                },
+                axisLabel: {
+                    formatter: function (value) {
+                        // Function formatter
+//                return value + ' °C'
+                        return value
+                    },
+                    margin: 10,
+                    textStyle: {
+                        color: '#fff',
+                        fontFamily: 'verdana',
+                        fontSize: 12,
+                        fontStyle: 'normal'
+                    }
+                },
+                axisTick: {    // 轴标记
+                    show: true,
+                    length: 3,
+                    lineStyle: {
+                        color: '#2F95BF',
+                        type: 'solid',
+                        width: 1
+                    }
                 }
             }
-        }
-    ],
-    series: [
-        {
-            name: 'Byte',
-            type: 'line',
-            smooth: true,
-            itemStyle: {normal: {areaStyle: {type: 'default'}}},
-            data: (function(){
-                var res = []
-                var arr = vm.getData6(0,6)
-                arr.forEach(function(val,i){
-                    res.unshift(val.volume)
-                })
-                return res
-            })()
-        }
-    ]
-};
+        ],
+        series: [
+            {
+                name: 'Byte',
+                type: 'line',
+                smooth: true,
+                itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                data: (function(){
+                    var res = []
+                    var arr = vm.getData6(0,6)
+                    arr.forEach(function(val,i){
+                        res.unshift(val.volume)
+                    })
+                    return res
+                })()
+            }
+        ]
+    };
 
     var lastData4 = 7;
     var axisData4;
@@ -905,7 +962,7 @@ var option4 = {
         //lastData4 += Math.random() * ((Math.round(Math.random() * 10) % 2) == 0 ? 1 : -1);
         //lastData4 = lastData4.toFixed(1) - 0;
         lastData4 = vm.getData6(0,1)[0]['volume']
-        axisData4 = (new Date()).toLocaleTimeString().replace(/^\D*/,'').slice(3,8);
+        axisData4 = (new Date()).toLocaleTimeString().replace(/^\D*/,'').slice(2,8);
 
         // 动态数据接口 addData
         myChart4.addData([
@@ -919,452 +976,464 @@ var option4 = {
         ]);
     }, 2000);
 
-var option5 = {
-    grid: {
-        x: 30,
-        y: 50,
-        x2: 30,
-        y2: 30
-    },
-    tooltip: {
-        trigger: 'axis'
-    },
-    legend: {
-        data: ['磁盘IO', '网络IO', 'CPU使用率'],
-        y: 10,
-        textStyle: {
-            color: '#fff'
-        }
-    },
-    xAxis: [
-        {
-            type: 'category',
-            position: 'bottom',
-//            splitNumber: 5,
-            boundaryGap: false, // 从0开始绘制
-            axisLine: {    // 轴线
-                show: true,
-                lineStyle: {
-                    color: '#2F95BF',
-                    type: 'solid',
-                    width: 1
-                }
-            },
-            axisTick: {    // 轴标记
-                show: true,
-                length: 10,
-                lineStyle: {
-//                color: 'red',
-                    type: 'none',
-//                type: 'solid',
-                    width: 1
-                }
-            },
-            axisLabel: {
-                show: true,
-                interval: 'auto',    // {number}
-//              rotate: 45,
-                margin: 10,
-                formatter: '{value}',
-                textStyle: {
-                    color: '#2F95BF',
-                    fontFamily: 'verdana',
-                    fontSize: 10,
-                    fontStyle: 'normal',
-//                fontWeight: 'bold'
-                }
-//              formatter: '{value}月',
-                /*textStyle: {
-                 color: 'blue',
-                 fontFamily: 'sans-serif',
-                 fontSize: 15,
-                 fontStyle: 'italic',
-                 fontWeight: 'bold'
-                 }*/
-            },
-            splitLine: {
-                show: true,
-                lineStyle: {
-//                color: '#483d8b',
-                    type: 'none',
-//                type: 'dashed',
-//                width: 1
-                }
-            }, /*
-         splitArea : {
-         show: true,
-         areaStyle:{
-         color:['rgba(144,238,144,0.3)','rgba(135,200,250,0.3)']
-         }
-         },*/
-            data: [
-                '1', '2', '3'
-                /*{
-                 value:'6',
-                 textStyle: {
-                 color: 'red',
-                 fontSize: 30,
-                 fontStyle: 'normal',
-                 fontWeight: 'bold'
-                 }
-                 },*/
-            ]
-        }
-    ],
-    yAxis: [
-        {
-            type: 'value',
-            name: '%',
-            position: 'left',
-            //min: 0,
-            //max: 300,
-            //splitNumber: 5,
-            boundaryGap: [0, 0.1],
-            axisLine: {    // 轴线
-                show: true,
-                lineStyle: {
-                    color: '#2F95BF',
-//                type: 'none',
-//                type: 'dashed',
-                    width: 1
-                }
-            },
-            axisTick: {    // 轴标记
-                show: true,
-                length: 3,
-                lineStyle: {
-                    color: '#2F95BF',
-                    type: 'solid',
-                    width: 1
-                }
-            },
-            axisLabel: {
-                show: true,
-                interval: 'auto',    // {number}
-//              rotate: -45,
-                margin: 5,
-                formatter: '{value}',    // Template formatter!
-                textStyle: {
-                    color: '#2F95BF',
-                    fontFamily: 'verdana',
-                    fontSize: 10,
-                    fontStyle: 'normal',
-//                fontWeight: 'bold'
-                }
-            },
-            /*splitLine : {
-             show:true,
-             lineStyle: {
-             color: '#483d8b',
-             type: 'dotted',
-             width: 2
-             }
-             },
-             splitArea : {
-             show: true,
-             areaStyle:{
-             color:['rgba(205,92,92,0.3)','rgba(255,215,0,0.3)']
-             }
-             }*/
+    var option5 = {
+        grid: {
+            x: 30,
+            y: 50,
+            x2: 40,
+            y2: 30
         },
-        {
-            type: 'value',
-            name: 'Byte/s',
-            splitNumber: 5,
-            axisLabel: {
-                formatter: function (value) {
-                    // Function formatter
-//                return value + ' °C'
-                    return value
-                },
-                margin: 10,
-                textStyle: {
-                    color: '#2F95BF',
-                    fontFamily: 'verdana',
-                    fontSize: 10,
-                    fontStyle: 'normal',
-//                fontWeight: 'bold'
-                }
-            },
-            axisTick: {    // 轴标记
-                show: true,
-                length: 3,
-                lineStyle: {
-                    color: '#2F95BF',
-                    type: 'solid',
-                    width: 1
-                }
-            },
-            splitLine: {
-                show: true
+        tooltip: {
+            trigger: 'axis'
+        },
+        legend: {
+            data: ['磁盘IO', '网络IO', 'CPU使用率'],
+            y: 10,
+            textStyle: {
+                color: '#fff'
             }
-        }
-    ],
-    series: [
-        {
-            name: '磁盘IO',
-            type: 'line',
-            smooth: true,
-            data: [10, 55, 80]
         },
-        {
-            name: '网络IO',
-            type: 'line',
-            smooth: true,
-            yAxisIndex: 1,
-            data: [38, 62, 91]
-        },
-        {
-            name: 'CPU使用率',
-            type: 'line',
-            smooth: true,
+        xAxis: [
+            {
+                type: 'category',
+                position: 'bottom',
+//            splitNumber: 5,
+                boundaryGap: false, // 从0开始绘制
+                axisLine: {    // 轴线
+                    show: true,
+                    lineStyle: {
+                        color: '#2F95BF',
+                        type: 'solid',
+                        width: 1
+                    }
+                },
+                axisTick: {    // 轴标记
+                    show: true,
+                    length: 10,
+                    lineStyle: {
+                        type: 'none',
+                        width: 1
+                    }
+                },
+                axisLabel: {
+                    show: true,
+                    interval: 'auto',    // {number}
+                    margin: 10,
+                    formatter: '{value}',
+                    textStyle: {
+                        color: '#2F95BF',
+                        fontFamily: 'verdana',
+                        fontSize: 10,
+                        fontStyle: 'normal'
+                    }
+                },
+                splitLine: {
+                    show: true,
+                    lineStyle: {
+                        type: 'none'
+                    }
+                },
+                data: (function (){
+                    var now = new Date();
+                    var res = [];
+                    var len = 4;
+                    while (len--) {
+                        res.unshift(now.toLocaleTimeString().replace(/^\D*/,'').slice(2,8));
+                        now = new Date(now - 2000);
+                    }
+                    return res;
+                })()
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value',
+                name: '%',
+                position: 'left',
+                boundaryGap: [0, 0.1],
+                axisLine: {    // 轴线
+                    show: true,
+                    lineStyle: {
+                        color: '#2F95BF',
+                        width: 1
+                    }
+                },
+                axisTick: {    // 轴标记
+                    show: true,
+                    length: 3,
+                    lineStyle: {
+                        color: '#2F95BF',
+                        type: 'solid',
+                        width: 1
+                    }
+                },
+                axisLabel: {
+                    show: true,
+                    interval: 'auto',    // {number}
+                    margin: 5,
+                    formatter: '{value}',    // Template formatter!
+                    textStyle: {
+                        color: '#2F95BF',
+                        fontFamily: 'verdana',
+                        fontSize: 10,
+                        fontStyle: 'normal'
+                    }
+                }
+            },
+            {
+                type: 'value',
+                name: 'Byte/s',
+                splitNumber: 5,
+                axisLabel: {
+                    formatter: function (value) {
+                        // Function formatter
+//                return value + ' °C'
+                        return value
+                    },
+                    margin: 5,
+                    textStyle: {
+                        color: '#2F95BF',
+                        fontFamily: 'verdana',
+                        fontSize: 10,
+                        fontStyle: 'normal'
+                    }
+                },
+                axisTick: {    // 轴标记
+                    show: true,
+                    length: 3,
+                    lineStyle: {
+                        color: '#2F95BF',
+                        type: 'solid',
+                        width: 1
+                    }
+                },
+                splitLine: {
+                    show: true
+                }
+            }
+        ],
+        series: [
+            {
+                name: '磁盘IO',
+                type: 'line',
+                smooth: true,
+                yAxisIndex: 1,
+                data: (function(){
+                    var res = []
+                    var arr = vm.getData3(1,4)
+                    arr.forEach(function(val,i){
+                        res.push((val.disk_input+val.disk_output))
+                    })
+                    return res
+                })()
+            },
+            {
+                name: '网络IO',
+                type: 'line',
+                smooth: true,
+                yAxisIndex: 1,
+                data: (function(){
+                    var res = []
+                    var arr = vm.getData3(1,4)
+                    arr.forEach(function(val,i){
+                        res.push((val.net_input+val.net_output))
+                    })
+                    console.log(res)
+                    return res
+                })()
+            },
+            {
+                name: 'CPU使用率',
+                type: 'line',
+                smooth: true,
 //            xAxisIndex: 1,
 //            yAxisIndex: 1,
-            data: [20, 77, 50]
-        }
-    ]
-};
+                data: (function(){
+                    var res = []
+                    var arr = vm.getData3(1,4)
+                    arr.forEach(function(val,i){
+                        console.log(val.cpu_percent)
+                        res.push(val.cpu_percent*100)
+                    })
+                    return res
+                })()
+            }
+        ]
+    };
 
-var option6 = {
-    color: ['#FBC31A', '#258BFF'],
-    title: {
-        text: '内存占用',
-        x: 'center',
-        y: 'bottom',
-        textStyle: {
-            color: '#5797D6',
-            fontSize: 12,
-            fontStyle: 'normal'
-        }
-    },
-    tooltip: {
-        trigger: 'item',
-        formatter: "{a} <br/>{b}: {c} ({d}%)"
-    },
-    legend: {
-        orient: 'horizontal',
-        x: 'center',
-        y: 10,
-        data: ['已用', '空闲'],
-        textStyle: {
-            color: '#fff'
-        }
-    },
-    series: [
-        {
-            name: '使用率',
-            type: 'pie',
-            radius: ['30%', '50%'],
-            avoidLabelOverlap: false,
-            label: {
-                normal: {
-                    show: false,
-                    position: 'center'
-                },
-                emphasis: {
-                    show: false,
-                    textStyle: {
-                        color: '#fff',
-                        fontSize: '30',
-                        fontWeight: 'bold'
-                    }
-                }
-            },
-            labelLine: {
-                normal: {
-                    show: false
-                }
-            },
-            itemStyle: {
-                normal: {
-                    label: {
-                        show: false
-                    },
-                    labelLine: {
-                        show: false,
-//                  length : 10,
-                    }
-                }
-            },
-            data: [
-                {value: vmData.uses[0].disk_useD, name: '已用'},
-                {value: vmData.uses[0].disk_useN, name: '空闲'}
+    var lastData5 = 5;
+    var axisData5;
+    clearInterval(timeTicket5);
+    var timeTicket5 = setInterval(function (){
+        axisData5 = (new Date()).toLocaleTimeString().replace(/^\D*/,'').slice(2,8);
+
+        // 动态数据接口 addData
+        myChart5.addData([
+            [
+                0,        // 系列索引
+                vm.getData3(1,1)[0]['disk_input']+vm.getData3(0,1)[0]['disk_output'], // 新增数据
+                false,    // 新增数据是否从队列头部插入
+                false,    // 是否增加队列长度，false则自定删除原有数据，队头插入删队尾，队尾插入删队头
+                axisData5  // 坐标轴标签
+            ],
+            [
+                1,        // 系列索引
+                vm.getData3(1,1)[0]['disk_input']+vm.getData3(0,1)[0]['net_output'], // 新增数据
+                false,    // 新增数据是否从队列头部插入
+                false,    // 是否增加队列长度，false则自定删除原有数据，队头插入删队尾，队尾插入删队头
+                axisData5  // 坐标轴标签
+            ],
+            [
+                2,        // 系列索引
+                vm.getData3(1,1)[0]['cpu_percent']*100, // 新增数据
+                false,    // 新增数据是否从队列头部插入
+                false,    // 是否增加队列长度，false则自定删除原有数据，队头插入删队尾，队尾插入删队头
+                axisData5  // 坐标轴标签
             ]
-        }
-    ]
-};
+        ]);
+    }, 2000);
 
-var option7 = {
-    color: ['#FBC31A', '#258BFF'],
-    title: {
-        text: '磁盘占用',
-        x: 'center',
-        y: 'bottom',
-        textStyle: {
-            color: '#5797D6',
-            fontSize: 12,
-            fontStyle: 'normal'
-        }
-    },
-    tooltip: {
-        trigger: 'item',
-        formatter: "{a} <br/>{b}: {c} ({d}%)"
-    },
-    series: [
-        {
-            name: '使用率',
-            type: 'pie',
-            radius: ['30%', '50%'],
-            avoidLabelOverlap: false,
-            label: {
-                normal: {
-                    show: false,
-                    position: 'center'
-                },
-                emphasis: {
-                    show: true,
-                    textStyle: {
-                        color: '#fff',
-                        fontSize: '30',
-                        fontWeight: 'bold'
-                    }
-                }
-            },
-            labelLine: {
-                normal: {
-                    show: false
-                }
-            },
-            itemStyle: {
-                normal: {
-                    label: {
-                        show: false
-                    },
-                    labelLine: {
-                        show: false,
-//                  length : 10,
-                    }
-                }
-            },
-            data: [
-                {value: 335, name: '已用'},
-                {value: 1548, name: '空闲'}
-            ]
-        }
-    ]
-};
 
-var option8 = {
-    color: ['#3FC3EC'],
-    grid: {
-        x: 50,
-        y: 30,
-        x2: 50,
-        y2: 30
-    },
-    tooltip: {
-        trigger: 'axis'
-    },
-    calculable: true,
-    xAxis: [
-        {
-            type: 'category',
-            boundaryGap: false,
-            axisLabel: {
-                formatter: function (value) {
-                    // Function formatter
-//                return value + ' °C'
-                    return value
-                },
-                margin: 10,
-                textStyle: {
-                    color: '#fff',
-                    fontFamily: 'verdana',
-                    fontSize: 12,
-                    fontStyle: 'normal',
-//                fontWeight: 'bold'
-                }
-            },
-            axisTick: {    // 轴标记
-                show: true,
-                length: 3,
-                lineStyle: {
-                    color: '#2F95BF',
-                    type: 'solid',
-                    width: 1
-                }
-            },
-            data : (function (){
-                var now = new Date();
-                var res = [];
-                var len = 6;
-                while (len--) {
-                    res.unshift(now.toLocaleTimeString().replace(/^\D*/,'').slice(3,8));
-                    now = new Date(now - 2000);
-                }
-                return res;
-            })()
+    var option6 = {
+        color: ['#FBC31A', '#258BFF'],
+        title: {
+            text: '内存占用',
+            x: 'center',
+            y: 'bottom',
+            textStyle: {
+                color: '#5797D6',
+                fontSize: 12,
+                fontStyle: 'normal'
+            }
         },
-    ],
-    yAxis: [
-        {
-            type: 'value',
-            name: 'Byte',
-            position: 'left',
-            //min: 0,
-            //max: 300,
-            //splitNumber: 5,
-            boundaryGap: [0, 0.1],
-            axisLine: {    // 轴线
-                show: true,
-                lineStyle: {
-                    color: '#2F95BF',
-                    width: 1
-                }
-            },
-            axisLabel: {
-                formatter: function (value) {
-                    // Function formatter
-//                return value + ' °C'
-                    return value
+        tooltip: {
+            trigger: 'item',
+            formatter: "{a} <br/>{b}: {c} ({d}%)"
+        },
+        legend: {
+            orient: 'horizontal',
+            x: 'center',
+            y: 10,
+            data: ['已用', '空闲'],
+            textStyle: {
+                color: '#fff'
+            }
+        },
+        series: [
+            {
+                name: '使用率',
+                type: 'pie',
+                radius: ['30%', '50%'],
+                avoidLabelOverlap: false,
+                label: {
+                    normal: {
+                        show: false,
+                        position: 'center'
+                    },
+                    emphasis: {
+                        show: false,
+                        textStyle: {
+                            color: '#fff',
+                            fontSize: '30',
+                            fontWeight: 'bold'
+                        }
+                    }
                 },
-                margin: 10,
-                textStyle: {
-                    color: '#fff',
-                    fontFamily: 'verdana',
-                    fontSize: 12,
-                    fontStyle: 'normal',
+                labelLine: {
+                    normal: {
+                        show: false
+                    }
+                },
+                itemStyle: {
+                    normal: {
+                        label: {
+                            show: false
+                        },
+                        labelLine: {
+                            show: false,
+//                  length : 10,
+                        }
+                    }
+                },
+                data: [
+                    {value: vmData.uses[0].disk_useD, name: '已用'},
+                    {value: vmData.uses[0].disk_useN, name: '空闲'}
+                ]
+            }
+        ]
+    };
+
+    var option7 = {
+        color: ['#FBC31A', '#258BFF'],
+        title: {
+            text: '磁盘占用',
+            x: 'center',
+            y: 'bottom',
+            textStyle: {
+                color: '#5797D6',
+                fontSize: 12,
+                fontStyle: 'normal'
+            }
+        },
+        tooltip: {
+            trigger: 'item',
+            formatter: "{a} <br/>{b}: {c} ({d}%)"
+        },
+        series: [
+            {
+                name: '使用率',
+                type: 'pie',
+                radius: ['30%', '50%'],
+                avoidLabelOverlap: false,
+                label: {
+                    normal: {
+                        show: false,
+                        position: 'center'
+                    },
+                    emphasis: {
+                        show: true,
+                        textStyle: {
+                            color: '#fff',
+                            fontSize: '30',
+                            fontWeight: 'bold'
+                        }
+                    }
+                },
+                labelLine: {
+                    normal: {
+                        show: false
+                    }
+                },
+                itemStyle: {
+                    normal: {
+                        label: {
+                            show: false
+                        },
+                        labelLine: {
+                            show: false,
+//                  length : 10,
+                        }
+                    }
+                },
+                data: [
+                    {value: 335, name: '已用'},
+                    {value: 1548, name: '空闲'}
+                ]
+            }
+        ]
+    };
+
+    var option8 = {
+        color: ['#3FC3EC'],
+        grid: {
+            x: 50,
+            y: 30,
+            x2: 50,
+            y2: 30
+        },
+        tooltip: {
+            trigger: 'axis'
+        },
+        calculable: true,
+        xAxis: [
+            {
+                type: 'category',
+                boundaryGap: false,
+                axisLabel: {
+                    formatter: function (value) {
+                        // Function formatter
+//                return value + ' °C'
+                        return value
+                    },
+                    margin: 10,
+                    textStyle: {
+                        color: '#fff',
+                        fontFamily: 'verdana',
+                        fontSize: 12,
+                        fontStyle: 'normal',
 //                fontWeight: 'bold'
-                }
+                    }
+                },
+                axisTick: {    // 轴标记
+                    show: true,
+                    length: 3,
+                    lineStyle: {
+                        color: '#2F95BF',
+                        type: 'solid',
+                        width: 1
+                    }
+                },
+                data : (function (){
+                    var now = new Date();
+                    var res = [];
+                    var len = 6;
+                    while (len--) {
+                        res.unshift(now.toLocaleTimeString().replace(/^\D*/,'').slice(2,8));
+                        now = new Date(now - 2000);
+                    }
+                    return res;
+                })()
             },
-            axisTick: {    // 轴标记
-                show: true,
-                length: 3,
-                lineStyle: {
-                    color: '#2F95BF',
-                    type: 'solid',
-                    width: 1
+        ],
+        yAxis: [
+            {
+                type: 'value',
+                name: 'Byte',
+                position: 'left',
+                //min: 0,
+                //max: 300,
+                //splitNumber: 5,
+                boundaryGap: [0, 0.1],
+                axisLine: {    // 轴线
+                    show: true,
+                    lineStyle: {
+                        color: '#2F95BF',
+                        width: 1
+                    }
+                },
+                axisLabel: {
+                    formatter: function (value) {
+                        // Function formatter
+//                return value + ' °C'
+                        return value
+                    },
+                    margin: 10,
+                    textStyle: {
+                        color: '#fff',
+                        fontFamily: 'verdana',
+                        fontSize: 12,
+                        fontStyle: 'normal',
+//                fontWeight: 'bold'
+                    }
+                },
+                axisTick: {    // 轴标记
+                    show: true,
+                    length: 3,
+                    lineStyle: {
+                        color: '#2F95BF',
+                        type: 'solid',
+                        width: 1
+                    }
                 }
             }
-        }
-    ],
-    series: [
-        {
-            name: 'Byte',
-            type: 'line',
-            smooth: true,
-            itemStyle: {normal: {areaStyle: {type: 'default'}}},
-            data: (function(){
-                var res = []
-                var arr = vm.getData6(1,6)
-                arr.forEach(function(val,i){
-                    res.unshift(val.volume)
-                })
-                return res
-            })()
-        }
-    ]
-};
+        ],
+        series: [
+            {
+                name: 'Byte',
+                type: 'line',
+                smooth: true,
+                itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                data: (function(){
+                    var res = []
+                    var arr = vm.getData6(1,6)
+                    arr.forEach(function(val,i){
+                        res.unshift(val.volume)
+                    })
+                    return res
+                })()
+            }
+        ]
+    };
 
     var lastData8 = 7;
     var axisData8;
@@ -1373,7 +1442,7 @@ var option8 = {
         //lastData8 += Math.random() * ((Math.round(Math.random() * 10) % 2) == 0 ? 1 : -1);
         //lastData8 = lastData4.toFixed(1) - 0;
         lastData8 = vm.getData6(1,1)[0]['volume']
-        axisData8 = (new Date()).toLocaleTimeString().replace(/^\D*/,'').slice(3,8);
+        axisData8 = (new Date()).toLocaleTimeString().replace(/^\D*/,'').slice(2,8);
 
         // 动态数据接口 addData
         myChart8.addData([
@@ -1387,466 +1456,477 @@ var option8 = {
         ]);
     }, 2000);
 
-var option9 = {
-    grid: {
-        x: 30,
-        y: 50,
-        x2: 30,
-        y2: 30
-    },
-    tooltip: {
-        trigger: 'axis'
-    },
-    legend: {
-        data: ['磁盘IO', '网络IO', 'CPU使用率'],
-        y: 10,
-        textStyle: {
-            color: '#fff'
-        }
-    },
-    xAxis: [
-        {
-            type: 'category',
-            position: 'bottom',
-//            splitNumber: 5,
-            boundaryGap: false, // 从0开始绘制
-            axisLine: {    // 轴线
-                show: true,
-                lineStyle: {
-                    color: '#2F95BF',
-                    type: 'solid',
-                    width: 1
-                }
-            },
-            axisTick: {    // 轴标记
-                show: true,
-                length: 10,
-                lineStyle: {
-//                color: 'red',
-                    type: 'none',
-//                type: 'solid',
-                    width: 1
-                }
-            },
-            axisLabel: {
-                show: true,
-                interval: 'auto',    // {number}
-//              rotate: 45,
-                margin: 10,
-                formatter: '{value}',
-                textStyle: {
-                    color: '#2F95BF',
-                    fontFamily: 'verdana',
-                    fontSize: 10,
-                    fontStyle: 'normal',
-//                fontWeight: 'bold'
-                }
-//              formatter: '{value}月',
-                /*textStyle: {
-                 color: 'blue',
-                 fontFamily: 'sans-serif',
-                 fontSize: 15,
-                 fontStyle: 'italic',
-                 fontWeight: 'bold'
-                 }*/
-            },
-            splitLine: {
-                show: true,
-                lineStyle: {
-//                color: '#483d8b',
-                    type: 'none',
-//                type: 'dashed',
-//                width: 1
-                }
-            }, /*
-         splitArea : {
-         show: true,
-         areaStyle:{
-         color:['rgba(144,238,144,0.3)','rgba(135,200,250,0.3)']
-         }
-         },*/
-            data: [
-                '1', '2', '3'
-                /*{
-                 value:'6',
-                 textStyle: {
-                 color: 'red',
-                 fontSize: 30,
-                 fontStyle: 'normal',
-                 fontWeight: 'bold'
-                 }
-                 },*/
-            ]
-        }
-    ],
-    yAxis: [
-        {
-            type: 'value',
-            name: '%',
-            position: 'left',
-            //min: 0,
-            //max: 300,
-            //splitNumber: 5,
-            boundaryGap: [0, 0.1],
-            axisLine: {    // 轴线
-                show: true,
-                lineStyle: {
-                    color: '#2F95BF',
-//                type: 'none',
-//                type: 'dashed',
-                    width: 1
-                }
-            },
-            axisTick: {    // 轴标记
-                show: true,
-                length: 3,
-                lineStyle: {
-                    color: '#2F95BF',
-                    type: 'solid',
-                    width: 1
-                }
-            },
-            axisLabel: {
-                show: true,
-                interval: 'auto',    // {number}
-//              rotate: -45,
-                margin: 5,
-                formatter: '{value}',    // Template formatter!
-                textStyle: {
-                    color: '#2F95BF',
-                    fontFamily: 'verdana',
-                    fontSize: 10,
-                    fontStyle: 'normal',
-//                fontWeight: 'bold'
-                }
-            },
-            /*splitLine : {
-             show:true,
-             lineStyle: {
-             color: '#483d8b',
-             type: 'dotted',
-             width: 2
-             }
-             },
-             splitArea : {
-             show: true,
-             areaStyle:{
-             color:['rgba(205,92,92,0.3)','rgba(255,215,0,0.3)']
-             }
-             }*/
+    var option9 = {
+        grid: {
+            x: 30,
+            y: 50,
+            x2: 40,
+            y2: 30
         },
-        {
-            type: 'value',
-            name: 'Byte/s',
-            splitNumber: 5,
-            axisLabel: {
-                formatter: function (value) {
-                    // Function formatter
-//                return value + ' °C'
-                    return value
-                },
-                margin: 10,
-                textStyle: {
-                    color: '#2F95BF',
-                    fontFamily: 'verdana',
-                    fontSize: 10,
-                    fontStyle: 'normal',
-//                fontWeight: 'bold'
-                }
-            },
-            axisTick: {    // 轴标记
-                show: true,
-                length: 3,
-                lineStyle: {
-                    color: '#2F95BF',
-                    type: 'solid',
-                    width: 1
-                }
-            },
-            splitLine: {
-                show: true
+        tooltip: {
+            trigger: 'axis'
+        },
+        legend: {
+            data: ['磁盘IO', '网络IO', 'CPU使用率'],
+            y: 10,
+            textStyle: {
+                color: '#fff'
             }
-        }
-    ],
-    series: [
-        {
-            name: '磁盘IO',
-            type: 'line',
-            smooth: true,
-            data: [10, 55, 80]
         },
-        {
-            name: '网络IO',
-            type: 'line',
-            smooth: true,
-            yAxisIndex: 1,
-            data: [38, 62, 91]
-        },
-        {
-            name: 'CPU使用率',
-            type: 'line',
-            smooth: true,
+        xAxis: [
+            {
+                type: 'category',
+                position: 'bottom',
+//            splitNumber: 5,
+                boundaryGap: false, // 从0开始绘制
+                axisLine: {    // 轴线
+                    show: true,
+                    lineStyle: {
+                        color: '#2F95BF',
+                        type: 'solid',
+                        width: 1
+                    }
+                },
+                axisTick: {    // 轴标记
+                    show: true,
+                    length: 10,
+                    lineStyle: {
+                        type: 'none',
+                        width: 1
+                    }
+                },
+                axisLabel: {
+                    show: true,
+                    interval: 'auto',    // {number}
+                    margin: 10,
+                    formatter: '{value}',
+                    textStyle: {
+                        color: '#2F95BF',
+                        fontFamily: 'verdana',
+                        fontSize: 10,
+                        fontStyle: 'normal'
+                    }
+                },
+                splitLine: {
+                    show: true,
+                    lineStyle: {
+                        type: 'none'
+                    }
+                },
+                data: (function (){
+                    var now = new Date();
+                    var res = [];
+                    var len = 4;
+                    while (len--) {
+                        res.unshift(now.toLocaleTimeString().replace(/^\D*/,'').slice(2,8));
+                        now = new Date(now - 2000);
+                    }
+                    return res;
+                })()
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value',
+                name: '%',
+                position: 'left',
+                boundaryGap: [0, 0.1],
+                axisLine: {    // 轴线
+                    show: true,
+                    lineStyle: {
+                        color: '#2F95BF',
+                        width: 1
+                    }
+                },
+                axisTick: {    // 轴标记
+                    show: true,
+                    length: 3,
+                    lineStyle: {
+                        color: '#2F95BF',
+                        type: 'solid',
+                        width: 1
+                    }
+                },
+                axisLabel: {
+                    show: true,
+                    interval: 'auto',    // {number}
+                    margin: 5,
+                    formatter: '{value}',    // Template formatter!
+                    textStyle: {
+                        color: '#2F95BF',
+                        fontFamily: 'verdana',
+                        fontSize: 10,
+                        fontStyle: 'normal'
+                    }
+                }
+            },
+            {
+                type: 'value',
+                name: 'Byte/s',
+                splitNumber: 5,
+                axisLabel: {
+                    formatter: function (value) {
+                        // Function formatter
+//                return value + ' °C'
+                        return value
+                    },
+                    margin: 5,
+                    textStyle: {
+                        color: '#2F95BF',
+                        fontFamily: 'verdana',
+                        fontSize: 10,
+                        fontStyle: 'normal'
+                    }
+                },
+                axisTick: {    // 轴标记
+                    show: true,
+                    length: 3,
+                    lineStyle: {
+                        color: '#2F95BF',
+                        type: 'solid',
+                        width: 1
+                    }
+                },
+                splitLine: {
+                    show: true
+                }
+            }
+        ],
+        series: [
+            {
+                name: '磁盘IO',
+                type: 'line',
+                smooth: true,
+                yAxisIndex: 1,
+                data: (function(){
+                    var res = []
+                    var arr = vm.getData3(2,4)
+                    arr.forEach(function(val,i){
+                        res.push((val.disk_input+val.disk_output))
+                    })
+                    return res
+                })()
+            },
+            {
+                name: '网络IO',
+                type: 'line',
+                smooth: true,
+                yAxisIndex: 1,
+                data: (function(){
+                    var res = []
+                    var arr = vm.getData3(2,4)
+                    arr.forEach(function(val,i){
+                        res.push((val.net_input+val.net_output))
+                    })
+                    console.log(res)
+                    return res
+                })()
+            },
+            {
+                name: 'CPU使用率',
+                type: 'line',
+                smooth: true,
 //            xAxisIndex: 1,
 //            yAxisIndex: 1,
-            data: [20, 77, 50]
-        }
-    ]
-};
+                data: (function(){
+                    var res = []
+                    var arr = vm.getData3(2,4)
+                    arr.forEach(function(val,i){
+                        console.log(val.cpu_percent)
+                        res.push(val.cpu_percent*100)
+                    })
+                    return res
+                })()
+            }
+        ]
+    };
 
-var option10 = {
-    color: ['#FBC31A', '#258BFF'],
-    title: {
-        text: '内存占用',
-        x: 'center',
-        y: 'bottom',
-        textStyle: {
-            color: '#5797D6',
-            fontSize: 12,
-            fontStyle: 'normal'
-        }
-    },
-    tooltip: {
-        trigger: 'item',
-        formatter: "{a} <br/>{b}: {c} ({d}%)"
-    },
-    legend: {
-        orient: 'horizontal',
-        x: 'center',
-        y: 10,
-        data: ['已用', '空闲'],
-        textStyle: {
-            color: '#fff'
-        }
-    },
-    series: [
-        {
-            name: '使用率',
-            type: 'pie',
-            radius: ['30%', '50%'],
-            avoidLabelOverlap: false,
-            label: {
-                normal: {
-                    show: false,
-                    position: 'center'
-                },
-                emphasis: {
-                    show: false,
-                    textStyle: {
-                        color: '#fff',
-                        fontSize: '30',
-                        fontWeight: 'bold'
-                    }
-                }
-            },
-            labelLine: {
-                normal: {
-                    show: false
-                }
-            },
-            itemStyle: {
-                normal: {
-                    label: {
-                        show: false
-                    },
-                    labelLine: {
-                        show: false,
-//                  length : 10,
-                    }
-                }
-            },
-            data: [
-                {value: 335, name: '已用'},
-                {value: 1548, name: '空闲'}
+    var lastData9 = 5;
+    var axisData9;
+    clearInterval(timeTicket9);
+    var timeTicket9 = setInterval(function (){
+        axisData9 = (new Date()).toLocaleTimeString().replace(/^\D*/,'').slice(2,8);
+
+        // 动态数据接口 addData
+        myChart9.addData([
+            [
+                0,        // 系列索引
+                vm.getData3(2,1)[0]['disk_input']+vm.getData3(0,1)[0]['disk_output'], // 新增数据
+                false,    // 新增数据是否从队列头部插入
+                false,    // 是否增加队列长度，false则自定删除原有数据，队头插入删队尾，队尾插入删队头
+                axisData9  // 坐标轴标签
+            ],
+            [
+                1,        // 系列索引
+                vm.getData3(2,1)[0]['disk_input']+vm.getData3(0,1)[0]['net_output'], // 新增数据
+                false,    // 新增数据是否从队列头部插入
+                false,    // 是否增加队列长度，false则自定删除原有数据，队头插入删队尾，队尾插入删队头
+                axisData9  // 坐标轴标签
+            ],
+            [
+                2,        // 系列索引
+                vm.getData3(2,1)[0]['cpu_percent']*100, // 新增数据
+                false,    // 新增数据是否从队列头部插入
+                false,    // 是否增加队列长度，false则自定删除原有数据，队头插入删队尾，队尾插入删队头
+                axisData9  // 坐标轴标签
             ]
-        }
-    ]
-};
+        ]);
+    }, 2000);
 
-var option11 = {
-    color: ['#FBC31A', '#258BFF'],
-    title: {
-        text: '磁盘占用',
-        x: 'center',
-        y: 'bottom',
-        textStyle: {
-            color: '#5797D6',
-            fontSize: 12,
-            fontStyle: 'normal'
-        }
-    },
-    tooltip: {
-        trigger: 'item',
-        formatter: "{a} <br/>{b}: {c} ({d}%)"
-    },
-    series: [
-        {
-            name: '使用率',
-            type: 'pie',
-            radius: ['30%', '50%'],
-            avoidLabelOverlap: false,
-            label: {
-                normal: {
-                    show: false,
-                    position: 'center'
-                },
-                emphasis: {
-                    show: true,
-                    textStyle: {
-                        color: '#fff',
-                        fontSize: '30',
-                        fontWeight: 'bold'
-                    }
-                }
-            },
-            labelLine: {
-                normal: {
-                    show: false
-                }
-            },
-            itemStyle: {
-                normal: {
-                    label: {
-                        show: false
-                    },
-                    labelLine: {
-                        show: false,
-//                  length : 10,
-                    }
-                }
-            },
-            data: [
-                {value: 335, name: '已用'},
-                {value: 1548, name: '空闲'}
-            ]
-        }
-    ]
-};
-
-var option12 = {
-    color: ['#3FC3EC','#C48743'],
-    grid: {
-        x: 50,
-        y: 30,
-        x2: 50,
-        y2: 30
-    },
-    legend: {
-        data:['流入流量','流出流量'],
-        textStyle:{
-            color: '#fff'
-        }
-    },
-    tooltip: {
-        trigger: 'axis'
-    },
-    calculable: true,
-    xAxis: [
-        {
-            type: 'category',
-            boundaryGap: false,
-            axisLabel: {
-                formatter: function (value) {
-                    // Function formatter
-//                return value + ' °C'
-                    return value
-                },
-                margin: 10,
-                textStyle: {
-                    color: '#fff',
-                    fontFamily: 'verdana',
-                    fontSize: 12,
-                    fontStyle: 'normal',
-//                fontWeight: 'bold'
-                }
-            },
-            axisTick: {    // 轴标记
-                show: true,
-                length: 3,
-                lineStyle: {
-                    color: '#2F95BF',
-                    type: 'solid',
-                    width: 1
-                }
-            },
-            data : (function (){
-                var now = new Date();
-                var res = [];
-                var len = 6;
-                while (len--) {
-                    res.unshift(now.toLocaleTimeString().replace(/^\D*/,'').slice(3,8));
-                    now = new Date(now - 2000);
-                }
-                return res;
-            })()
+    var option10 = {
+        color: ['#FBC31A', '#258BFF'],
+        title: {
+            text: '内存占用',
+            x: 'center',
+            y: 'bottom',
+            textStyle: {
+                color: '#5797D6',
+                fontSize: 12,
+                fontStyle: 'normal'
+            }
         },
-    ],
-    yAxis: [
-        {
-            type: 'value',
-            name: 'Byte',
-            position: 'left',
-            boundaryGap: [0, 0.1],
-            axisLine: {    // 轴线
-                show: true,
-                lineStyle: {
-                    color: '#2F95BF',
-                    width: 1
-                }
-            },
-            axisLabel: {
-                formatter: function (value) {
-                    return value
+        tooltip: {
+            trigger: 'item',
+            formatter: "{a} <br/>{b}: {c} ({d}%)"
+        },
+        legend: {
+            orient: 'horizontal',
+            x: 'center',
+            y: 10,
+            data: ['已用', '空闲'],
+            textStyle: {
+                color: '#fff'
+            }
+        },
+        series: [
+            {
+                name: '使用率',
+                type: 'pie',
+                radius: ['30%', '50%'],
+                avoidLabelOverlap: false,
+                label: {
+                    normal: {
+                        show: false,
+                        position: 'center'
+                    },
+                    emphasis: {
+                        show: false,
+                        textStyle: {
+                            color: '#fff',
+                            fontSize: '30',
+                            fontWeight: 'bold'
+                        }
+                    }
                 },
-                margin: 10,
-                textStyle: {
-                    color: '#fff',
-                    fontFamily: 'verdana',
-                    fontSize: 12,
-                    fontStyle: 'normal',
-                }
+                labelLine: {
+                    normal: {
+                        show: false
+                    }
+                },
+                itemStyle: {
+                    normal: {
+                        label: {
+                            show: false
+                        },
+                        labelLine: {
+                            show: false,
+//                  length : 10,
+                        }
+                    }
+                },
+                data: [
+                    {value: 335, name: '已用'},
+                    {value: 1548, name: '空闲'}
+                ]
+            }
+        ]
+    };
+
+    var option11 = {
+        color: ['#FBC31A', '#258BFF'],
+        title: {
+            text: '磁盘占用',
+            x: 'center',
+            y: 'bottom',
+            textStyle: {
+                color: '#5797D6',
+                fontSize: 12,
+                fontStyle: 'normal'
+            }
+        },
+        tooltip: {
+            trigger: 'item',
+            formatter: "{a} <br/>{b}: {c} ({d}%)"
+        },
+        series: [
+            {
+                name: '使用率',
+                type: 'pie',
+                radius: ['30%', '50%'],
+                avoidLabelOverlap: false,
+                label: {
+                    normal: {
+                        show: false,
+                        position: 'center'
+                    },
+                    emphasis: {
+                        show: true,
+                        textStyle: {
+                            color: '#fff',
+                            fontSize: '30',
+                            fontWeight: 'bold'
+                        }
+                    }
+                },
+                labelLine: {
+                    normal: {
+                        show: false
+                    }
+                },
+                itemStyle: {
+                    normal: {
+                        label: {
+                            show: false
+                        },
+                        labelLine: {
+                            show: false,
+//                  length : 10,
+                        }
+                    }
+                },
+                data: [
+                    {value: 335, name: '已用'},
+                    {value: 1548, name: '空闲'}
+                ]
+            }
+        ]
+    };
+
+    var option12 = {
+        color: ['#3FC3EC','#C48743'],
+        grid: {
+            x: 50,
+            y: 30,
+            x2: 50,
+            y2: 30
+        },
+        legend: {
+            data:['流入流量','流出流量'],
+            textStyle:{
+                color: '#fff'
+            }
+        },
+        tooltip: {
+            trigger: 'axis'
+        },
+        calculable: true,
+        xAxis: [
+            {
+                type: 'category',
+                boundaryGap: false,
+                axisLabel: {
+                    formatter: function (value) {
+                        // Function formatter
+//                return value + ' °C'
+                        return value
+                    },
+                    margin: 10,
+                    textStyle: {
+                        color: '#fff',
+                        fontFamily: 'verdana',
+                        fontSize: 12,
+                        fontStyle: 'normal',
+//                fontWeight: 'bold'
+                    }
+                },
+                axisTick: {    // 轴标记
+                    show: true,
+                    length: 3,
+                    lineStyle: {
+                        color: '#2F95BF',
+                        type: 'solid',
+                        width: 1
+                    }
+                },
+                data : (function (){
+                    var now = new Date();
+                    var res = [];
+                    var len = 6;
+                    while (len--) {
+                        res.unshift(now.toLocaleTimeString().replace(/^\D*/,'').slice(2,8));
+                        now = new Date(now - 2000);
+                    }
+                    return res;
+                })()
             },
-            axisTick: {    // 轴标记
-                show: true,
-                length: 3,
-                lineStyle: {
-                    color: '#2F95BF',
-                    type: 'solid',
-                    width: 1
+        ],
+        yAxis: [
+            {
+                type: 'value',
+                name: 'Byte',
+                position: 'left',
+                boundaryGap: [0, 0.1],
+                axisLine: {    // 轴线
+                    show: true,
+                    lineStyle: {
+                        color: '#2F95BF',
+                        width: 1
+                    }
+                },
+                axisLabel: {
+                    formatter: function (value) {
+                        return value
+                    },
+                    margin: 10,
+                    textStyle: {
+                        color: '#fff',
+                        fontFamily: 'verdana',
+                        fontSize: 12,
+                        fontStyle: 'normal',
+                    }
+                },
+                axisTick: {    // 轴标记
+                    show: true,
+                    length: 3,
+                    lineStyle: {
+                        color: '#2F95BF',
+                        type: 'solid',
+                        width: 1
+                    }
                 }
             }
-        }
-    ],
-    series: [
-        {
-            name: '流入流量',
-            type: 'line',
-            smooth: true,
-            itemStyle: {normal: {areaStyle: {type: 'default'}}},
-            data: (function(){
-                var res = []
-                var arr = vm.getData6(2,6)
-                arr.forEach(function(val,i){
-                    res.unshift(val.volume_in)
-                })
-                return res
-            })()
-        },
-        {
-            name: '流出流量',
-            type: 'line',
-            smooth: true,
-            itemStyle: {normal: {areaStyle: {type: 'default'}}},
-            data: (function(){
-                var res = []
-                var arr = vm.getData6(2,6)
-                arr.forEach(function(val,i){
-                    res.unshift(val.volume_out)
-                })
-                return res
-            })()
-        },
-    ]
-};
+        ],
+        series: [
+            {
+                name: '流入流量',
+                type: 'line',
+                smooth: true,
+                itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                data: (function(){
+                    var res = []
+                    var arr = vm.getData6(2,6)
+                    arr.forEach(function(val,i){
+                        res.unshift(val.volume_in)
+                    })
+                    return res
+                })()
+            },
+            {
+                name: '流出流量',
+                type: 'line',
+                smooth: true,
+                itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                data: (function(){
+                    var res = []
+                    var arr = vm.getData6(2,6)
+                    arr.forEach(function(val,i){
+                        res.unshift(val.volume_out)
+                    })
+                    return res
+                })()
+            },
+        ]
+    };
 
     var lastData12 = 7;
     var axisData12;
@@ -1855,7 +1935,7 @@ var option12 = {
         //lastData12 += Math.random() * ((Math.round(Math.random() * 10) % 2) == 0 ? 1 : -1);
         //lastData12 = lastData4.toFixed(1) - 0;
         lastData12 = vm.getData6(2,1)[0]['volume_in']
-        axisData12 = (new Date()).toLocaleTimeString().replace(/^\D*/,'').slice(3,8);
+        axisData12 = (new Date()).toLocaleTimeString().replace(/^\D*/,'').slice(2,8);
 
         // 动态数据接口 addData
         myChart12.addData([
@@ -1877,52 +1957,31 @@ var option12 = {
     }, 2000);
 
 // 基于准备好的dom，初始化echarts图表
-var myChart1 = echarts.init(document.getElementById('myChart1'));
-var myChart2 = echarts.init(document.getElementById('myChart2'));
-var myChart3 = echarts.init(document.getElementById('myChart3'));
-var myChart4 = echarts.init(document.getElementById('myChart4'));
-var myChart5 = echarts.init(document.getElementById('myChart5'));
-var myChart6 = echarts.init(document.getElementById('myChart6'));
-var myChart7 = echarts.init(document.getElementById('myChart7'));
-var myChart8 = echarts.init(document.getElementById('myChart8'));
-var myChart9 = echarts.init(document.getElementById('myChart9'));
-var myChart10 = echarts.init(document.getElementById('myChart10'));
-var myChart11 = echarts.init(document.getElementById('myChart11'));
-var myChart12 = echarts.init(document.getElementById('myChart12'));
+    var myChart1 = echarts.init(document.getElementById('myChart1'));
+    var myChart2 = echarts.init(document.getElementById('myChart2'));
+    var myChart3 = echarts.init(document.getElementById('myChart3'));
+    var myChart4 = echarts.init(document.getElementById('myChart4'));
+    var myChart5 = echarts.init(document.getElementById('myChart5'));
+    var myChart6 = echarts.init(document.getElementById('myChart6'));
+    var myChart7 = echarts.init(document.getElementById('myChart7'));
+    var myChart8 = echarts.init(document.getElementById('myChart8'));
+    var myChart9 = echarts.init(document.getElementById('myChart9'));
+    var myChart10 = echarts.init(document.getElementById('myChart10'));
+    var myChart11 = echarts.init(document.getElementById('myChart11'));
+    var myChart12 = echarts.init(document.getElementById('myChart12'));
 
 // 为echarts对象加载数据
-myChart1.setOption(option1);
-myChart2.setOption(option2);
-myChart3.setOption(option3);
-myChart4.setOption(option4);
-myChart5.setOption(option5);
-myChart6.setOption(option6);
-myChart7.setOption(option7);
-myChart8.setOption(option8);
-myChart9.setOption(option9);
-myChart10.setOption(option10);
-myChart11.setOption(option11);
-myChart12.setOption(option12);
-
-
-    var lastIndex = 2;
-    var axisData;
-    clearInterval(timeTicket);
-    var timeTicket = setInterval(function (){
-        lastIndex += 1;
-        // 动态数据接口 addData
-        myChart2.addData([
-            [
-                0,        // 系列索引
-                {         // 新增数据
-                    name:  lastIndex%2==0?'空闲':'已用',
-                    value: Math.round(Math.random()*10)
-                },
-                false,     // 新增数据是否从队列头部插入
-                false,     // 是否增加队列长度，false则自定删除原有数据，队头插入删队尾，队尾插入删队头
-            ]
-
-        ]);
-    }, 1000);
+    myChart1.setOption(option1);
+    myChart2.setOption(option2);
+    myChart3.setOption(option3);
+    myChart4.setOption(option4);
+    myChart5.setOption(option5);
+    myChart6.setOption(option6);
+    myChart7.setOption(option7);
+    myChart8.setOption(option8);
+    myChart9.setOption(option9);
+    myChart10.setOption(option10);
+    myChart11.setOption(option11);
+    myChart12.setOption(option12);
 
 },500)
