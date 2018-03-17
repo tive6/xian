@@ -226,7 +226,7 @@ var vm = new Vue({
             setInterval(function(){
                 that.getData5() // 5
             },oneMinutes)
-            console.log(this.getData6(0,6)) // 6
+            //console.log(this.getData6(0,6)) // 6
             this.getJqzyzl() // 7
 
             this.getJqzysy(1)// 8
@@ -428,7 +428,7 @@ var vm = new Vue({
                 then(function (res) {
                     //console.log(res.body)
                     that.data8 = res.body.data.data[0]
-                    console.log(that.data8)
+                    //console.log(that.data8)
                     that.getData8()
                 }, function (res) {
                     console.log(res.body.msg)
@@ -626,7 +626,6 @@ setTimeout(function(){
                     arr.forEach(function(val,i){
                         res.push((val.net_input+val.net_output))
                     })
-                    console.log(res)
                     return res
                 })()
             },
@@ -640,7 +639,7 @@ setTimeout(function(){
                     var res = []
                     var arr = vm.getData3(0,4)
                     arr.forEach(function(val,i){
-                        console.log(val.cpu_percent)
+                        //console.log(val.cpu_percent)
                         res.push(val.cpu_percent*100)
                     })
                     return res
@@ -1161,7 +1160,6 @@ setTimeout(function(){
                     arr.forEach(function(val,i){
                         res.push((val.net_input+val.net_output))
                     })
-                    console.log(res)
                     return res
                 })()
             },
@@ -1175,7 +1173,7 @@ setTimeout(function(){
                     var res = []
                     var arr = vm.getData3(1,4)
                     arr.forEach(function(val,i){
-                        console.log(val.cpu_percent)
+                        //console.log(val.cpu_percent)
                         res.push(val.cpu_percent*100)
                     })
                     return res
@@ -1699,7 +1697,6 @@ setTimeout(function(){
                     arr.forEach(function(val,i){
                         res.push((val.net_input+val.net_output))
                     })
-                    console.log(res)
                     return res
                 })()
             },
@@ -1713,7 +1710,7 @@ setTimeout(function(){
                     var res = []
                     var arr = vm.getData3(2,4)
                     arr.forEach(function(val,i){
-                        console.log(val.cpu_percent)
+                        //console.log(val.cpu_percent)
                         res.push(val.cpu_percent*100)
                     })
                     return res
