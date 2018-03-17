@@ -35,8 +35,8 @@ router.get('/:ct/resource', function(req, res){
             'cluster': n,
             'nodes': 40,
             'cores': 345,
-            'memory': 10237418240,
-            'disk': 8003741824
+            'memory': 107374182400,
+            'disk': 107374182400
         }
     }
     switch(n)
@@ -72,8 +72,8 @@ router.get('/:ct/resource/usage', function(req, res){
         let obj = {
             'timestamp': 123445678754,
             'cpu_percent': toNum2(Math.random(),2),
-            'mem_used': Math.floor(Math.random()*100000),
-            'disk_used': Math.floor(Math.random()*100000),
+            'mem_used': Math.floor(Math.random()*107374182400),
+            'disk_used': Math.floor(Math.random()*107374182400),
             'disk_input': toNum2(Math.random()*1000,1),
             'disk_output': toNum2(Math.random()*1000,1),
             'net_input': toNum2(Math.random()*1000,1),
@@ -289,14 +289,14 @@ router.get('/virtualResource', function(req, res) {
 router.get('/virtualResource/usage', function(req, res){
     let num = parseInt(req.query.range) || 30
     console.log(num)
-    let obj = {
-        'timestamp': 1293801928309,
-        'vcore_used': 650,
-        'vmem_used': 4020390,
-        'hdfs_used': 1934802983
-    }
     let data = []
     for(let i=0;i<num;i++){
+        let obj = {
+            'timestamp': 1293801928309,
+            'vcore_used': toNum2(Math.random()*650),
+            'vmem_used': toNum2(Math.random()*4020390),
+            'hdfs_used': toNum2(Math.random()*1934802983)
+        }
         data.push(obj)
     }
     let json = {

@@ -9,10 +9,13 @@ Vue.prototype.toNum2 = function(num,n){
     return parseFloat((num).toFixed(n))
 }
 
+const oneMinutes = 60000
+const oneHours = 3600000
+const oneDays = 86400000
+
 var vm = new Vue({
     el: '.ad-container',
     data: {
-        a: 10,
         timeType:{
             twoS: 2000,
             oneM: 60000,
@@ -205,9 +208,7 @@ var vm = new Vue({
             return lastDate
         }
     },
-    computed: {
-
-    },
+    computed: {},
     beforeCreate:function(){
         this.$nextTick(function () {
             var that = this
@@ -224,39 +225,38 @@ var vm = new Vue({
             this.getData5() // 5
             setInterval(function(){
                 that.getData5() // 5
-            },that.timeType.twoS)
+            },oneMinutes)
             console.log(this.getData6(0,6)) // 6
             this.getJqzyzl() // 7
+
             this.getJqzysy(1)// 8
-            /*setInterval(function(){
-             that.getJqzysy(1)
-             },2000)*/
+            setInterval(function(){
+                that.getJqzysy(1)// 8
+            },oneMinutes)
 
             //this.getJquse() // 9
+            var ind = 0;
+            var arr9 = ['vcore_seconds','mem_used','jobs','during_time']
             that.getJquse(function(res){
                 that.arrSort(res,arr9[0])
             })
-            var ind = 0;
-            var arr9 = ['vcore_seconds','mem_used','jobs','during_time']
             setInterval(function(){
                 that.getJquse(function(res){
                     ind ++
                     if(ind>=arr9.length){
                         ind = 0
                     }
-                    console.log(arr9[ind])
+                    //console.log(arr9[ind])
                     that.arrSort(res,arr9[ind])
                 })
-            },5000)
-            //},that.timeType.oneD)
+                //},5000)
+            },oneDays)
         })
     },
     created: function () {
         this.$nextTick(function () {
             //this.getJkzk()
-
         })
-
     },
     mounted: function () {
         this.$nextTick(function () {
@@ -307,17 +307,6 @@ var vm = new Vue({
                 this.uses[len].disk_useD = this.fn_bytesToGB(this.data3[len][0].disk_used)
                 len++
             }
-            //console.log(this.uses)
-        },
-        getSum(){
-            var len = 0
-            while (len < 3){
-                this.uses[len].mem_useN = this.fn_bytesToGB(this.data2[len].memory - this.data3[len][0].mem_used)
-                this.uses[len].mem_useD = this.fn_bytesToGB(this.data3[len][0].mem_used)
-                this.uses[len].disk_useN = this.fn_bytesToGB(this.data2[len].disk - this.data3[len][0].disk_used)
-                this.uses[len].disk_useD = this.fn_bytesToGB(this.data3[len][0].disk_used)
-                len++
-            }
         },
         // 分别获取资源总量
         getData2: function (){
@@ -330,7 +319,7 @@ var vm = new Vue({
         },
         getData3: function (index,n){
             this.getJqsy(index,n)
-            console.log(this.data3)
+            //console.log(this.data3)
             return this.data3[index]
         },
         getData5: function (){
@@ -351,9 +340,9 @@ var vm = new Vue({
             return this.data6[index]
         },
         getData8(){
-            this.lastData8.vcores = (this.data8.vcore_used / this.data7.vcores).toFixed(2) * 100
-            this.lastData8.vmems = (this.data8.vmem_used / this.data7.vmems).toFixed(2) * 100
-            this.lastData8.hdfs_capacity = (this.data8.hdfs_used / this.data7.hdfs_capacity).toFixed(2) * 100
+            this.lastData8.vcores = (this.data8.vcore_used / this.data7.vcores).toFixed(3) * 100
+            this.lastData8.vmems = (this.data8.vmem_used / this.data7.vmems).toFixed(3) * 100
+            this.lastData8.hdfs_capacity = (this.data8.hdfs_used / this.data7.hdfs_capacity).toFixed(3) * 100
         },
         // this.$http.get('/someUrl', [options]).then(function(response){}
         getJkzk: function () { // 1.健康状况
@@ -382,7 +371,7 @@ var vm = new Vue({
             var that = this
             this.$http.get('/api/v1/' + ct + '/resource/usage?range=' + n).
                 then(function (res) {
-                    console.log(res.body)
+                    //console.log(res.body)
                     that.data3.splice(ct,1,res.body.data.data)
                     this.getUses()
                 }, function (res) {
@@ -462,22 +451,20 @@ var vm = new Vue({
     }
 })
 
-console.log(vm)
-var vmData = vm.$data
 setTimeout(function(){
-    console.log(vmData.uses[0].mem_useD)
-
+    var vmData = vm.$data
 
     var option1 = {
+        //color: ['#3FC3EC','#C48743','#FFFF00'],
         grid: {
             x: 30,
             y: 50,
             x2: 40,
             y2: 30
         },
-        tooltip: {
+        /*tooltip: {
             trigger: 'axis'
-        },
+        },*/
         legend: {
             data: ['磁盘IO', '网络IO', 'CPU使用率'],
             y: 10,
@@ -496,14 +483,15 @@ setTimeout(function(){
                     lineStyle: {
                         color: '#2F95BF',
                         type: 'solid',
-                        width: 1
+                        width: 0
                     }
                 },
                 axisTick: {    // 轴标记
                     show: true,
-                    length: 10,
+                    length: 3,
                     lineStyle: {
-                        type: 'none',
+                        color: '#2F95BF',
+                        type: 'solid',
                         width: 1
                     }
                 },
@@ -530,8 +518,8 @@ setTimeout(function(){
                     var res = [];
                     var len = 4;
                     while (len--) {
-                        res.unshift(now.toLocaleTimeString().replace(/^\D*/,'').slice(2,8));
-                        now = new Date(now - 2000);
+                        res.unshift(now.toLocaleTimeString().replace(/^\D*/,'').slice(0,8));
+                        now = new Date(now - oneMinutes);
                     }
                     return res;
                 })()
@@ -541,13 +529,14 @@ setTimeout(function(){
             {
                 type: 'value',
                 name: '%',
+                splitNumber: 5,
                 position: 'left',
-                boundaryGap: [0, 0.1],
+                max: 100,
                 axisLine: {    // 轴线
                     show: true,
                     lineStyle: {
                         color: '#2F95BF',
-                        width: 1
+                        width: 0
                     }
                 },
                 axisTick: {    // 轴标记
@@ -588,6 +577,13 @@ setTimeout(function(){
                         fontFamily: 'verdana',
                         fontSize: 10,
                         fontStyle: 'normal'
+                    }
+                },
+                axisLine: {    // 轴线
+                    show: true,
+                    lineStyle: {
+                        color: '#2F95BF',
+                        width: 0
                     }
                 },
                 axisTick: {    // 轴标记
@@ -653,12 +649,10 @@ setTimeout(function(){
         ]
     };
 
-    var lastData1 = 5;
     var axisData1;
     clearInterval(timeTicket1);
     var timeTicket1 = setInterval(function (){
-        axisData1 = (new Date()).toLocaleTimeString().replace(/^\D*/,'').slice(2,8);
-
+        axisData1 = (new Date()).toLocaleTimeString().replace(/^\D*/,'').slice(0,8);
         // 动态数据接口 addData
         myChart1.addData([
             [
@@ -683,7 +677,7 @@ setTimeout(function(){
                 axisData1  // 坐标轴标签
             ]
         ]);
-    }, 2000);
+    }, oneMinutes);
 
     var option2 = {
         color: ['#FBC31A', '#258BFF'],
@@ -697,10 +691,10 @@ setTimeout(function(){
                 fontStyle: 'normal'
             }
         },
-        tooltip: {
-            trigger: 'item',
-            formatter: "{a} <br/>{b}: {c} ({d}%)"
-        },
+        /*tooltip: {
+         trigger: 'item',
+         formatter: "{a} <br/>{b}: {c} ({d}%)"
+         },*/
         legend: {
             orient: 'horizontal',
             x: 'center',
@@ -741,50 +735,44 @@ setTimeout(function(){
                             show: false
                         },
                         labelLine: {
-                            show: false,
-//                  length : 10,
+                            show: false
                         }
                     }
                 },
                 data: (function(){
                     var res = []
                     res.push(
-                        {value: vmData.uses[0].disk_useD, name: '已用'},
-                        {value: vmData.uses[0].disk_useN, name: '空闲'}
+                        {value: vmData.uses[0].mem_useD, name: '已用'},
+                        {value: vmData.uses[0].mem_useN, name: '空闲'}
                     )
-                    console.log(res)
                     return res
                 })()
             }
         ]
     };
 
-    var lastIndex = 2;
-    var axisData;
-    clearInterval(timeTicket);
-    var timeTicket = setInterval(function (){
-        lastIndex += 1;
+    var lastIndex2 = 3;
+    clearInterval(timeTicket2);
+    var timeTicket2 = setInterval(function (){
         // 动态数据接口 addData
         myChart2.addData([
             [
                 0,        // 系列索引
-                {         // 新增数据
-                    name:  lastIndex%2==0?'空闲':'已用',
-                    value: Math.round(Math.random()*10)
-                },
+                {value: vmData.uses[0].mem_useD, name: lastIndex2%2==0?'空闲':'已用'},
                 false,     // 新增数据是否从队列头部插入
                 false,     // 是否增加队列长度，false则自定删除原有数据，队头插入删队尾，队尾插入删队头
                 //lastIndex%2==0?'空闲':'已用'
+                //['已用','空闲']
             ]
-
         ]);
-    }, 2000);
+        lastIndex2 ++
+    }, oneMinutes);
 
 
     var option3 = {
         color: ['#FBC31A', '#258BFF'],
         title: {
-            text: '磁盘占用',
+            text: '内存占用',
             x: 'center',
             y: 'bottom',
             textStyle: {
@@ -793,9 +781,18 @@ setTimeout(function(){
                 fontStyle: 'normal'
             }
         },
-        tooltip: {
-            trigger: 'item',
-            formatter: "{a} <br/>{b}: {c} ({d}%)"
+        /*tooltip: {
+         trigger: 'item',
+         formatter: "{a} <br/>{b}: {c} ({d}%)"
+         },*/
+        legend: {
+            orient: 'horizontal',
+            x: 'center',
+            y: 10,
+            data: ['已用', '空闲'],
+            textStyle: {
+                color: '#fff'
+            }
         },
         series: [
             {
@@ -809,7 +806,7 @@ setTimeout(function(){
                         position: 'center'
                     },
                     emphasis: {
-                        show: true,
+                        show: false,
                         textStyle: {
                             color: '#fff',
                             fontSize: '30',
@@ -828,8 +825,7 @@ setTimeout(function(){
                             show: false
                         },
                         labelLine: {
-                            show: false,
-//                  length : 10,
+                            show: false
                         }
                     }
                 },
@@ -845,6 +841,23 @@ setTimeout(function(){
         ]
     };
 
+    var lastIndex3 = 3;
+    clearInterval(timeTicket3);
+    var timeTicket3 = setInterval(function (){
+        // 动态数据接口 addData
+        myChart3.addData([
+            [
+                0,        // 系列索引
+                {value: vmData.uses[0].disk_useD, name: lastIndex3%2==0?'空闲':'已用'},
+                false,     // 新增数据是否从队列头部插入
+                false,     // 是否增加队列长度，false则自定删除原有数据，队头插入删队尾，队尾插入删队头
+                //lastIndex%2==0?'空闲':'已用'
+                //['已用','空闲']
+            ]
+        ]);
+        lastIndex3 ++
+    }, oneMinutes);
+
     var option4 = {
         color: ['#3FC3EC'],
         grid: {
@@ -853,9 +866,9 @@ setTimeout(function(){
             x2: 50,
             y2: 30
         },
-        tooltip: {
+        /*tooltip: {
             trigger: 'axis'
-        },
+        },*/
         calculable: true,
         xAxis: [
             {
@@ -871,7 +884,7 @@ setTimeout(function(){
                     textStyle: {
                         color: '#fff',
                         fontFamily: 'verdana',
-                        fontSize: 12,
+                        fontSize: 10,
                         fontStyle: 'normal'
                     }
                 },
@@ -889,8 +902,8 @@ setTimeout(function(){
                     var res = [];
                     var len = 6;
                     while (len--) {
-                        res.unshift(now.toLocaleTimeString().replace(/^\D*/,'').slice(2,8));
-                        now = new Date(now - 2000);
+                        res.unshift(now.toLocaleTimeString().replace(/^\D*/,'').slice(0,8));
+                        now = new Date(now - oneMinutes);
                     }
                     return res;
                 })()
@@ -922,7 +935,7 @@ setTimeout(function(){
                     textStyle: {
                         color: '#fff',
                         fontFamily: 'verdana',
-                        fontSize: 12,
+                        fontSize: 10,
                         fontStyle: 'normal'
                     }
                 },
@@ -962,7 +975,7 @@ setTimeout(function(){
         //lastData4 += Math.random() * ((Math.round(Math.random() * 10) % 2) == 0 ? 1 : -1);
         //lastData4 = lastData4.toFixed(1) - 0;
         lastData4 = vm.getData6(0,1)[0]['volume']
-        axisData4 = (new Date()).toLocaleTimeString().replace(/^\D*/,'').slice(2,8);
+        axisData4 = (new Date()).toLocaleTimeString().replace(/^\D*/,'').slice(0,8);
 
         // 动态数据接口 addData
         myChart4.addData([
@@ -974,18 +987,19 @@ setTimeout(function(){
                 axisData4  // 坐标轴标签
             ]
         ]);
-    }, 2000);
+    }, oneMinutes);
 
     var option5 = {
+        //color: ['#3FC3EC','#C48743','#FFFF00'],
         grid: {
             x: 30,
             y: 50,
             x2: 40,
             y2: 30
         },
-        tooltip: {
+        /*tooltip: {
             trigger: 'axis'
-        },
+        },*/
         legend: {
             data: ['磁盘IO', '网络IO', 'CPU使用率'],
             y: 10,
@@ -1004,14 +1018,15 @@ setTimeout(function(){
                     lineStyle: {
                         color: '#2F95BF',
                         type: 'solid',
-                        width: 1
+                        width: 0
                     }
                 },
                 axisTick: {    // 轴标记
                     show: true,
-                    length: 10,
+                    length: 3,
                     lineStyle: {
-                        type: 'none',
+                        color: '#2F95BF',
+                        type: 'solid',
                         width: 1
                     }
                 },
@@ -1038,8 +1053,8 @@ setTimeout(function(){
                     var res = [];
                     var len = 4;
                     while (len--) {
-                        res.unshift(now.toLocaleTimeString().replace(/^\D*/,'').slice(2,8));
-                        now = new Date(now - 2000);
+                        res.unshift(now.toLocaleTimeString().replace(/^\D*/,'').slice(0,8));
+                        now = new Date(now - oneMinutes);
                     }
                     return res;
                 })()
@@ -1049,13 +1064,14 @@ setTimeout(function(){
             {
                 type: 'value',
                 name: '%',
+                splitNumber: 5,
                 position: 'left',
-                boundaryGap: [0, 0.1],
+                max: 100,
                 axisLine: {    // 轴线
                     show: true,
                     lineStyle: {
                         color: '#2F95BF',
-                        width: 1
+                        width: 0
                     }
                 },
                 axisTick: {    // 轴标记
@@ -1096,6 +1112,13 @@ setTimeout(function(){
                         fontFamily: 'verdana',
                         fontSize: 10,
                         fontStyle: 'normal'
+                    }
+                },
+                axisLine: {    // 轴线
+                    show: true,
+                    lineStyle: {
+                        color: '#2F95BF',
+                        width: 0
                     }
                 },
                 axisTick: {    // 轴标记
@@ -1165,7 +1188,7 @@ setTimeout(function(){
     var axisData5;
     clearInterval(timeTicket5);
     var timeTicket5 = setInterval(function (){
-        axisData5 = (new Date()).toLocaleTimeString().replace(/^\D*/,'').slice(2,8);
+        axisData5 = (new Date()).toLocaleTimeString().replace(/^\D*/,'').slice(0,8);
 
         // 动态数据接口 addData
         myChart5.addData([
@@ -1191,7 +1214,7 @@ setTimeout(function(){
                 axisData5  // 坐标轴标签
             ]
         ]);
-    }, 2000);
+    }, oneMinutes);
 
 
     var option6 = {
@@ -1206,10 +1229,10 @@ setTimeout(function(){
                 fontStyle: 'normal'
             }
         },
-        tooltip: {
-            trigger: 'item',
-            formatter: "{a} <br/>{b}: {c} ({d}%)"
-        },
+        /*tooltip: {
+         trigger: 'item',
+         formatter: "{a} <br/>{b}: {c} ({d}%)"
+         },*/
         legend: {
             orient: 'horizontal',
             x: 'center',
@@ -1250,23 +1273,44 @@ setTimeout(function(){
                             show: false
                         },
                         labelLine: {
-                            show: false,
-//                  length : 10,
+                            show: false
                         }
                     }
                 },
-                data: [
-                    {value: vmData.uses[0].disk_useD, name: '已用'},
-                    {value: vmData.uses[0].disk_useN, name: '空闲'}
-                ]
+                data: (function(){
+                    var res = []
+                    res.push(
+                        {value: vmData.uses[1].mem_useD, name: '已用'},
+                        {value: vmData.uses[1].mem_useN, name: '空闲'}
+                    )
+                    return res
+                })()
             }
         ]
     };
 
+    var lastIndex6 = 3;
+    clearInterval(timeTicket6);
+    var timeTicket6 = setInterval(function (){
+        // 动态数据接口 addData
+        myChart6.addData([
+            [
+                0,        // 系列索引
+                {value: vmData.uses[1].mem_useD, name: lastIndex6%2==0?'空闲':'已用'},
+                false,     // 新增数据是否从队列头部插入
+                false,     // 是否增加队列长度，false则自定删除原有数据，队头插入删队尾，队尾插入删队头
+                //lastIndex%2==0?'空闲':'已用'
+                //['已用','空闲']
+            ]
+        ]);
+        lastIndex6 ++
+    }, oneMinutes);
+
+
     var option7 = {
         color: ['#FBC31A', '#258BFF'],
         title: {
-            text: '磁盘占用',
+            text: '内存占用',
             x: 'center',
             y: 'bottom',
             textStyle: {
@@ -1275,9 +1319,18 @@ setTimeout(function(){
                 fontStyle: 'normal'
             }
         },
-        tooltip: {
-            trigger: 'item',
-            formatter: "{a} <br/>{b}: {c} ({d}%)"
+        /*tooltip: {
+         trigger: 'item',
+         formatter: "{a} <br/>{b}: {c} ({d}%)"
+         },*/
+        legend: {
+            orient: 'horizontal',
+            x: 'center',
+            y: 10,
+            data: ['已用', '空闲'],
+            textStyle: {
+                color: '#fff'
+            }
         },
         series: [
             {
@@ -1291,7 +1344,7 @@ setTimeout(function(){
                         position: 'center'
                     },
                     emphasis: {
-                        show: true,
+                        show: false,
                         textStyle: {
                             color: '#fff',
                             fontSize: '30',
@@ -1310,18 +1363,38 @@ setTimeout(function(){
                             show: false
                         },
                         labelLine: {
-                            show: false,
-//                  length : 10,
+                            show: false
                         }
                     }
                 },
-                data: [
-                    {value: 335, name: '已用'},
-                    {value: 1548, name: '空闲'}
-                ]
+                data: (function(){
+                    var res = []
+                    res.push(
+                        {value: vmData.uses[1].disk_useD, name: '已用'},
+                        {value: vmData.uses[1].disk_useN, name: '空闲'}
+                    )
+                    return res
+                })()
             }
         ]
     };
+
+    var lastIndex7 = 3;
+    clearInterval(timeTicket7);
+    var timeTicket7 = setInterval(function (){
+        // 动态数据接口 addData
+        myChart7.addData([
+            [
+                0,        // 系列索引
+                {value: vmData.uses[1].disk_useD, name: lastIndex7%2==0?'空闲':'已用'},
+                false,     // 新增数据是否从队列头部插入
+                false,     // 是否增加队列长度，false则自定删除原有数据，队头插入删队尾，队尾插入删队头
+                //lastIndex%2==0?'空闲':'已用'
+                //['已用','空闲']
+            ]
+        ]);
+        lastIndex7 ++
+    }, oneMinutes);
 
     var option8 = {
         color: ['#3FC3EC'],
@@ -1331,9 +1404,9 @@ setTimeout(function(){
             x2: 50,
             y2: 30
         },
-        tooltip: {
+        /*tooltip: {
             trigger: 'axis'
-        },
+        },*/
         calculable: true,
         xAxis: [
             {
@@ -1349,8 +1422,8 @@ setTimeout(function(){
                     textStyle: {
                         color: '#fff',
                         fontFamily: 'verdana',
-                        fontSize: 12,
-                        fontStyle: 'normal',
+                        fontSize: 10,
+                        fontStyle: 'normal'
 //                fontWeight: 'bold'
                     }
                 },
@@ -1368,8 +1441,8 @@ setTimeout(function(){
                     var res = [];
                     var len = 6;
                     while (len--) {
-                        res.unshift(now.toLocaleTimeString().replace(/^\D*/,'').slice(2,8));
-                        now = new Date(now - 2000);
+                        res.unshift(now.toLocaleTimeString().replace(/^\D*/,'').slice(0,8));
+                        now = new Date(now - oneMinutes);
                     }
                     return res;
                 })()
@@ -1380,7 +1453,6 @@ setTimeout(function(){
                 type: 'value',
                 name: 'Byte',
                 position: 'left',
-                //min: 0,
                 //max: 300,
                 //splitNumber: 5,
                 boundaryGap: [0, 0.1],
@@ -1401,9 +1473,8 @@ setTimeout(function(){
                     textStyle: {
                         color: '#fff',
                         fontFamily: 'verdana',
-                        fontSize: 12,
-                        fontStyle: 'normal',
-//                fontWeight: 'bold'
+                        fontSize: 10,
+                        fontStyle: 'normal'
                     }
                 },
                 axisTick: {    // 轴标记
@@ -1442,7 +1513,7 @@ setTimeout(function(){
         //lastData8 += Math.random() * ((Math.round(Math.random() * 10) % 2) == 0 ? 1 : -1);
         //lastData8 = lastData4.toFixed(1) - 0;
         lastData8 = vm.getData6(1,1)[0]['volume']
-        axisData8 = (new Date()).toLocaleTimeString().replace(/^\D*/,'').slice(2,8);
+        axisData8 = (new Date()).toLocaleTimeString().replace(/^\D*/,'').slice(0,8);
 
         // 动态数据接口 addData
         myChart8.addData([
@@ -1454,18 +1525,19 @@ setTimeout(function(){
                 axisData8  // 坐标轴标签
             ]
         ]);
-    }, 2000);
+    }, oneMinutes);
 
     var option9 = {
+        //color: ['#3FC3EC','#C48743','#FFFF00'],
         grid: {
             x: 30,
             y: 50,
             x2: 40,
             y2: 30
         },
-        tooltip: {
+        /*tooltip: {
             trigger: 'axis'
-        },
+        },*/
         legend: {
             data: ['磁盘IO', '网络IO', 'CPU使用率'],
             y: 10,
@@ -1484,14 +1556,15 @@ setTimeout(function(){
                     lineStyle: {
                         color: '#2F95BF',
                         type: 'solid',
-                        width: 1
+                        width: 0
                     }
                 },
                 axisTick: {    // 轴标记
                     show: true,
-                    length: 10,
+                    length: 3,
                     lineStyle: {
-                        type: 'none',
+                        color: '#2F95BF',
+                        type: 'solid',
                         width: 1
                     }
                 },
@@ -1518,8 +1591,8 @@ setTimeout(function(){
                     var res = [];
                     var len = 4;
                     while (len--) {
-                        res.unshift(now.toLocaleTimeString().replace(/^\D*/,'').slice(2,8));
-                        now = new Date(now - 2000);
+                        res.unshift(now.toLocaleTimeString().replace(/^\D*/,'').slice(0,8));
+                        now = new Date(now - oneMinutes);
                     }
                     return res;
                 })()
@@ -1529,13 +1602,14 @@ setTimeout(function(){
             {
                 type: 'value',
                 name: '%',
+                splitNumber: 5,
                 position: 'left',
-                boundaryGap: [0, 0.1],
+                max: 100,
                 axisLine: {    // 轴线
                     show: true,
                     lineStyle: {
                         color: '#2F95BF',
-                        width: 1
+                        width: 0
                     }
                 },
                 axisTick: {    // 轴标记
@@ -1576,6 +1650,13 @@ setTimeout(function(){
                         fontFamily: 'verdana',
                         fontSize: 10,
                         fontStyle: 'normal'
+                    }
+                },
+                axisLine: {    // 轴线
+                    show: true,
+                    lineStyle: {
+                        color: '#2F95BF',
+                        width: 0
                     }
                 },
                 axisTick: {    // 轴标记
@@ -1645,7 +1726,7 @@ setTimeout(function(){
     var axisData9;
     clearInterval(timeTicket9);
     var timeTicket9 = setInterval(function (){
-        axisData9 = (new Date()).toLocaleTimeString().replace(/^\D*/,'').slice(2,8);
+        axisData9 = (new Date()).toLocaleTimeString().replace(/^\D*/,'').slice(0,8);
 
         // 动态数据接口 addData
         myChart9.addData([
@@ -1671,7 +1752,7 @@ setTimeout(function(){
                 axisData9  // 坐标轴标签
             ]
         ]);
-    }, 2000);
+    }, oneMinutes);
 
     var option10 = {
         color: ['#FBC31A', '#258BFF'],
@@ -1685,10 +1766,10 @@ setTimeout(function(){
                 fontStyle: 'normal'
             }
         },
-        tooltip: {
-            trigger: 'item',
-            formatter: "{a} <br/>{b}: {c} ({d}%)"
-        },
+        /*tooltip: {
+         trigger: 'item',
+         formatter: "{a} <br/>{b}: {c} ({d}%)"
+         },*/
         legend: {
             orient: 'horizontal',
             x: 'center',
@@ -1729,23 +1810,44 @@ setTimeout(function(){
                             show: false
                         },
                         labelLine: {
-                            show: false,
-//                  length : 10,
+                            show: false
                         }
                     }
                 },
-                data: [
-                    {value: 335, name: '已用'},
-                    {value: 1548, name: '空闲'}
-                ]
+                data: (function(){
+                    var res = []
+                    res.push(
+                        {value: vmData.uses[2].mem_useD, name: '已用'},
+                        {value: vmData.uses[2].mem_useN, name: '空闲'}
+                    )
+                    return res
+                })()
             }
         ]
     };
 
+    var lastIndex10 = 3;
+    clearInterval(timeTicket10);
+    var timeTicket10 = setInterval(function (){
+        // 动态数据接口 addData
+        myChart10.addData([
+            [
+                0,        // 系列索引
+                {value: vmData.uses[2].mem_useD, name: lastIndex10%2==0?'空闲':'已用'},
+                false,     // 新增数据是否从队列头部插入
+                false,     // 是否增加队列长度，false则自定删除原有数据，队头插入删队尾，队尾插入删队头
+                //lastIndex%2==0?'空闲':'已用'
+                //['已用','空闲']
+            ]
+        ]);
+        lastIndex10 ++
+    }, oneMinutes);
+
+
     var option11 = {
         color: ['#FBC31A', '#258BFF'],
         title: {
-            text: '磁盘占用',
+            text: '内存占用',
             x: 'center',
             y: 'bottom',
             textStyle: {
@@ -1754,9 +1856,18 @@ setTimeout(function(){
                 fontStyle: 'normal'
             }
         },
-        tooltip: {
-            trigger: 'item',
-            formatter: "{a} <br/>{b}: {c} ({d}%)"
+        /*tooltip: {
+         trigger: 'item',
+         formatter: "{a} <br/>{b}: {c} ({d}%)"
+         },*/
+        legend: {
+            orient: 'horizontal',
+            x: 'center',
+            y: 10,
+            data: ['已用', '空闲'],
+            textStyle: {
+                color: '#fff'
+            }
         },
         series: [
             {
@@ -1770,7 +1881,7 @@ setTimeout(function(){
                         position: 'center'
                     },
                     emphasis: {
-                        show: true,
+                        show: false,
                         textStyle: {
                             color: '#fff',
                             fontSize: '30',
@@ -1789,18 +1900,38 @@ setTimeout(function(){
                             show: false
                         },
                         labelLine: {
-                            show: false,
-//                  length : 10,
+                            show: false
                         }
                     }
                 },
-                data: [
-                    {value: 335, name: '已用'},
-                    {value: 1548, name: '空闲'}
-                ]
+                data: (function(){
+                    var res = []
+                    res.push(
+                        {value: vmData.uses[2].disk_useD, name: '已用'},
+                        {value: vmData.uses[2].disk_useN, name: '空闲'}
+                    )
+                    return res
+                })()
             }
         ]
     };
+
+    var lastIndex11 = 3;
+    clearInterval(timeTicket11);
+    var timeTicket11 = setInterval(function (){
+        // 动态数据接口 addData
+        myChart11.addData([
+            [
+                0,        // 系列索引
+                {value: vmData.uses[2].disk_useD, name: lastIndex11%2==0?'空闲':'已用'},
+                false,     // 新增数据是否从队列头部插入
+                false,     // 是否增加队列长度，false则自定删除原有数据，队头插入删队尾，队尾插入删队头
+                //lastIndex%2==0?'空闲':'已用'
+                //['已用','空闲']
+            ]
+        ]);
+        lastIndex11 ++
+    }, oneMinutes);
 
     var option12 = {
         color: ['#3FC3EC','#C48743'],
@@ -1816,9 +1947,9 @@ setTimeout(function(){
                 color: '#fff'
             }
         },
-        tooltip: {
+        /*tooltip: {
             trigger: 'axis'
-        },
+        },*/
         calculable: true,
         xAxis: [
             {
@@ -1834,8 +1965,8 @@ setTimeout(function(){
                     textStyle: {
                         color: '#fff',
                         fontFamily: 'verdana',
-                        fontSize: 12,
-                        fontStyle: 'normal',
+                        fontSize: 10,
+                        fontStyle: 'normal'
 //                fontWeight: 'bold'
                     }
                 },
@@ -1853,8 +1984,8 @@ setTimeout(function(){
                     var res = [];
                     var len = 6;
                     while (len--) {
-                        res.unshift(now.toLocaleTimeString().replace(/^\D*/,'').slice(2,8));
-                        now = new Date(now - 2000);
+                        res.unshift(now.toLocaleTimeString().replace(/^\D*/,'').slice(0,8));
+                        now = new Date(now - oneMinutes);
                     }
                     return res;
                 })()
@@ -1881,8 +2012,8 @@ setTimeout(function(){
                     textStyle: {
                         color: '#fff',
                         fontFamily: 'verdana',
-                        fontSize: 12,
-                        fontStyle: 'normal',
+                        fontSize: 10,
+                        fontStyle: 'normal'
                     }
                 },
                 axisTick: {    // 轴标记
@@ -1935,7 +2066,7 @@ setTimeout(function(){
         //lastData12 += Math.random() * ((Math.round(Math.random() * 10) % 2) == 0 ? 1 : -1);
         //lastData12 = lastData4.toFixed(1) - 0;
         lastData12 = vm.getData6(2,1)[0]['volume_in']
-        axisData12 = (new Date()).toLocaleTimeString().replace(/^\D*/,'').slice(2,8);
+        axisData12 = (new Date()).toLocaleTimeString().replace(/^\D*/,'').slice(0,8);
 
         // 动态数据接口 addData
         myChart12.addData([
@@ -1952,9 +2083,9 @@ setTimeout(function(){
                 false,    // 新增数据是否从队列头部插入
                 false,    // 是否增加队列长度，false则自定删除原有数据，队头插入删队尾，队尾插入删队头
                 axisData12  // 坐标轴标签
-            ],
+            ]
         ]);
-    }, 2000);
+    }, oneMinutes);
 
 // 基于准备好的dom，初始化echarts图表
     var myChart1 = echarts.init(document.getElementById('myChart1'));
