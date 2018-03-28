@@ -226,7 +226,7 @@ var vm = new Vue({
             setInterval(function(){
                 that.getData5() // 5
             },oneMinutes)
-            //console.log(this.getData6(0,6)) // 6
+            this.getData6(0,6) // 6
             this.getJqzyzl() // 7
 
             this.getJqzysy(1)// 8
