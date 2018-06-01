@@ -8,6 +8,9 @@
     <div class="div2">
       <text>abc</text>
     </div>
+    <a href="../dist/index.js">
+      <text>O(∩_∩)O哈哈~</text>
+    </a>
     <router-view/>
   </div>
 </template>

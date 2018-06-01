@@ -1,0 +1,57 @@
+/* defined common functions */
+linearGradient($reg=0deg,$color1=#fc4923,$color2=#f52e3e)
+  background -moz-linear-gradient($reg, $color1, $color2)
+  background -webkit-linear-gradient($reg, $color1, $color2)
+  background -o-linear-gradient($reg, $color1, $color2)
+  background linear-gradient($reg, $color1, $color2)
+
+setBtnCss($bg=$colorRed,$mt=35px)
+  display block
+  height 44px
+  line-height 44px
+  color $bgFf
+  background-color $bg
+  border-radius 22px
+  margin $mt 30px 0
+  font-size 16px
+  text-align center
+
+setFormList($li,$l,$r,$bg=$bgFf,$h=44px,$w,$or=true)
+  .{$li}
+    background-color $bg
+    height $h
+    margin-bottom 10px
+    overflow hidden
+    if $or
+      padding-left $w + 15px
+      padding-right 15px
+    else
+      padding-left 15px
+      padding-right $w + 15px
+  .{$l},
+  .{$r}
+    display inline-block
+    float left
+    height $h
+    line-height $h
+  if $or
+    .{$l}
+      width $w
+      margin-left - $w
+      color $color6
+    .{$r}
+      width 100%
+      color $color9
+  else
+    .{$l}
+      width 100%
+    .{$r}
+      width $w
+      margin-right -$w
+
+
+
+
+
+
+
