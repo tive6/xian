@@ -414,7 +414,7 @@
   color $color9
 .bidDtl-btn-next
   width 100%
-  position fixed
+  position absolute
   bottom 0
   left 0
   display block
@@ -812,7 +812,7 @@
   text-align center
   color $bgFf
   border-radius 24px
-  background-color $bgGrayD2
+  background-color $colorRed
   font-size 16px
   &.login-btn-submit-ok
     background-color $colorRed
@@ -1351,21 +1351,93 @@ setFormList('form-li','form-lil','form-lir',$bgFf,44px,120px,true)
   width 10px
   height 100%
   background url(./../../assets/img/my/my-icon-right-m.png) no-repeat right center
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/* recommend */
+.recommend-head
+  background-color $bgFf
+  margin-bottom 10px
+.recommend-head-img
+  display block
+  width 100%
+.recommend-body
+  margin 0 15px
+  padding 30px 30px
+  background url(./../../assets/img/my/my-bg-03.png) no-repeat center top
+  background-size 100%
+  border-bottom-left-radius 8px
+  border-bottom-right-radius 8px
+.recommend-qr
+  text-align center
+  img
+    display block
+    margin 0 auto
+.recommend-btn
+  display block
+  width 100%
+  height 44px
+  text-align center
+  font-size 16px
+  border-radius 22px
+  color $colorRed
+.recommend-btn-toRec
+  line-height 44px
+  background-color $bgFf
+  margin 20px 0 15px
+.recommend-btn-record
+  border 1px solid $bgFf
+  line-height 42px
+  color $bgFf
+/* total-assets */
+.TotalAssets
+  margin 0 15px
+.veRing
+.tAll-body
+  margin 10px 0 0
+  padding 10px 0
+  background-color #fff
+  border-radius 5px
+.tAll-li
+  overflow hidden
+  padding-left 138px
+  border-top 1px solid $colorBorF1
+  &:first-child
+    border-top none
+.tAll-lil
+.tAll-lir
+  height 44px
+  line-height 44px
+  float left
+.tAll-lil:before
+.tAll-lir:after
+  display inline-block
+  content: ''
+  height 44px
+.tAll-li
+  .tAll-lil:before
+    width 40px
+    float left
+    background-size 45%
+.tAll-lil
+  width 138px
+  margin-left -138px
+.tAll-lir
+  width 100%
+  text-align right
+.tAll-lir:after
+  width 20px
+  float right
+  background url(./../../assets/img/my/my-icon-right-m.png) no-repeat right center
+/*.tAll-lil1:before
+  background url(./../../assets/img/my/my-icon-money-01.png) no-repeat center center
+.tAll-lil2:before
+  background url(./../../assets/img/my/my-icon-bid.png) no-repeat center center
+.tAll-lil3:before
+  background url(./../../assets/img/my/my-icon-money-02.png) no-repeat center center
+.tAll-lil4:before
+  background url(./../../assets/img/my/my-icon-money-03.png) no-repeat center center*/
+$tIcon = 'money-01' 'bid' 'money-02' 'money-03'
+for urls, i in $tIcon
+  .tAll-lil{i+1}:before
+    background url('./../../assets/img/my/my-icon-'urls'.png') no-repeat center center
 
 
 

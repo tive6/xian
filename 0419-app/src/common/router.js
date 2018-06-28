@@ -1,17 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-/* 全部加载 */
-//import Index from '@/pages/Index'
-//import TouZi from '@/pages/TouZi'
-//import FaXian from '@/pages/FaXian'
-//import My from '@/pages/My'
-//import BidDetail from '@/pages/BidDetail'
-//import Settings from '@/pages/Settings'
-
-/* activity */
-//import XinShouAct from '@/act/XinShouAct'
-
 /* 异步加载 */
 /* index */
 const Index = () => import('@/pages/Index')
@@ -49,6 +38,7 @@ const RechargeRecord = () => import('@/pages/RechargeRecord')
 const TouZiRecord = () => import('@/pages/TouZiRecord')
 const Recommend = () => import('@/pages/Recommend')
 const RecommendRecord = () => import('@/pages/RecommendRecord')
+const TotalAssets = () => import('@/pages/TotalAssets')
 
 /* news */
 const Trends = () => import('@/pages/Trends')
@@ -181,6 +171,12 @@ export default new Router({
             name: 'recommendrecord',
             component: RecommendRecord,
             meta: { title: '推荐记录',requireAuth: true }
+        },
+        {
+            path: '/totalassets',
+            name: 'totalassets',
+            component: TotalAssets,
+            meta: { title: '总资产',requireAuth: true }
         },
 
 

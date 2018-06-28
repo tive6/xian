@@ -188,9 +188,6 @@
             this.initShow()
         },
         methods:{
-            initList(){
-
-            },
             optionsCheck(n1,n2,event){
                 if(this.isFinished){
                     return false
@@ -217,6 +214,7 @@
                     if(!this.token){
                         this.token = this.getLocationData('user','token')
                     }
+                    console.log(this.token)
                     this.$http.post(this.$api.evaluationdo,{
                         token: that.token,
                         num: that.score
@@ -305,27 +303,5 @@
                 }
             }
         }
-        /*
-         前端：
-         1、微信端风险测评页面
-         2、投资详情-借款资料页面
-         3、投资详情-投资记录页面
-         * */
-
-        /*
-         前端：
-         本周：
-         1、微信端未认证投资测评弹窗
-         2、首页注册送红包弹窗
-         3、投资项目详情页
-         4、风险测评页面
-         5、投资详情-借款资料页面
-         6、投资详情-投资记录页面
-         7、设计编写PC端风险测评页面
-         下周：
-         1、编写微信页面
-         2、实现部分功能交互
-
-         * */
     }
 </script>

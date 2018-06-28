@@ -68,6 +68,7 @@
             },
             logout(){
                 this.delCookie()
+                this.delCookie('other')
                 this.$router.push({path:'/'})
             }
         }

@@ -90,6 +90,7 @@
             })*/
         },
         mounted(){
+            console.log(this)
         },
         updated(){
             this.bannerSilder()

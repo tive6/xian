@@ -79,10 +79,19 @@
         },
         methods:{
             getDetail(){
-                this.$http.post(this.$api.borrowdetail,{
-                    bid: this.$route.params.id,
-//                    token: this.token
-                }).
+                let token = this.getLocationData()
+                let opts = {}
+                if(token){
+                    opts = {
+                        bid: this.$route.params.id,
+                        token: token
+                    }
+                }else{
+                    opts = {
+                        bid: this.$route.params.id
+                    }
+                }
+                this.$http.post(this.$api.borrowdetail,opts).
                 then(function (res) {
                     let data = res.data.data
                     console.log(res)
@@ -113,7 +122,7 @@
                 if(!this.$store.getters.getLoginStatus){
                     this.pop = true
                 }else{
-                    this.$router.push({path:'/tzdetail',params:{id:this.$route.params.id}})
+                    this.$router.push({name:'tzdetail',params:{id:this.$route.params.id}})
                 }
             },
             toInvest(){

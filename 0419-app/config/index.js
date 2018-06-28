@@ -52,12 +52,12 @@ module.exports = {
     // Template for index.html
     //index: path.resolve(__dirname, '../dist/index.html'),
     //index: path.resolve(__dirname,'D:/web/dist/index.html'),
-    index: path.resolve(__dirname,'D:/SVN/App/Tpl/Home/cgtz/dist/index.html'),
+    index: path.resolve(__dirname,'D:/SVN/dist/index.html'),
 
     // Paths
     //assetsRoot: path.resolve(__dirname, '../dist'),
     //assetsRoot: path.resolve(__dirname,'D:/web/dist'),
-    assetsRoot: path.resolve(__dirname,'D:/SVN/App/Tpl/Home/cgtz/dist'),
+    assetsRoot: path.resolve(__dirname,'D:/SVN/dist'),
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
 

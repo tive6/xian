@@ -45,6 +45,7 @@ const Api = {
     borrowdetail:'/mobile/tinvest/borrowdetail', //项目详情
     investlist:'/mobile/tinvest/investlist', //标的投资记录
     tinvestmoney:'/mobile/tinvest/tinvestmoney', //会员投资提交
+    borrowinterest:'/mobile/tinvest/borrowinterest', //获取项目收益
     //111:'111', //
 }
 

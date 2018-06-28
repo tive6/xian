@@ -34,14 +34,14 @@
             </div>
             <div class="bidDtled-bl bidDtled-bl1">
                 <span class="bidDtled-bl-l">投资金额</span>
-                <input v-model="allMoney" type="text" class="bidDtled-bl-m" placeholder="请输入投资金额">
-                <a href="javascript:" class="bidDtled-bl-r">全投</a>
+                <input @change="getEarnings" v-model="inputMoney" type="text" class="bidDtled-bl-m" placeholder="请输入投资金额">
+                <a @click="investAll" href="javascript:" class="bidDtled-bl-r">全投</a>
             </div>
             <div class="bidDtled-bl bidDtled-bl2">
                 <span class="bidDtled-bl-l">预计收益</span>
-                <span class="bidDtled-bl2-text">0.00</span>
+                <span class="bidDtled-bl2-text">{{allEarnings}}</span>
             </div>
-            <div class="bidDtled-bl bidDtled-bl3">
+            <div v-if="0" class="bidDtled-bl bidDtled-bl3">
                 <span class="bidDtled-bl-l">可用卡券</span>
                 <span class="bidDtled-bl3-r">5个可用奖励</span>
             </div>
@@ -52,7 +52,7 @@
                 <a class="bidDtled-xy-link" href="">《风险提示书》</a>
             </div>
         </div>
-        <a href="javascript:" class="bidDtl-btn-next">立即投资</a>
+        <a @click="toInvest" href="javascript:" class="bidDtl-btn-next">立即投资</a>
     </div>
 </template>
 
@@ -64,13 +64,16 @@
                 msg: 'BidDetailLogined',
                 detail: {},
                 token: '',
-                allMoney: 0
+                allMoney: 0,
+                inputMoney: 0,
+                allEarnings: 0
             }
         },
         components:{
         },
         mounted(){
             this.getDetail()
+            console.log(typeof  this.$route.params.id)
         },
         methods:{
             toBankQuota(){
@@ -107,8 +110,71 @@
                     console.log(err)
                 })
             },
+            getEarnings(){
+                let that = this
+                that.token = that.getLocationData()
+                this.$http.post(this.$api.borrowinterest,{
+                    bid: this.$route.params.id,
+                    token: this.token,
+                    money: parseInt(this.inputMoney)
+                }).
+                then(function (res) {
+                    let data = res.data.data
+                    console.log(res)
+                    if(res.status==200 && res.data.code==1001){
+                        that.allEarnings = data.shouyi
+                        console.log(that.detail)
+                    }else if(res.data.code==1009){
+                        that.allEarnings = '0.00'
+                    }else{
+                        that.$alert('vs-model',{
+                            show: true,
+                            msg: res.data.msg
+                        })
+                    }
+                    console.log(`code:${res.data.code}\t msg:${res.data.msg}`)
+                }).catch(function (err){
+                    console.log(err)
+                })
+            },
+            toInvest(){
+                let that = this
+                that.token = that.getLocationData()
+                this.$http.post(this.$api.tinvestmoney,{
+                    borrow_id: this.$route.params.id,
+                    token: this.token,
+                    tnum: parseInt(this.inputMoney)
+                }).
+                then(function (res) {
+                    let data = res.data.data
+                    console.log(res)
+                    if(res.status==200 && res.data.code==1001){
+                        that.allEarnings = data.shouyi
+                        console.log(that.detail)
+                    }else if(res.status==200 && res.data.code==1000){
+                        that.$alert('vs-model',{
+                            show: true,
+                            msg: res.data.msg,
+                            nextText: '去登录',
+                            fn(){
+                                that.toLoginAddBackUrl()
+                            }
+                        })
+                    }else{
+                        that.$alert('vs-model',{
+                            show: true,
+                            msg: res.data.msg
+                        })
+                    }
+                    console.log(`code:${res.data.code}\t msg:${res.data.msg}`)
+                }).catch(function (err){
+                    console.log(err)
+                })
+            },
             investAll(){
-                this.allMoney
+                this.inputMoney = this.allMoney
+                if(this.allMoney<100)return
+                this.getEarnings()
             }
         }
     }

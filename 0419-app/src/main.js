@@ -56,13 +56,13 @@ let baseUrl
 //console.log(process.env.NODE_ENV)
 /*if(process.env.NODE_ENV == 'production'){
     // 部署服务调用正式地址
-    baseUrl = 'https://www.beifu58.com/'
+    baseUrl = 'http://m.zyzaixian.com/'
     //baseUrl = 'http://test.beifu58.com/'
 }else{
     // 开发测试地址
     baseUrl = 'http://test.beifu58.com/'
 }*/
-baseUrl = 'http://test.beifu58.com/'
+baseUrl = 'http://zyzaixian.com/'
 axios.defaults.timeout = 5000
 axios.baseURL = baseUrl
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
