@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>弹框</title>
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/common.css">
+</head>
+<body>
+
+<div class="zy-container">
+    <!-- 页头 -->
+    <div class="zy-header">
+        <div class="zy-header-t">
+            <div class="zy-header-t-inner clear">
+                <div class="zy-header-tl">
+                    <div class="zy-header-kf">
+                        服务热线：400-000-0000 (工作日9:00-18:00)
+                    </div>
+                </div>
+                <div class="zy-header-tr">
+                    <a class="zy-header-link zy-header-regs" href="javascript:">注册</a>
+                    <a class="zy-header-link zy-header-line" href="javascript:">|</a>
+                    <a class="zy-header-link zy-header-login" href="javascript:">登录</a>
+                    <a class="zy-header-link zy-header-xs" href="javascript:">新手引导</a>
+                    <a class="zy-header-link zy-header-xs" href="javascript:">常见问题</a>
+                </div>
+            </div>
+        </div>
+        <!-- 导航 -->
+        <div class="zy-header-b clear">
+            <a href="" class="zy-header-logo">
+                <img src="./img/zy-logo.png" alt="">
+            </a>
+            <div class="zy-header-nav clear">
+                <div class="zy-nav-outer"><a href="javascript:" class="zy-nav-list zy-nav-list-active">首页</a></div>
+                <div class="zy-nav-outer"><a href="javascript:" class="zy-nav-list">我要投资</a></div>
+                <div class="zy-nav-outer">
+                    <a href="javascript:" class="zy-nav-list">信息批露</a>
+                </div>
+                <div class="zy-nav-outer"><a href="javascript:" class="zy-nav-list zy-nav-list-user">我的账户</a></div>
+            </div>
+        </div>
+    </div>
+    <!-- 404页面 -->
+    <div class="zy-404">
+        <img src="./img/zy-404.png" alt="" class="zy-404-img">
+        <div class="zy-404-text">啊哦！不小心闯进了未知领域，请点击下面按钮返回首页。</div>
+        <a class="zy-404-goBack" href="javascript:window.history.back()">返回首页</a>
+    </div>
+
+    <!-- 弹框 -->
+    <!-- 账户未认证 弹框 -->
+    <div class="model-auth" style="display:none">
+        <img src="./img/zy-model-img-01.png" alt="" class="model-auth-img">
+        <h3 class="model-auth-text">账户未认证</h3>
+        <div class="model-auth-btn-outer">
+            <a href="javascript:" class="model-auth-btn model-auth-btn-back">放弃</a>
+            <a href="javascript:" class="model-auth-btn model-auth-btn-next">马上去认证</a>
+        </div>
+    </div>
+
+    <!-- 投资成功 弹框 -->
+    <div class="model-tz" style="display:none">
+        <a href="javascript:" class="model-tz-close"></a>
+        <img src="./img/zy-img-touzi.png" alt="" class="model-tz-img">
+        <div class="model-tz-text">预计获得收益 666元</div>
+        <a href="javascript:" class="model-tz-btn">确认</a>
+    </div>
+
+    <!-- 确认投资 弹框 -->
+    <div class="model-tz-confirm" style="display:none">
+        <a href="javascript:" class="model-tz-close"></a>
+        <div class="model-tzc-text">确认要投资吗？</div>
+        <div class="model-tzc-btn-outer">
+            <a href="javascript:" class="model-tzc-btn model-tzc-btn-next">确认投资</a>
+            <a href="javascript:" class="model-tzc-btn model-tzc-btn-back">放弃投资</a>
+        </div>
+    </div>
+
+    <!-- 充值余额不足 弹框 -->
+    <div class="model-tz-confirm">
+        <a href="javascript:" class="model-tz-close"></a>
+        <div class="model-tzc-text">余额不足，请充值</div>
+        <div class="model-tzc-btn-outer">
+            <a href="javascript:" class="model-tzc-btn model-tzc-btn-next">充值</a>
+            <a href="javascript:" class="model-tzc-btn model-tzc-btn-back">取消</a>
+        </div>
+    </div>
+
+
+
+    <!-- 注销成功 弹框 -->
+    <div class="model-logout" style="display:none">
+        注销成功
+    </div>
+
+    <div class="mask-bg" style="display:block"></div>
+
+    <!-- 页尾 -->
+    <div class="zy-footer">
+        <div class="zy-ft-outer">
+            <div class="zy-ft-inner clear">
+                <div class="zy-ft-list zy-ft-1 clear">
+                    <div class="zy-ft1-link-list">
+                        <h3 class="zy-ft1-link-top">关于我们</h3>
+                        <a href="" class="zy-ft1-link">公司简介</a>
+                        <a href="" class="zy-ft1-link">团队介绍</a>
+                        <a href="" class="zy-ft1-link">荣誉资质</a>
+                        <a href="" class="zy-ft1-link">信息批露</a>
+                    </div>
+                    <div class="zy-ft1-link-list">
+                        <h3 class="zy-ft1-link-top">帮助中心</h3>
+                        <a href="" class="zy-ft1-link">平台数据</a>
+                        <a href="" class="zy-ft1-link">法律保障</a>
+                        <a href="" class="zy-ft1-link">新手引导</a>
+                        <a href="" class="zy-ft1-link">理财课堂</a>
+                    </div>
+                    <div class="zy-ft1-link-list zy-ft1-link-list3">
+                        <h3 class="zy-ft1-link-top">理财课堂</h3>
+                        <a href="" class="zy-ft1-link">风险管理</a>
+                        <a href="" class="zy-ft1-link">银行存管</a>
+                        <a href="" class="zy-ft1-link">电子合同</a>
+                        <a href="" class="zy-ft1-link">风控体系</a>
+                    </div>
+                </div>
+                <div class="zy-ft-list zy-ft-2 clear">
+                    <div class="zy-ft2-list">
+                        <img src="./img/icon/zy-icon-wx.png" alt="">
+                        <h4>APP客户端下载</h4>
+                    </div>
+                    <div class="zy-ft2-list">
+                        <img src="./img/icon/zy-icon-wx.png" alt="">
+                        <h4>关注中业公众号</h4>
+                    </div>
+                </div>
+                <div class="zy-ft-list zy-ft-3">
+                    <h4 class="zy-ft2-text">客服热线</h4>
+                    <h2 class="zy-ft2-number">400-000-0000</h2>
+                    <h3 class="zy-ft2-times">服务时间  工作日9：00-18：00</h3>
+                    <h4 class="zy-ft2-text">客服邮箱</h4>
+                    <h2 class="zy-ft2-number">service@zy.com</h2>
+                </div>
+            </div>
+        </div>
+        <div class="zy-fb-outer">
+            <div class="zy-fb-inner">
+                <div class="zy-fb-hint">温馨提示：市场有风险，投资需谨慎</div>
+                <div class="zy-fb-img">
+                    <img src="./img/icon/zy-icon-cr1.png" alt="">
+                    <img class="zy-fb-img2" src="./img/icon/zy-icon-cr2.png" alt="">
+                    <img src="./img/icon/zy-icon-cr3.png" alt="">
+                </div>
+                <div class="zy-fb-cr">
+                    京公网安备 32100200000111 @2014-2018 中业在线 京ICP备150008888号
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="./js/jquery.min.js?v6541"></script>
+<script>
+    $(function(){
+        $(document).on('click','.model-auth-btn-back,.model-tz-close,.model-tzc-btn-back,.mask-bg',function(){
+            $('.model-auth,.model-tz,.model-tz-confirm,.model-logout,.mask-bg').fadeOut()
+        })
+
+        /* 注销成功 提示框 自动消失 */
+        /*setTimeout(function(){
+            $('.model-logout,.mask-bg').fadeOut()
+        },2000)*/
+    })
+</script>
+</body>
+</html>

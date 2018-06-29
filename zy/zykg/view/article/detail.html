@@ -1,0 +1,64 @@
+{include file="/public/_head" /}
+
+    <title>动态详情</title>
+</head>
+<body>
+
+{include file="/public/_header" /}
+
+<div class="detail-main">
+    <div class="detail-head">
+        <div class="detail-head-inner">
+            <a href="/" class="detail-navbar">首页</a> &gt;
+            <a href="/article" class="detail-navbar">新闻中心</a> &gt;
+            <a href="javascript:" class="detail-navbar">行业报道</a>
+        </div>
+    </div>
+    <div class="detail-body">
+        <h2 class="detail-title">{$vo.title}</h2>
+        <div class="detail-info">
+            <!--<span class="detail-source">来源：青年网</span>-->
+            <span class="detail-times">发布时间：{$vo.publish_time}</span>
+        </div>
+        <div class="detail-content">
+            {$vo.content}
+        </div>
+        
+        
+                    
+                    
+        <div class="detail-other clear">
+            {if condition="$vo['next_info']['article_id'] neq ''"}
+                        <a href="{:U('/article/details',['id'=>$vo['next_info']['article_id']])}" class="detail-preview detail-prev">
+                            上一篇 &gt;&gt; {$vo['next_info']['title']}
+                        </a>
+                        {else /}
+                        <a href="javascript:;" class="detail-preview detail-prev">这是第一篇</a>
+                    {/if}
+                    
+            {if condition="$vo['before_info']['article_id'] neq ''"}
+                        <a href="{:U('/article/details',['id'=>$vo['before_info']['article_id']])}" class="detail-preview detail-next">
+                            下一篇 &gt;&gt; {$vo['next_info']['title']}
+                        </a>
+                        {else /}
+                        <a href="javascript:;" class="detail-preview detail-next">这是最后一篇</a>
+                    {/if}
+        </div>
+    </div>
+</div>
+
+{include file="/public/_footer" /}
+
+<script src="/static/home/js/jquery.min.js"></script>
+<script>
+    $(function () {
+        $('.detail-nav').on('click', function () {
+            var index = $(this).index()
+            $(this).addClass('detail-nav-active').siblings().removeClass('detail-nav-active')
+            if(index==3){
+                return
+            }
+            $('.detail-b').eq(index).fadeIn().siblings().fadeOut(0)
+        })
+    })
+</script>

@@ -1,0 +1,753 @@
+/* bidList */
+.zy-bidList,
+.zy-bidDetail{
+    background-color: #F7F7F7;
+    overflow: hidden;
+}
+.bidList-banner{
+    display: block;
+    margin: 20px auto 0;
+}
+.bidList-main{
+    width: 1200px;
+    margin: 0 auto;
+    padding: 0 0 30px;
+}
+.bidList-nav{
+    line-height: 1;
+    padding: 40px 0 25px;
+    overflow: hidden;
+}
+.bidList-nav-tab{
+    float: left;
+    font-size: 22px;
+    margin-right: 40px;
+}
+.bidList-nav-active{
+    color: #f52e3e;
+}
+.bidList-body{
+    background-color: #fff;
+}
+.bidList-body-list{
+    border-top: 1px solid #F4F4F4;
+}
+.bidList-body-select{
+    height: 60px;
+    line-height: 60px;
+    padding-left: 50px;
+}
+.bidList-body-select-text{
+    font-size: 16px;
+    float: left;
+}
+.bidList-body-select-choose{
+    display: inline-block;
+    font-size: 16px;
+    float: left;
+    margin-left: 40px;
+    position: relative;
+}
+.bidList-body-selected{
+    color: #f52e3e;
+}
+.bidList-body-select2:after,
+.bidList-body-select3:after{
+    display: inline-block;
+    content: '';
+    width: 11px;
+    height: 60px;
+    background: url(./../img/bid/bid-icon-sanjiao.png) no-repeat center center;
+    position: absolute;
+    right: -20px;
+}
+.bidList-body-selected.bidList-body-select2:after,
+.bidList-body-selected.bidList-body-select3:after{
+    background: url(./../img/bid/bid-icon-sanjiao-active.png) no-repeat center center;
+}
+.bidList-body-select2{
+    margin-right: 20px;
+}
+.bidList-body-list{
+    padding: 40px 50px 36px;
+}
+.bidList-body-list-col{
+    width: 25%;
+    float: left;
+}
+.bidList-body-list-col3{
+    width: 15%;
+    padding-right: 10%;
+}
+.bidList-body-list-t{
+    margin-bottom: 30px;
+}
+.bidList-body-list-t span{
+    display: inline-block;
+}
+.bidList-body-type{
+    display: inline-block;
+    width: 58px;
+    line-height: 28px;
+    text-align: center;
+    font-size: 18px;
+    color: #fff;
+    border-radius: 5px;
+    margin-right: 30px;
+}
+.bidList-body-type-s{
+    background-color: #f52e3e;
+}
+.bidList-body-type-m{
+    background-color: #FA8B30;
+}
+.bidList-body-type-l{
+    background-color: #008AFF;
+}
+.bidList-body-name{
+    font-size: 25px;
+    margin-right: 30px;
+}
+.bidList-body-tag{
+    padding: 3px 20px;
+    border: 1px solid #FA8E36;
+    color: #FA8E36;
+}
+.bidList-body-list-num{
+    font-size: 30px;
+}
+.bidList-body-list-font{
+    font-size: 16px;
+}
+.bidList-body-list-text{
+    color: #666;
+}
+.bidList-body-list-min{
+    font-size: 20px;
+    margin-top: 35px;
+}
+.bidList-body-list-red{
+    color: #f52e3e;
+}
+.bidList-body-percent{
+    width: 100%;
+    height: 5px;
+    background-color: #E4E4E4;
+    margin-top: 40px;
+}
+.bidList-body-percent-inner{
+    height: 5px;
+    width: 70%;
+    background-color: #f52e3e;
+}
+.bidList-body-list-last{
+    line-height: 30px;
+    color: #666;
+}
+.bidList-body-list-two{
+    line-height: 25px;
+    margin-top: 18px;
+    color: #666;
+}
+.bidList-body-list-two span{
+    display: inline-block;
+    line-height: 25px;
+}
+.bidList-body-list-tr{
+    float: right;
+}
+.bidList-body-list-btn{
+    display: block;
+    background-color: #f52e3e;
+    line-height: 46px;
+    color: #fff;
+    text-align: center;
+    font-size: 18px;
+    border-radius: 5px;
+    margin-top: 30px;
+    /*-webkit-box-shadow: 1px 5px 10px #f52e3e;
+    -moz-box-shadow: 1px 5px 10px #f52e3e;
+    box-shadow: 1px 5px 10px #f52e3e;*/
+}
+.bidList-body-btn-disabled{
+    background-color: #DBDBDB;
+    color: #666;
+    /*-webkit-box-shadow: 1px 5px 10px #ddd;
+    -moz-box-shadow: 1px 5px 10px #ddd;
+    box-shadow: 1px 5px 10px #ddd;*/
+}
+.bidList-body-tabs{
+    display: none;
+}
+.bidList-body-tabs:first-child{
+    display: block;
+}
+
+/* 分页 */
+.bidList-pager{
+    padding: 30px 0;
+}
+.bidList-pager-inner{
+    float: right;
+    line-height: 32px;
+}
+.bidList-pager-inner a{
+    display: inline-block;
+    box-sizing: border-box;
+}
+.bidList-pager-n{
+    width: 32px;
+    height: 32px;
+    line-height: 30px;
+    text-align: center;
+    font-size: 17px;
+    float: left;
+    background-color: #fff;
+    border: 1px solid #E0E0E0;
+    margin-left: 10px;
+}
+.bidList-pager-active{
+    background-color: #f52e3e;
+    color: #fff;
+}
+.bidList-pager-text{
+    float: left;
+    font-size: 16px;
+    margin: 0 15px;
+}
+.bidList-pager-input{
+    width: 40px;
+    line-height: 30px;
+    border: 1px solid #E0E0E0;
+    text-align: center;
+}
+.bidList-pager-btn{
+    float: left;
+    padding: 0 10px;
+    line-height: 30px;
+    text-align: center;
+    font-size: 17px;
+    background-color: #fff;
+    border: 1px solid #E0E0E0;
+}
+
+/*  bidDetail */
+.bidDtl-main{
+    width: 1200px;
+    margin: 0 auto;
+    padding-bottom: 50px;
+}
+.bidDtl-header{
+    height: 54px;
+    line-height: 54px;
+    color: #999;
+}
+.bidDtl-header-navbar{
+    color: #999;
+}
+.bidDtl-t,
+.bidDtl-b{
+    background-color: #fff;
+    border-radius: 9px;
+}
+.bidDtl-title{
+    height: 72px;
+    line-height: 72px;
+    position: relative;
+    border-bottom: 1px solid #E6E6E6;
+}
+.bidDtl-title-icon{
+    position: absolute;
+    display: block;
+    top: 0;
+    left: 0;
+}
+.bidDtl-title-text{
+    font-size: 24px;
+    padding: 0 30px;
+}
+.bidDtl-title-tags{
+    display: inline-block;
+    line-height: 20px;
+    padding: 0 10px;
+    color: #fa8b30;
+    border: 1px solid #fa8b30;
+    position: relative;
+    bottom: 3px;
+}
+.bidDtl-title-date{
+    font-size: 18px;
+    float: right;
+    padding-right: 45px;
+}
+.bidDtl-title-times{
+    color: #fa8b30;
+    padding-left: 20px;
+}
+.bidDtl-t-content{
+    padding: 20px 46px;
+}
+.bidDtl-tl-list-box1{
+    margin-top: 20px;
+}
+.bidDtl-tl,
+.bidDtl-tr{
+    box-sizing: border-box;
+    float: left;
+}
+.bidDtl-tl{
+    width: 744px;
+}
+.bidDtl-tr{
+    width: 364px;
+    padding-left: 46px;
+    border-left: 1px solid #E6E6E6;
+}
+.bidDtl-tl-list{
+    float: left;
+}
+.bidDtl-tl-list1{
+    width: 40%;
+}
+.bidDtl-tl-list3{
+    width: 30%;
+}
+.bidDtl-tl-list2{
+    width: 30%;
+}
+.bidDtl-tl-list-num{
+    font-size: 30px;
+}
+.bidDtl-tl-list-font{
+    font-size: 16px;
+}
+.bidDtl-tl-list-desc{
+    color: #666;
+    line-height: 40px;
+}
+.bidDtl-tl-list-red{
+    color: #f52e3e;
+}
+.bidDtl-tl-list-rOut{
+    width: 80%;
+    height: 5px;
+    background-color: #E4E4E4;
+    margin: 50px 0 15px;
+}
+.bidDtl-tl-list-rIn{
+    width: 60%;
+    height: 100%;
+    background-color: #f52e3e;
+}
+.bidDtl-tl-list-intro{
+    width: 80%;
+    color: #666;
+}
+.bidDtl-tl-list-percent{
+    float: right;
+}
+.bidDtl-tl-list-box2{
+    padding: 76px 0 10px;
+}
+.bidDtl-tl-list-2{
+    width: 50%;
+    float: left;
+    line-height: 35px;
+    color: #666;
+    margin-bottom: 15px;
+}
+.bidDtl-tl-list-2:before{
+    content: '';
+    display: inline-block;
+    float: left;
+    width: 35px;
+    height: 35px;
+    margin-right: 10px;
+}
+.bidDtl-tl-list-21:before{
+    background: url(./../img/bid/bid-icon-01.png) no-repeat center center;
+}
+.bidDtl-tl-list-22:before{
+    background: url(./../img/bid/bid-icon-02.png) no-repeat center center;
+}
+.bidDtl-tl-list-23:before{
+    background: url(./../img/bid/bid-icon-03.png) no-repeat center center;
+}
+.bidDtl-tl-list-24:before{
+    background: url(./../img/bid/bid-icon-04.png) no-repeat center center;
+}
+.bidDtl-tl-list-fw{
+    color: #333;
+}
+.bidDtl-tr-list{
+    line-height: 34px;
+}
+.bidDtl-tr-list-n{
+    float: right;
+}
+.bidDtl-tr-list-sum{
+    margin-left: 50px;
+}
+.bidDtl-tr-list-rech{
+    height: 20px;
+    line-height: 20px;
+    color: #f52e3e;
+    border: 1px solid #f52e3e;
+    border-radius: 5px;
+    padding: 0 10px;
+    float: right;
+    margin-top: 5px;
+}
+.bidDtl-tr-input{
+    height: 46px;
+    line-height: 46px;
+    border: 1px solid #E5E5E5;
+    margin-bottom: 10px;
+}
+.bidDtl-tr-input-inner{
+    width: 100%;
+    line-height: 46px;
+    vertical-align: bottom;
+    text-indent: 15px;
+}
+.bidDtl-tr-input-down{
+    position: relative;
+}
+.bidDtl-tr-input-down:after{
+    content: '';
+    display: inline-block;
+    width: 46px;
+    height: 46px;
+    background: url(./../img/icon/zy-icon-down.png) no-repeat center center;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+.bidDtl-tr-expect{
+    line-height: 30px;
+}
+.bidDtl-tr-expect-icon{
+    vertical-align: middle;
+    margin-left: 5px;
+}
+.bidDtl-tr-expect-money{
+    float: right;
+    color: #f52e3e;
+}
+.bidDtl-tr-checkbox{
+    line-height: 35px;
+}
+.bidDtl-tr-checkbox-input{
+    vertical-align: middle;
+}
+.bidDtl-tr-link{
+    color: #5595ff;
+}
+.bidDtl-tr-invest{
+    display: block;
+    font-size: 18px;
+    line-height: 48px;
+    background-color: #f52e3e;
+    text-align: center;
+    color: #fff;
+    border-radius: 5px;
+    margin: 20px 0;
+}
+
+/* bidDtl-b */
+.bidDtl-b{
+    margin-top: 20px;
+}
+.bidDtl-b-header{
+    line-height: 70px;
+    border-bottom: 1px solid #E6E6E6;
+}
+.bidDtl-b-header-tabs{
+    display: inline-block;
+    float: left;
+    padding: 0 30px;
+    font-size: 18px;
+}
+.bidDtl-b-header-active{
+    color: #f52e3e;
+}
+.bidDtl-b-header-pact{
+    float: right;
+    color: #5595ff;
+    font-size: 16px;
+    padding: 0 30px;
+}
+.bidDtl-b-body{
+    padding: 30px;
+}
+.bidDtl-b-body-title{
+    line-height: 56px;
+    font-size: 18px;
+}
+.bidDtl-b-body-table{
+    width: 100%;
+    border: 1px solid #E5E5E5;
+    margin-bottom: 30px;
+}
+.bidDtl-b-body-table thead{
+    background-color: #F8F8F8;
+}
+.bidDtl-b-body-table td,
+.bidDtl-b-body-table th{
+    line-height: 20px;
+    padding: 20px 10px;
+}
+.bidDtl-b-body-table th{
+    color: #666;
+}
+
+.bidDtl-b-body-list{
+    display: none;
+}
+.bidDtl-b-body1{
+    display: block;
+}
+
+
+/* 未登录 */
+.bidDtl-tr-list-not .bidDtl-tr-list-sum{
+    float: right;
+}
+.bidDtl-tr-list-not{
+    margin-top: 56px;
+}
+.bidDtl-tr-invest-not{
+    margin-top: 40px;
+}
+.bidDtl-b-body-not{
+    padding: 50px 0;
+    text-align: center;
+}
+.bidDtl-b-body-toLogin{
+    color: #f52e3e;
+}
+
+/* 借款资料 */
+.bidDtl-b-body2-outer{
+    width: 966px;
+    margin: 0 auto;
+    position: relative;
+}
+.bidDtl-b-body2-inner{
+    width: 686px;
+    height: 468px;
+    margin: 0 auto;
+    overflow: hidden;
+    position: relative;
+}
+.bidDtl-b-body2-cont{
+    width: 2000px;
+    height: 468px;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+.bidDtl-b-body2-btn{
+    width: 140px;
+    height: 400px;
+    position: absolute;
+    top: 0;
+}
+.bidDtl-b-body2-btnl{
+    left: 0;
+    background: url(./../img/icon/zy-icon-lg-l.png) no-repeat center center;
+}
+.bidDtl-b-body2-btnr{
+    right: 0;
+    background: url(./../img/icon/zy-icon-lg-r.png) no-repeat center center;
+}
+.bidDtl-b-body2-dtl{
+    width: 686px;
+    float: left;
+}
+.bidDtl-b-body2-img{
+    height: 400px;
+    overflow: hidden;
+}
+.bidDtl-b-body2-img img{
+    display: block;
+    width: 100%;
+}
+.bidDtl-b-body2-desc{
+    line-height: 68px;
+    text-align: center;
+}
+
+/* 风险情况 */
+.bidDtl-b-body3-list{
+    line-height: 1.9;
+}
+.bidDtl-b-body3-lr{
+    color: #666;
+}
+.bidDtl-b-body3-step{
+    margin: 34px 0 50px;
+}
+.bidDtl-b-body3-sl{
+    box-sizing: border-box;
+    width: 162px;
+    padding-right: 94px;
+    float: left;
+    position: relative;
+}
+.bidDtl-b-body3-sl:before{
+    content: '';
+    display: inline-block;
+    width: 94px;
+    height: 68px;
+    background: url(./../img/bid/bid-icon-right.png) no-repeat center center;
+    position: absolute;
+    left: 68px;
+}
+.bidDtl-b-body3-sLast:before{
+    display: none;
+}
+.bidDtl-b-body3-sText{
+    line-height: 20px;
+    text-align: center;
+    margin-top: 10px;
+}
+
+/* 还款记录 */
+.bidDtl-b-body5-title{
+    line-height: 40px;
+    font-size: 16px;
+    text-align: right;
+    margin-bottom: 10px;
+}
+.bidDtl-b-body5-tab{
+    width: 100%;
+}
+.bidDtl-b-body5-tab thead,
+.bidDtl-b-body5-tab tbody tr:nth-child(2n){
+    background-color: #F8F8F8;
+}
+.bidDtl-b-body5-tab th,
+.bidDtl-b-body5-tab td{
+    line-height: 58px;
+}
+
+
+/* 风险提示 */
+.bidDtl-b-body6-title{
+    font-size: 16px;
+    margin: 20px 0;
+}
+.bidDtl-b-body6-list{
+    line-height: 1.8;
+    margin-bottom: 12px;
+}
+.bidDtl-b-body6-ps{
+    font-size: 12px;
+    line-height: 1.8;
+    color: #666;
+    margin-top: 30px;
+}
+
+
+
+
+
+
+
+
+
+
+/* 红包、优惠券 */
+.bidDtl-tr-packet{
+    box-sizing: border-box;
+    width: 318px;
+    height: 344px;
+    padding: 20px 10px;
+    overflow-y: auto;
+    position: absolute;
+    bottom: -350px;
+    left: -1px;
+    z-index: 10;
+    background-color: #fff;
+    border: 1px solid #E5E5E5;
+}
+.bidDtl-tr-packet-list{
+    margin-bottom: 10px;
+}
+.bidDtl-packet-radio,
+.bidDtl-packet-box{
+    float: left;
+    height: 68px;
+}
+.bidDtl-packet-radio{
+    width: 23px;
+}
+.bidDtl-packet-box{
+    width: 253px;
+}
+.bidDtl-tr-packet-list1 .bidDtl-packet-box{
+    background: url(./../img/bid/bid-packet-01.png) no-repeat;
+}
+.bidDtl-tr-packet-list2 .bidDtl-packet-box{
+    background: url(./../img/bid/bid-packet-02.png) no-repeat;
+}
+.bidDtl-tr-packet-list3 .bidDtl-packet-box{
+    background: url(./../img/bid/bid-packet-03.png) no-repeat;
+}
+.bidDtl-packet-l{
+    width: 79px;
+    float: left;
+    text-align: center;
+    color: #fff;
+}
+.bidDtl-tr-packet-list3 .bidDtl-packet-l{
+    color: #999;
+}
+.bidDtl-packet-r{
+    box-sizing: border-box;
+    width: 174px;
+    padding: 3px 10px 3px 15px;
+    float: left;
+    font-size: 12px;
+}
+.bidDtl-packet-l-type{
+    font-size: 16px;
+    line-height: 25px;
+    margin-top: 10px;
+}
+.bidDtl-packet-l-s{
+    line-height: 20px;
+}
+.bidDtl-packet-r-text{
+    line-height: 20px;
+}
+.bidDtl-packet-r-text3{
+    color: #f52e3e;
+}
+.bidDtl-packet-radio-input{
+    vertical-align: bottom;
+    width: 20px;
+    line-height: 30px;
+}
+.bidDtl-tr-packet{
+    display: none;
+}
+
+
+/* 0418 add */
+.bidDtl-b-bl{
+    line-height: 1.8;
+    margin-bottom: 10px;
+}
+.bidDtl-b-bl-l{
+    width: 12%;
+    float: left;
+    text-align: right;
+    font-weight: 600;
+}
+.bidDtl-b-bl-r{
+    width: 88%;
+    float: left;
+    color: #666;
+}

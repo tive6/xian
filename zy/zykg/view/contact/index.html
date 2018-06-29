@@ -1,0 +1,76 @@
+{include file="/public/_head" /}
+
+    <title>联系我们</title>
+</head>
+<body>
+
+{include file="/public/_header" /}
+
+<div class="contact-main">
+    <div class="contact-banner"></div>
+    <div class="sec-f">
+        <div class="sec-inner">
+            <h2 class="sec-title-en">Contact us</h2>
+            <h2 class="sec-title-zh">联系我们</h2>
+            <div class="sec-contact-inner">
+                <div class="sec-contact-desc">
+                    中业控股作为一个年轻、阳光的创新型公司，乐于展示我们的理念和价值观。如果您有媒体采访需求；如果贵 <br>
+                    公司与中业控股优势互补，并有合作意向，工作人员会尽快与您联系。
+                </div>
+                <div class="sec-contact-info clear">
+                    <div class="sec-contact-info-li">
+                        <div class="sec-contact-info-icon sec-contact-info-icon1"></div>
+                        <div class="sec-contact-info-text">联系邮箱：contact@fkadjkhsf.com</div>
+                    </div>
+                    <div class="sec-contact-info-li">
+                        <div class="sec-contact-info-icon sec-contact-info-icon2"></div>
+                        <div class="sec-contact-info-text">联系电话：400--062--6899</div>
+                    </div>
+                    <div class="sec-contact-info-li">
+                        <div class="sec-contact-info-icon sec-contact-info-icon3"></div>
+                        <div class="sec-contact-info-text">联系地址：北京市朝阳区东三环北路甲19号嘉盛中心801</div>
+                    </div>
+                </div>
+                <div class="sec-contact-map" id="baiduMap"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{include file="/public/_footer" /}
+
+<script src="https://api.map.baidu.com/api?v=2.0&ak=78879bccaafcf5b74081186cff551645&services=&t=20160721145132"></script>
+<script src="/static/home/js/jquery.min.js"></script>
+<script>
+    $(function () {
+        initMap()
+        $('.news-tabs').on('click', function () {
+            var index = $(this).index()
+            $(this).addClass('news-tabs-active').siblings().removeClass('news-tabs-active')
+            $('.news-b').eq(index).fadeIn().siblings().fadeOut(0)
+        })
+    })
+    //百度地图API功能
+    function loadJs() {
+        var script = document.createElement("script");
+        script.type = "text/javascript";
+        script.src = "https://api.map.baidu.com/api?v=2.0&ak=78879bccaafcf5b74081186cff551645&services=&t=20160721145132";
+        document.head.appendChild(script);
+    }
+    function initMap() {
+        /* 百度地图API功能 */
+        var map = new BMap.Map("baiduMap");    // 创建Map实例
+        var sContent ="中业恒通控股（北京）有限公司 <br> 北京市朝阳区东三环北路甲19号嘉盛中心801";
+        var point = new BMap.Point(116.467216,39.935184);
+        map.centerAndZoom(point, 19);  // 初始化地图,设置中心点坐标和地图级别
+        //添加地图类型控件
+        map.addControl(new BMap.MapTypeControl({
+            mapTypes:[
+                BMAP_NORMAL_MAP,
+                BMAP_HYBRID_MAP
+            ]}));
+        map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+        var infoWindow = new BMap.InfoWindow(sContent);  // 创建信息窗口对象
+        map.openInfoWindow(infoWindow,point); //开启信息窗口
+    }
+</script>

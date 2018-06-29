@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>个人中心—资金管理</title>
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/common.css">
+    <link rel="stylesheet" href="./css/personal.css">
+</head>
+<body>
+
+<div class="zy-container">
+    <!-- 页头 -->
+    <div class="zy-header">
+        <div class="zy-header-t">
+            <div class="zy-header-t-inner clear">
+                <div class="zy-header-tl">
+                    <div class="zy-header-kf">
+                        服务热线：400-000-0000 (工作日9:00-18:00)
+                    </div>
+                </div>
+                <div class="zy-header-tr">
+                    <a class="zy-header-link zy-header-regs" href="javascript:">注册</a>
+                    <a class="zy-header-link zy-header-line" href="javascript:">|</a>
+                    <a class="zy-header-link zy-header-login" href="javascript:">登录</a>
+                    <a class="zy-header-link zy-header-xs" href="javascript:">新手引导</a>
+                    <a class="zy-header-link zy-header-xs" href="javascript:">常见问题</a>
+                </div>
+            </div>
+        </div>
+        <!-- 导航 -->
+        <div class="zy-header-b clear">
+            <a href="" class="zy-header-logo">
+                <img src="./img/zy-logo.png" alt="">
+            </a>
+            <div class="zy-header-nav clear">
+                <div class="zy-nav-outer"><a href="javascript:" class="zy-nav-list zy-nav-list-active">首页</a></div>
+                <div class="zy-nav-outer"><a href="javascript:" class="zy-nav-list">我要投资</a></div>
+                <div class="zy-nav-outer">
+                    <a href="javascript:" class="zy-nav-list">信息批露</a>
+                </div>
+                <div class="zy-nav-outer"><a href="javascript:" class="zy-nav-list zy-nav-list-user">我的账户</a></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 个人中心 -->
+    <div class="zy-personal">
+        <div class="pal-section clear">
+            <!-- 左侧栏菜单 -->
+            <div class="pal-aside">
+                <div class="pal-aside-t">
+                    <img class="pal-aside-userPic" src="./img/user/user-pic.png" alt="">
+                    <h4 class="pal-aside-t-tel">13500000000</h4>
+                    <a href="" class="pal-aside-t-risk">风险测评</a>
+                    <div class="pal-aside-t-auth">
+                        <a href="" class="pal-aside-auth-icon pal-aside-auth1"></a>
+                        <a href="" class="pal-aside-auth-icon pal-aside-auth2"></a>
+                        <a href="" class="pal-aside-auth-icon pal-aside-auth3"></a>
+                    </div>
+                </div>
+                <div class="pal-aside-b">
+                    <a href="" class="pal-aside-list pal-aside-list1 pal-aside-list-active">账户总览</a>
+                    <a href="" class="pal-aside-list pal-aside-list2">资金管理</a>
+                    <a href="" class="pal-aside-list pal-aside-list6">投资管理</a>
+                    <a href="" class="pal-aside-list pal-aside-list3">卡卷管理</a>
+                    <a href="" class="pal-aside-list pal-aside-list4">个人资料</a>
+                    <a href="" class="pal-aside-list pal-aside-list5">推荐奖励</a>
+                </div>
+            </div>
+            <!-- 左侧栏菜单 end -->
+
+            <!-- 右侧主体内容区 -->
+            <div class="pal-main">
+                <!-- 资金管理 -->
+                <div class="pal-m2">
+                    <div class="pal-main-title pal-m2-title">资金管理</div>
+                    <div class="pal-m2-filter clear">
+                        <div class="pal-m2-fl">
+                            <span class="pal-m2-fl-type">查询类型</span>
+                            <select class="pal-m2-fl-select" name="" id="">
+                                <option value="">全部</option>
+                                <option value="">收入</option>
+                                <option value="">支出</option>
+                                <option value="">投资</option>
+                                <option value="">回款</option>
+                                <option value="">充值</option>
+                                <option value="">提现</option>
+                                <option value="">投资礼金</option>
+                                <option value="">投资服务费</option>
+                            </select>
+                        </div>
+                        <div class="pal-m2-fr clear">
+                            <span class="pal-m2-fl-type">日期选择</span>
+                            <input type="date" class="pal-m2-fl-date">
+                            <a href="javascript:" class="pal-m2-fl-export">导出</a>
+                        </div>
+                    </div>
+                    <table class="pal-m2-tables pal-m3-tables">
+                        <thead>
+                        <tr>
+                            <th>时间</th>
+                            <th>类型</th>
+                            <th>影响金额(元)</th>
+                            <th>可用余额(元)</th>
+                            <th>冻结金额(元)</th>
+                            <th>待收本息(元)</th>
+                            <th style="width:200px;">说明</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>2018-04-10 <br>12:12:30</td>
+                            <td>2222</td>
+                            <td><span class="pal-table-color-blue">1111</span></td>
+                            <td>1111</td>
+                            <td>1111</td>
+                            <td>1111</td>
+                            <td>提现申请已通过，扣除实际 <br>
+                                手续费0元，到账金额1元
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2018-04-10 <br>12:12:30</td>
+                            <td>3333</td>
+                            <td><span class="pal-table-color-red">1111</span></td>
+                            <td>1111</td>
+                            <td>1111</td>
+                            <td>1111</td>
+                            <td>1111</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+            <!-- 右侧主体内容区 end -->
+        </div>
+    </div>
+    <!-- 个人中心 end -->
+
+    <!-- 页尾 -->
+    <div class="zy-footer">
+        <div class="zy-ft-outer">
+            <div class="zy-ft-inner clear">
+                <div class="zy-ft-list zy-ft-1 clear">
+                    <div class="zy-ft1-link-list">
+                        <h3 class="zy-ft1-link-top">关于我们</h3>
+                        <a href="" class="zy-ft1-link">公司简介</a>
+                        <a href="" class="zy-ft1-link">团队介绍</a>
+                        <a href="" class="zy-ft1-link">荣誉资质</a>
+                        <a href="" class="zy-ft1-link">信息批露</a>
+                    </div>
+                    <div class="zy-ft1-link-list">
+                        <h3 class="zy-ft1-link-top">帮助中心</h3>
+                        <a href="" class="zy-ft1-link">平台数据</a>
+                        <a href="" class="zy-ft1-link">法律保障</a>
+                        <a href="" class="zy-ft1-link">新手引导</a>
+                        <a href="" class="zy-ft1-link">理财课堂</a>
+                    </div>
+                    <div class="zy-ft1-link-list zy-ft1-link-list3">
+                        <h3 class="zy-ft1-link-top">理财课堂</h3>
+                        <a href="" class="zy-ft1-link">风险管理</a>
+                        <a href="" class="zy-ft1-link">银行存管</a>
+                        <a href="" class="zy-ft1-link">电子合同</a>
+                        <a href="" class="zy-ft1-link">风控体系</a>
+                    </div>
+                </div>
+                <div class="zy-ft-list zy-ft-2 clear">
+                    <div class="zy-ft2-list">
+                        <img src="./img/icon/zy-icon-wx.png" alt="">
+                        <h4>APP客户端下载</h4>
+                    </div>
+                    <div class="zy-ft2-list">
+                        <img src="./img/icon/zy-icon-wx.png" alt="">
+                        <h4>关注中业公众号</h4>
+                    </div>
+                </div>
+                <div class="zy-ft-list zy-ft-3">
+                    <h4 class="zy-ft2-text">客服热线</h4>
+                    <h2 class="zy-ft2-number">400-000-0000</h2>
+                    <h3 class="zy-ft2-times">服务时间  工作日9：00-18：00</h3>
+                    <h4 class="zy-ft2-text">客服邮箱</h4>
+                    <h2 class="zy-ft2-number">service@zy.com</h2>
+                </div>
+            </div>
+        </div>
+        <div class="zy-fb-outer">
+            <div class="zy-fb-inner">
+                <div class="zy-fb-hint">温馨提示：市场有风险，投资需谨慎</div>
+                <div class="zy-fb-img">
+                    <img src="./img/icon/zy-icon-cr1.png" alt="">
+                    <img class="zy-fb-img2" src="./img/icon/zy-icon-cr2.png" alt="">
+                    <img src="./img/icon/zy-icon-cr3.png" alt="">
+                </div>
+                <div class="zy-fb-cr">
+                    京公网安备 32100200000111 @2014-2018 中业在线 京ICP备150008888号
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="./js/jquery.min.js"></script>
+<script>
+    $(function(){
+        $('.pal-m13-h-tab').click(function(){
+            var $pi = $(this).index()
+            $(this).addClass('pal-m13-h-active').siblings().removeClass('pal-m13-h-active')
+            $('.pal-m13-table-outer').eq($pi).fadeIn().siblings().fadeOut(0)
+        })
+
+    })
+</script>
+</body>
+</html>

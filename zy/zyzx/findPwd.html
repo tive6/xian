@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>找回密码</title>
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/common.css">
+    <link rel="stylesheet" href="./css/login.css">
+</head>
+<body>
+
+<div class="zy-container">
+    <!-- 页头 -->
+    <div class="zy-header">
+        <div class="zy-header-t">
+            <div class="zy-header-t-inner clear">
+                <div class="zy-header-tl">
+                    <div class="zy-header-kf">
+                        服务热线：400-000-0000 (工作日9:00-18:00)
+                    </div>
+                </div>
+                <div class="zy-header-tr">
+                    <a class="zy-header-link zy-header-regs" href="javascript:">注册</a>
+                    <a class="zy-header-link zy-header-line" href="javascript:">|</a>
+                    <a class="zy-header-link zy-header-login" href="javascript:">登录</a>
+                    <a class="zy-header-link zy-header-xs" href="javascript:">新手引导</a>
+                    <a class="zy-header-link zy-header-xs" href="javascript:">常见问题</a>
+                </div>
+            </div>
+        </div>
+        <!-- 导航 -->
+        <div class="zy-header-b clear">
+            <a href="" class="zy-header-logo">
+                <img src="./img/zy-logo.png" alt="">
+            </a>
+            <div class="zy-header-nav clear">
+                <div class="zy-nav-outer"><a href="javascript:" class="zy-nav-list zy-nav-list-active">首页</a></div>
+                <div class="zy-nav-outer"><a href="javascript:" class="zy-nav-list">我要投资</a></div>
+                <div class="zy-nav-outer">
+                    <a href="javascript:" class="zy-nav-list">信息批露</a>
+                </div>
+                <div class="zy-nav-outer"><a href="javascript:" class="zy-nav-list zy-nav-list-user">我的账户</a></div>
+            </div>
+        </div>
+    </div>
+    <!-- 找回密码 -->
+    <div class="findPwd">
+        <div class="findPwd-outer">
+            <div class="findPwd-title">找回登录密码</div>
+            <div class="findPwd-inner">
+                <div class="findPwd-step clear">
+                    <div class="findPwd-s findPwd-s1 findPwd-s-finish">
+                        <div class="findPwd-s-bg">1</div>
+                        <h4 class="findPwd-s-text">填写手机号</h4>
+                    </div>
+                    <div class="findPwd-s findPwd-s2">
+                        <div class="findPwd-s-bg">2</div>
+                        <h4 class="findPwd-s-text">重置密码</h4>
+                    </div>
+                    <div class="findPwd-s findPwd-s3">
+                        <div class="findPwd-s-bg">3</div>
+                        <h4 class="findPwd-s-text">完成</h4>
+                    </div>
+                </div>
+                <div class="findPwd-body">
+                    <div class="findPwd-b findPwd-b1" style="display:block">
+                        <div class="findPwd-b-inner">
+                            <div class="findPwd-b-list">
+                                <input type="text" class="findPwd-b-input" placeholder="请输入您的手机号">
+                                <div class="login-list-hint" style="display:block">
+                                    <img src="./img/icon/login-icon-jiao.png" alt="" class="login-list-hint-jiao">
+                                    <p class="login-list-hint-text">输入不正确，请重新输入</p>
+                                </div>
+                            </div>
+                            <div class="findPwd-b-list findPwd-b-ic">
+                                <input type="text" class="findPwd-b-input findPwd-b-int" placeholder="请输入手机验证码">
+                                <a href="" class="findPwd-b-yBtn">获取验证码</a>
+                                <!--<a href="" class="findPwd-b-yBtn findPwd-b-yed">58s后重新获取</a>-->
+                                <div class="login-list-hint">
+                                    <img src="./img/icon/login-icon-jiao.png" alt="" class="login-list-hint-jiao">
+                                    <p class="login-list-hint-text">输入不正确，请重新输入</p>
+                                </div>
+                            </div>
+                            <a href="" class="findPwd-b-btn findPwd-b-next1">下一步</a>
+                        </div>
+                    </div>
+                    <div class="findPwd-b findPwd-b2">
+                        <div class="findPwd-b-inner">
+                            <div class="findPwd-b-list findPwd-b2-kcode">
+                                <input type="password" class="findPwd-b-input" placeholder="设置新密码">
+                                <span class="findPwd-b2-icon"></span>
+                                <div class="login-list-hint">
+                                    <img src="./img/icon/login-icon-jiao.png" alt="" class="login-list-hint-jiao">
+                                    <p class="login-list-hint-text">输入不正确，请重新输入</p>
+                                </div>
+                            </div>
+                            <div class="findPwd-b2-hint">
+                                <img src="./img/pwd-icon-hint.png" alt="" class="findPwd-b2-bang">
+                                8～16个英文字母、数字、特殊字符或其组合，区分大小写
+                            </div>
+                            <div class="findPwd-b-list">
+                                <input type="password" class="findPwd-b-input" placeholder="确认新密码">
+                                <div class="login-list-hint">
+                                    <img src="./img/icon/login-icon-jiao.png" alt="" class="login-list-hint-jiao">
+                                    <p class="login-list-hint-text">输入不正确，请重新输入</p>
+                                </div>
+                            </div>
+                            <a href="" class="findPwd-b-btn findPwd-b-next2">下一步</a>
+                        </div>
+                    </div>
+                    <div class="findPwd-b findPwd-b3">
+                        <div class="findPwd-b-inner">
+                            <img src="./img/pwd-step-ed.png" alt="" class="findPwd-b3-img">
+                            <p class="findPwd-b3-text">恭喜您，登录密码设置成功</p>
+                            <a href="" class="findPwd-b-btn findPwd-b-next3">重新登录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页尾 -->
+    <div class="zy-footer">
+        <div class="zy-ft-outer">
+            <div class="zy-ft-inner clear">
+                <div class="zy-ft-list zy-ft-1 clear">
+                    <div class="zy-ft1-link-list">
+                        <h3 class="zy-ft1-link-top">关于我们</h3>
+                        <a href="" class="zy-ft1-link">公司简介</a>
+                        <a href="" class="zy-ft1-link">团队介绍</a>
+                        <a href="" class="zy-ft1-link">荣誉资质</a>
+                        <a href="" class="zy-ft1-link">信息批露</a>
+                    </div>
+                    <div class="zy-ft1-link-list">
+                        <h3 class="zy-ft1-link-top">帮助中心</h3>
+                        <a href="" class="zy-ft1-link">平台数据</a>
+                        <a href="" class="zy-ft1-link">法律保障</a>
+                        <a href="" class="zy-ft1-link">新手引导</a>
+                        <a href="" class="zy-ft1-link">理财课堂</a>
+                    </div>
+                    <div class="zy-ft1-link-list zy-ft1-link-list3">
+                        <h3 class="zy-ft1-link-top">理财课堂</h3>
+                        <a href="" class="zy-ft1-link">风险管理</a>
+                        <a href="" class="zy-ft1-link">银行存管</a>
+                        <a href="" class="zy-ft1-link">电子合同</a>
+                        <a href="" class="zy-ft1-link">风控体系</a>
+                    </div>
+                </div>
+                <div class="zy-ft-list zy-ft-2 clear">
+                    <div class="zy-ft2-list">
+                        <img src="./img/icon/zy-icon-wx.png" alt="">
+                        <h4>APP客户端下载</h4>
+                    </div>
+                    <div class="zy-ft2-list">
+                        <img src="./img/icon/zy-icon-wx.png" alt="">
+                        <h4>关注中业公众号</h4>
+                    </div>
+                </div>
+                <div class="zy-ft-list zy-ft-3">
+                    <h4 class="zy-ft2-text">客服热线</h4>
+                    <h2 class="zy-ft2-number">400-000-0000</h2>
+                    <h3 class="zy-ft2-times">服务时间  工作日9：00-18：00</h3>
+                    <h4 class="zy-ft2-text">客服邮箱</h4>
+                    <h2 class="zy-ft2-number">service@zy.com</h2>
+                </div>
+            </div>
+        </div>
+        <div class="zy-fb-outer">
+            <div class="zy-fb-inner">
+                <div class="zy-fb-hint">温馨提示：市场有风险，投资需谨慎</div>
+                <div class="zy-fb-img">
+                    <img src="./img/icon/zy-icon-cr1.png" alt="">
+                    <img class="zy-fb-img2" src="./img/icon/zy-icon-cr2.png" alt="">
+                    <img src="./img/icon/zy-icon-cr3.png" alt="">
+                </div>
+                <div class="zy-fb-cr">
+                    京公网安备 32100200000111 @2014-2018 中业在线 京ICP备150008888号
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="./js/jquery.min.js"></script>
+<script>
+    $(function(){
+
+    })
+</script>
+</body>
+</html>

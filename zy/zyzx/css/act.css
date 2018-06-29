@@ -1,0 +1,160 @@
+/* duanwu */
+.dw-main{
+    background: url(./../img/act/duanwu/dw-bg.png) no-repeat;
+}
+.dw-header{
+    position: relative;
+}
+.dw-header-img{
+    display: block;
+    width: 100%;
+}
+.dw-header-btn{
+    display: block;
+    width: 220px;
+    height: 48px;
+    background: url(./../img/act/duanwu/dw-btn-03.png) no-repeat;
+    position: absolute;
+    left: 50%;
+    top: 47%;
+    margin-left: -110px;
+}
+.dw-b-title{
+    width: 600px;
+    height: 160px;
+    line-height: 160px;
+    text-align: center;
+    font-size: 34px;
+    color: #fff;
+    margin: 140px auto 40px;
+}
+.dw-b-t1,
+.dw-b-t3{
+    background: url(./../img/act/duanwu/dw-title-01.png) no-repeat center center;
+}
+.dw-b-t2{
+    background: url(./../img/act/duanwu/dw-title-02.png) no-repeat center center;
+}
+.dw-b1-img{
+    display: block;
+    margin: 0 auto;
+}
+.dw-b1-btn{
+    display: block;
+    width: 280px;
+    height: 58px;
+    margin: 40px auto 0;
+    background: url(./../img/act/duanwu/dw-btn-02.png) no-repeat;
+}
+.dw-b2-outer{
+    width: 1175px;
+    margin: 0 auto;
+}
+.dw-b2-li{
+    box-sizing: border-box;
+    width: 385px;
+    height: 294px;
+    float: left;
+    background: url(./../img/act/duanwu/dw-bg-02.png) no-repeat;
+    padding: 0 40px 20px;
+    text-align: center;
+    position: relative;
+}
+.dw-b2-li2{
+    margin: 0 10px;
+}
+.dw-b2-li-title{
+    font-size: 20px;
+    color: #fff;
+    line-height: 38px;
+}
+.dw-b2-li-rate{
+    line-height: 1;
+    font-size: 40px;
+    color: #ff2525;
+    margin: 40px 0 10px;
+}
+.dw-b2-li-desc{
+    color: #999;
+}
+.dw-b2-li-text{
+    color: #999;
+    text-align: left;
+}
+.dw-b2-progress-outer{
+    height: 5px;
+    overflow: hidden;
+    background-color: #E4E4E4;
+    border-radius: 2px;
+    margin: 20px 0 10px;
+}
+.dw-b2-progress-inner{
+    width: 60%;
+    height: 100%;
+    background-color: #ff2525;
+    border-radius: 2px;
+}
+.dw-b2-li-btn{
+    display: block;
+    width: 220px;
+    height: 48px;
+    margin: 20px auto 0;
+    background: url(./../img/act/duanwu/dw-btn-03.png) no-repeat;
+}
+.dw-b3{
+    padding-bottom: 80px;
+}
+.dw-b3-outer{
+    width: 984px;
+    height: 346px;
+    background: url(./../img/act/duanwu/dw-bg-03.png) no-repeat;
+    margin: 0 auto;
+}
+.dw-b3-inner{
+    padding: 85px 0 0 242px;
+}
+.dw-b3-li{
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+.dw-b3-li span{
+    display: inline-block;
+    height: 24px;
+    line-height: 24px;
+    float: left;
+}
+.dw-b3-li-n{
+    width: 24px;
+    border-radius: 12px;
+    font-size: 18px;
+    color: #fff;
+    background-color: #FDC24E;
+    text-align: center;
+    margin-right: 10px;
+}
+.dw-b3-li-text{
+    font-size: 16px;
+    color: #333;
+}
+.dw-b2-li-img{
+    display: block;
+    width: 76px;
+    position: absolute;
+    left: 10%;
+    top: -80px;
+    filter: alpha(opacity=30);
+    opacity: 0.3;
+    transition: all 1.5s;
+    -moz-transition: all 1.5s; /* Firefox 4 */
+    -webkit-transition: all 1.5s; /* Safari and Chrome */
+    -o-transition: all 1.5s; /* Opera */
+}
+.dw-b2-li:hover .dw-b2-li-img{
+    transform: rotate(-80deg);
+    -webkit-transform: rotate(-80deg);	/* Safari 和 Chrome */
+    -moz-transform: rotate(-80deg);	/* Firefox */
+    filter: alpha(opacity=100);
+    opacity: 1;
+    left: 60%;
+    top: -20px;
+}

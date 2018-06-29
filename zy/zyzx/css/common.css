@@ -1,0 +1,489 @@
+/* header */
+.zy-header{
+    border-bottom: 1px solid #ddd;
+}
+.zy-header-t{
+    background-color: #F7F7F7;
+}
+.zy-header-t-inner{
+    width: 1200px;
+    height: 36px;
+    line-height: 36px;
+    margin: 0 auto;
+}
+.zy-header-tl,
+.zy-header-tr{
+    float: left;
+    width: 600px;
+}
+.zy-header-kf{
+    color: #999;
+}
+.zy-header-kf:before{
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 36px;
+    float: left;
+    background: url(./../img/icon/zy-icon-tel.png) no-repeat left center;
+}
+.zy-header-tr{
+    text-align: right;
+}
+.zy-header-line,
+.zy-header-regs,
+.zy-header-login{
+    color: #f52e3e;
+    margin-left: 7px;
+}
+.zy-header-xs{
+    color: #666;
+    margin-left: 30px;
+}
+.zy-header-b{
+    width: 1200px;
+    height: 75px;
+    margin: 0 auto;
+}
+.zy-header-logo{
+    display: block;
+    width: 200px;
+    height: 75px;
+    float: left;
+}
+.zy-header-logo img{
+    display: block;
+    margin: 13px 0;
+}
+.zy-header-nav{
+    width: 1000px;
+    line-height: 75px;
+    float: left;
+}
+.zy-nav-outer{
+    float: left;
+    text-align: center;
+}
+.zy-nav-list{
+    display: block;
+    color: #323232;
+    font-size: 18px;
+    margin-left: 70px;
+}
+.zy-nav-outer:first-child .zy-nav-list{
+    margin-left: 0;
+}
+.zy-nav-list-active,
+.zy-nav-list:hover{
+    color: #f52e3e;
+}
+.zy-nav-list-user{
+    padding-right: 0;
+}
+.zy-nav-list-user:before{
+    content: '';
+    display: inline-block;
+    width: 45px;
+    height: 75px;
+    float: left;
+    background: url(./../img/icon/zy-icon-user.png) no-repeat left center;
+}
+.zy-nav-outer:first-child{
+    margin-left: 490px;
+}
+.zy-nav-outer-toggle{
+    position: relative;
+}
+.zy-nav-list-toggle:after{
+    content: '∧';
+    display: inline-block;
+    width: 20px;
+    height: 60px;
+    line-height: 60px;
+    float: right;
+}
+.zy-nav-other{
+    position: absolute;
+    z-index: 111;
+    width: 100px;
+    background-color: rgba(0,0,0,.8);
+}
+.zy-nav-other-list{
+    display: block;
+    line-height: 35px;
+    color: #fff;
+}
+
+/* footer */
+.zy-footer{
+    background-color: #333;
+}
+.zy-ft-outer,
+.zy-fb-outer{
+    width: 1200px;
+    margin: 0 auto;
+}
+.zy-ft-list{
+    width: 400px;
+    float: left;
+}
+.zy-ft-2{
+    box-sizing: border-box;
+    height: 160px;
+    float: left;
+    /*border-left: 1px solid #fff;*/
+    /*border-right: 1px solid #fff;*/
+}
+.zy-footer,
+.zy-footer a{
+    color: #fff;
+}
+.zy-ft1-link-list{
+    width: 33.33%;
+    float: left;
+}
+.zy-ft1-link-top{
+    line-height: 1;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+.zy-ft1-link{
+    display: block;
+    line-height: 25px;
+}
+.zy-ft2-list{
+    float: left;
+    width: 50%;
+    text-align: center;
+}
+.zy-ft2-list img{
+    vertical-align: middle;
+    display: inline-block;
+    width: 100px;
+}
+.zy-ft2-list h4{
+    line-height: 35px;
+}
+.zy-ft-outer{
+    padding: 60px 0 25px;
+}
+.zy-fb-outer{
+    border-top: 1px solid #555;
+    padding: 15px 0 20px;
+}
+.zy-fb-inner{
+    text-align: center;
+}
+.zy-ft-3{
+    box-sizing: border-box;
+    padding-left: 70px;
+}
+.zy-ft2-text{
+    font-size: 18px;
+}
+.zy-ft2-number{
+    font-size: 22px;
+    line-height: 30px;
+}
+.zy-ft2-times{
+    color: #666;
+    margin-bottom: 30px;
+}
+.zy-fb-hint{
+    color: #f52e3e;
+}
+.zy-fb-img{
+    padding: 20px 0 15px;
+}
+.zy-fb-img img{
+    vertical-align: middle;
+}
+.zy-fb-img2{
+    margin: 0 15px;
+}
+.zy-fb-cr{
+    display: inline-block;
+    line-height: 30px;
+}
+.zy-fb-cr:before{
+    content: '';
+    display: inline-block;
+    height: 30px;
+    width: 30px;
+    float: left;
+    background: url(./../img/icon/zy-icon-hui.png) no-repeat center center;
+}
+
+/* 404页面 */
+.zy-404{
+    width: 1200px;
+    padding: 100px 0;
+    margin: 0 auto;
+}
+.zy-404-img{
+    display: block;
+    margin: 0 auto;
+}
+.zy-404-text{
+    font-size: 16px;
+    text-align: center;
+    margin: 50px 0;
+}
+.zy-404-goBack{
+    display: block;
+    width: 224px;
+    height: 47px;
+    line-height: 47px;
+    font-size: 18px;
+    color: #fff;
+    background-color: #F42E3D;
+    border-radius: 5px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+
+/* 分页样式 */
+.list_page{
+    height: 27px;
+    padding: 20px 0;
+    text-align: center;
+}
+.digg{
+    display: inline-block;
+    overflow: hidden;
+}
+.digg .current,
+.digg .page-but,
+.digg>a{
+    display: inline-block;
+    float: left;
+    height: 25px;
+    line-height: 25px;
+    padding: 0 10px;
+    border: 1px solid #E5E5E5;
+    background-color: #fff;
+}
+.digg .current,
+.digg .page-but,
+.digg>a{
+    margin-left: 10px;
+}
+.digg .page-but:first-child{
+    margin-left: 0;
+}
+.digg .current{
+    background-color: #EDEDED;
+}
+
+
+/* 按钮 hover active 效果 */
+
+.zy-m2r-dr-btn:hover,
+.zy-login-toRegs:hover,
+.zy-m3-btn:hover{
+    background-color: #f64251;
+}
+
+
+.zy-m2r-dr-btn:active,
+.zy-login-toRegs:active,
+.zy-m3-btn:active{
+    background-color: #D62936;
+}
+
+
+/* 遮罩层 */
+.mask-bg{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 66;
+    background-color: #000;
+    filter: alpha(opacity=60);
+    opacity: .6;
+    display: none;
+}
+
+/* 未认证弹框*/
+.model-auth{
+    box-sizing: border-box;
+    width: 470px;
+    height: 380px;
+    padding: 48px 56px;
+    position: fixed;
+    top: 50px;
+    left: 50%;
+    z-index: 999;
+    margin-left: -235px;
+    background-color: #fff;
+    border-radius: 5px;
+}
+.model-auth-img{
+    display: block;
+    margin: 0 auto;
+}
+.model-auth-text{
+    color: #999;
+    text-align: center;
+    margin: 20px 0 30px;
+}
+.model-auth-btn-outer{
+    text-align: center;
+}
+.model-auth-btn{
+    display: inline-block;
+    box-sizing: border-box;
+    width: 170px;
+    height: 48px;
+    border-radius: 5px;
+    font-size: 16px;
+}
+.model-auth-btn-back{
+    border: 1px solid #f52e3e;
+    color: #f52e3e;
+    line-height: 46px;
+    margin-right: 10px;
+}
+.model-auth-btn-next{
+    background-color: #f52e3e;
+    color: #fff;
+    line-height: 48px;
+}
+
+/* 投资成功弹框 */
+.model-tz{
+    box-sizing: border-box;
+    width: 400px;
+    height: 380px;
+    padding: 54px 40px;
+    position: fixed;
+    left: 50%;
+    top: 50px;
+    z-index: 999;
+    margin-left: -200px;
+    background-color: #fff;
+    border-radius: 5px;
+}
+.model-tz-close{
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    background: url(./../img/zy-icon-close-sm.png) no-repeat center center;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+.model-tz-img{
+    display: block;
+    margin: 0 auto;
+}
+.model-tz-text{
+    line-height: 1;
+    padding: 25px 0 35px;
+    font-size: 16px;
+    color: #666;
+    text-align: center;
+}
+.model-tz-btn{
+    display: block;
+    height: 48px;
+    line-height: 48px;
+    text-align: center;
+    background-color: #f52e3e;
+    color: #fff;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+/* 确认投资 弹框 */
+.model-tz-confirm{
+    box-sizing: border-box;
+    width: 400px;
+    height: 230px;
+    padding: 46px 40px 40px;
+    position: fixed;
+    top: 100px;
+    left: 50%;
+    z-index: 999;
+    margin-left: -200px;
+    background-color: #fff;
+    border-radius: 5px;
+    text-align: center;
+}
+.model-tz-confirm .model-tz-close{
+    right: 10px;
+    top: 10px;
+}
+.model-tzc-text{
+    font-size: 20px;
+    color: #666;
+}
+.model-tzc-btn-outer{
+    margin-top: 58px;
+}
+.model-tzc-btn{
+    box-sizing: border-box;
+    display: inline-block;
+    width: 150px;
+    height: 48px;
+    text-align: center;
+    font-size: 16px;
+    border-radius: 5px;
+}
+.model-tzc-btn-next{
+    line-height: 48px;
+    color: #fff;
+    background-color: #f52e3e;
+}
+.model-tzc-btn-back{
+    border: 1px solid #e5e5e5;
+    line-height: 46px;
+    color: #666;
+    margin-left: 15px;
+}
+
+/* 注销成功 pop弹框 */
+.model-logout{
+    box-sizing: border-box;
+    width: 266px;
+    height: 72px;
+    line-height: 72px;
+    position: fixed;
+    top: 100px;
+    left: 50%;
+    z-index: 999;
+    margin-left: -133px;
+    background-color: #fff;
+    border-radius: 5px;
+    font-size: 20px;
+    color: #f52e3e;
+    text-align: center;
+}
+.model-logout:before{
+    content: '';
+    display: inline-block;
+    width: 30px;
+    height: 72px;
+    float: left;
+    background: url(./../img/zy-icon-success.png) no-repeat center center;
+    position: relative;
+    left: 70px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

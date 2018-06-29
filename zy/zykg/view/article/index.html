@@ -1,0 +1,180 @@
+{include file="/public/_head" /}
+
+    <title>新闻中心</title>
+</head>
+<body>
+
+{include file="/public/_header" /}
+
+<div class="news-main">
+    <div class="news-banner"></div>
+    <div class="news-outer">
+        <div class="news-head">
+            <a href="javascript:" class="news-tabs news-tabs-active">行业报道</a>
+            <a href="javascript:" class="news-tabs news-tabs2">中业动态</a>
+            <a href="javascript:" class="news-tabs">媒体报道</a>
+        </div>
+        <div class="news-body">
+            <div class="news-b news-b1">
+                <div class="news-b-content">
+                    <!-- <a href="" class="news-b-li clear">
+                        <div class="news-bli-l">
+                            <img src="./img/news-li-img.png" alt="" class="news-bli-l-img">
+                        </div>
+                        <div class="news-bli-r">
+                            <h3 class="news-bli-r-title">科技创新是第一生产力</h3>
+                            <p class="news-bli-r-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus animi cumque cupiditate debitis dicta dolores eius, ipsum iure maiores nam nihil nostrum nulla obcaecati officiis optio quidem reiciendis rem reprehenderit.</p>
+                            <h4 class="news-bli-r-time">2018-06-06 15:30</h4>
+                        </div>
+                    </a> -->
+                </div>
+                <!-- <div class="pager">
+                    <div class="pager-outer clear">
+                        <a class="pager-btns pager-btns-prev" href="javascript:">上一页</a>
+                        <a class="pager-btns" href="javascript:">1</a>
+                        <a class="pager-btns" href="javascript:">2</a>
+                        <a class="pager-btns pager-btns-active" href="javascript:">3</a>
+                        <a class="pager-btns" href="javascript:">4</a>
+                        <a class="pager-btns pager-btns-next" href="javascript:">下一页</a>
+                    </div>
+                </div> -->
+            </div>
+            <div class="news-b news-b2">
+                <div class="news-b-content"></div>
+            </div>
+            <div class="news-b news-b3">
+                <div class="news-b-content"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{include file="/public/_footer" /}
+
+<script src="/static/home/js/jquery.min.js"></script>
+<script>
+    $(function(){
+        $('.news-tabs').on('click', function (){
+            var index = $(this).index()
+            $(this).addClass('news-tabs-active').siblings().removeClass('news-tabs-active')
+            $('.news-b').eq(index).fadeIn().siblings().fadeOut(0)
+        })
+
+        const count = 5
+        var type = [1,2,3]
+        var page = [1,1,1]
+        var nowIndex = [0,0,0]
+        type.forEach(function(item,index){
+            $.get('/article/data_list',{
+                page: page[index],
+                limit: count,
+                type_id: item
+            }).then(function(res){
+                // console.log(res)
+                var b1Html = ''
+                var pagerHtml = ''
+                res.data.list.forEach(function(val,i){
+                    b1Html += '<a href="/article/details?id='+val.article_id+'" class="news-b-li clear"><div class="news-bli-l">' +
+                    '<img onerror="imgErr(this)" src="'+val.thumb+'" alt="" class="news-bli-l-img"></div><div class="news-bli-r">' +
+                    '<h3 class="news-bli-r-title">'+val.title+'</h3>' +
+                    '<p class="news-bli-r-desc">'+val.description+'</p>' +
+                    '<h4 class="news-bli-r-time">'+val.publish_time+'</h4></div></a>'
+                });
+                $('.news-b'+item+'>.news-b-content').html(b1Html)
+                var n1 = res.data.count
+                if(n1>count+1){
+                    var or = 0
+                    var pagerStr = ''
+                    if(n1%count==0){
+                        or = n1/count
+                    }else{
+                        or = Math.ceil(n1/count)
+                    }
+                    for(var i1=0;i1<or;i1++){
+                        pagerStr += '<a class="pager-btns pager-btns-n'+(nowIndex[index]==i1?' pager-btns-active':'')+'" href="javascript:">'+(i1+1)+'</a>'
+                    }
+                    pagerHtml = '<div class="pager" data-type='+item+'><div class="pager-outer clear">' +
+                    '<a class="pager-btns pager-btns-prev" href="javascript:">上一页</a>' +
+                    pagerStr+
+                    '<a class="pager-btns pager-btns-next" href="javascript:">下一页</a></div></div>'
+                    $('.news-b'+item).append(pagerHtml)
+                }
+            },function(err){
+                console.log(err)
+            })
+        })
+            
+
+
+        $(document).on('click','.pager-btns-n',function(){
+            var p1 = parseInt($(this).text())
+            // console.log($(this).text())
+            var typeId = parseInt($(this).parents('.pager').attr('data-type'))
+            // console.log(typeId)
+            getData(typeId,p1)
+            $(this).addClass('pager-btns-active').siblings().removeClass('pager-btns-active')
+        })
+
+        $(document).on('click','.pager-btns-prev,.pager-btns-next',function(){
+            // console.log($(this).text())
+            var classStr = $(this).attr('class')
+            var typeId = parseInt($(this).parents('.pager').attr('data-type'))
+            var _nowIndex = parseInt($(this).siblings('.pager-btns-active').text())
+            var se = $(this).parents('.pager-outer').children().length - 2
+            // console.log(se)
+            // console.log(classStr)
+            // console.log(_nowIndex)
+            if(classStr.indexOf('prev')!=-1){
+                if(_nowIndex<=1){
+                    return false
+                }else{
+                    $(this).parents('.pager-outer').children().eq(_nowIndex-1).
+                    addClass('pager-btns-active').siblings().removeClass('pager-btns-active')
+                    getData(typeId,_nowIndex-1)
+                }
+            }
+            if(classStr.indexOf('next')!=-1){
+                if(_nowIndex>=se){
+                    return false
+                }else{
+                    $(this).parents('.pager-outer').children().eq(_nowIndex+1).
+                    addClass('pager-btns-active').siblings().removeClass('pager-btns-active')
+                    getData(typeId,_nowIndex+1)
+                }
+
+            }
+        })
+
+        function getData(type,pn){
+            $.get('/article/data_list',{
+                page: pn,
+                limit: count,
+                type_id: type
+            }).then(function(res){
+                var b1Html = ''
+                var pagerHtml = ''
+                res.data.list.forEach(function(val,i){
+                    b1Html += '<a href="/article/details?id='+val.article_id+'" class="news-b-li clear"><div class="news-bli-l">' +
+                    '<img onerror="imgErr(this)" src="'+val.thumb+'" alt="" class="news-bli-l-img"></div><div class="news-bli-r">' +
+                    '<h3 class="news-bli-r-title">'+val.title+'</h3>' +
+                    '<p class="news-bli-r-desc">'+val.description+'</p>' +
+                    '<h4 class="news-bli-r-time">'+val.publish_time+'</h4></div></a>'
+                })
+                if(type == 1){
+                    $('.news-b1 .news-b-content').html(b1Html)
+                }else if(type == 2){
+                    $('.news-b2 .news-b-content').html(b1Html)
+                }else{
+                    $('.news-b3 .news-b-content').html(b1Html)
+                }
+            },function(err){
+                console.log(err)
+            })
+        }
+
+    })
+    function imgErr(e){
+        e.src='http://placehold.it/280x160?text=404'
+    }
+
+</script>
